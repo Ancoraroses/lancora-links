@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'Àncora · Enllaços</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1c3454;
+    --navy-ink:#16283f;
+    --gold:#c8963e;
+    --cream:#f5f0e6;
+    --linen:#efe7d6;
+    --slate: #5b6b7a;
+    --hair: rgba(28,52,84,0.18);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream); color:var(--navy);
+    font-family:'Jost', -apple-system, sans-serif;
+    font-size:18px; line-height:1.55;
+    background-image:
+      linear-gradient(rgba(27,58,63,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(27,58,63,0.045) 1px, transparent 1px);
+    background-size: 34px 34px;
+  }
+  h1,h2{ font-family:'Playfair Display', Georgia, serif; font-weight:700; }
+  a{ color:inherit; }
+  .wrap{ max-width:640px; margin:0 auto; padding:0 22px; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; min-height:64vh; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; overflow:hidden;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(200,150,62,0.10), transparent 60%),
+      linear-gradient(180deg, var(--cream) 0%, var(--linen) 100%);
+    color:var(--navy); padding:56px 20px 46px;
+  }
+  .hero .grid-texture{
+    position:absolute; inset:0; z-index:0; opacity:0.5;
+    background-image:
+      linear-gradient(rgba(28,52,84,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(28,52,84,0.05) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  .hero .bg-anchor-big{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-48%);
+    width:64vh; height:64vh; opacity:0.05; color:var(--navy); z-index:0;
+  }
+  .hero .stars{ position:absolute; inset:0; z-index:0; }
+  .hero .stars .star{ position:absolute; color:var(--gold); opacity:0.55; }
+  .hero::before{
+    content:''; position:absolute; inset:14px; border:2.5px solid var(--navy);
+    border-radius:2px; pointer-events:none; z-index:2;
+  }
+  .hero::after{
+    content:''; position:absolute; inset:20px; border:1px solid var(--gold);
+    border-radius:2px; pointer-events:none; z-index:2;
+  }
+  .hero .illus{ position:absolute; bottom:8%; opacity:0.85; z-index:0; color:var(--navy); }
+  .hero .illus-boat{ left:2%; width:min(24vw, 260px); }
+  .hero .illus-mountain{ right:0; bottom:6%; width:min(26vw, 300px); opacity:0.55; color:var(--slate); }
+  .hero-content{ position:relative; z-index:1; }
+  .hero .emblem{
+    width:100px; height:100px; margin:0 auto 16px; position:relative;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .hero .emblem svg.rope{ position:absolute; inset:0; width:100%; height:100%; color:var(--gold); }
+  .hero .emblem svg.anchor-icon{ width:38px; height:38px; color:var(--navy); margin:0; opacity:1; }
+  .hero .eyebrow{
+    font-family:'Jost',sans-serif; font-size:13.5px; letter-spacing:4px; text-transform:uppercase;
+    color:var(--gold); margin-bottom:6px; font-weight:600;
+  }
+  .hero h1{ font-size:clamp(38px, 8vw, 64px); letter-spacing:1px; line-height:1; color:var(--navy); }
+  .hero .tagline{
+    margin-top:10px; font-size:16px; letter-spacing:2px; text-transform:uppercase;
+    color:var(--navy); opacity:0.8; font-family:'Jost',sans-serif; font-weight:500;
+  }
+  .hero .divider-wave{ width:70px; height:12px; margin:16px auto 0; color:var(--gold); opacity:0.9; }
+
+  /* ---------- LINKS ---------- */
+  main{ position:relative; padding:44px 0 20px; }
+  .links{ position:relative; z-index:1; display:flex; flex-direction:column; gap:14px; }
+  .link-card{
+    display:flex; align-items:center; gap:16px; background:#fff;
+    border:1px solid var(--hair); border-radius:14px; padding:16px 18px;
+    text-decoration:none; color:var(--navy);
+    transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+  }
+  .link-card:hover, .link-card:focus-visible{
+    transform:translateY(-2px); border-color:var(--gold);
+    box-shadow:0 14px 26px -14px rgba(28,52,84,0.35); outline:none;
+  }
+  .link-card:focus-visible{ outline:2px solid var(--gold); outline-offset:2px; }
+  .link-card .icon-wrap{
+    flex:none; width:46px; height:46px; border-radius:50%; background:var(--navy);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .link-card .icon-wrap svg{ width:22px; height:22px; color:var(--gold); }
+  .link-card .txt{ display:flex; flex-direction:column; line-height:1.25; }
+  .link-card .name{ font-family:'Playfair Display', serif; font-weight:700; font-size:19px; }
+  .link-card .desc{ font-size:13.5px; color:var(--slate); font-style:italic; margin-top:1px; }
+  .link-card .arrow{ margin-left:auto; flex:none; width:16px; height:16px; color:var(--gold); opacity:0.7; }
+
+  /* ---------- WIDGET FLOTANTE: idiomas + Instagram ---------- */
+  .side-widget{
+    position:fixed; right:16px; bottom:16px; z-index:30;
+    background:var(--navy); border:1px solid var(--gold); border-radius:30px;
+    display:flex; align-items:center; gap:2px; padding:6px 8px;
+    box-shadow:0 4px 16px rgba(28,52,84,0.28);
+  }
+  .side-widget .lang-btn{
+    font-family:'Jost',sans-serif; font-size:10.5px; font-weight:600; letter-spacing:0.5px;
+    padding:6px 8px; border-radius:16px; border:none; background:none;
+    color:var(--cream); cursor:pointer; opacity:0.55; transition:all .15s ease;
+  }
+  .side-widget .lang-btn:hover{ opacity:1; }
+  .side-widget .lang-btn.active{ opacity:1; background:var(--gold); color:var(--navy-ink); }
+  .side-widget .sep{ width:1px; height:16px; background:rgba(245,240,230,0.25); margin:0 4px; }
+  .side-widget .ig-link{
+    display:flex; align-items:center; justify-content:center; width:26px; height:26px;
+    color:var(--cream); opacity:0.85; transition:opacity .15s ease;
+  }
+  .side-widget .ig-link:hover{ opacity:1; color:var(--gold); }
+  .side-widget .ig-link svg{ width:17px; height:17px; }
+  @media (max-width:480px){
+    .side-widget{ right:10px; bottom:10px; padding:5px 6px; }
+    .side-widget .lang-btn{ padding:5px 6px; font-size:10px; }
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--navy); color:var(--cream); text-align:center; padding:52px 20px 76px;
+    position:relative; overflow:hidden; margin-top:40px;
+  }
+  footer .anchor-icon{ width:40px; height:40px; opacity:0.85; margin-bottom:14px; }
+  footer p{ font-size:13.5px; letter-spacing:1.5px; text-transform:uppercase; opacity:0.7; line-height:2; }
+
+  @media (max-width:640px){
+    .hero h1{ font-size:44px; }
+    .link-card .name{ font-size:17.5px; }
+  }
+
+  /* ---------- WIFI MODAL ---------- */
+  .wifi-overlay{
+    position:fixed; inset:0; z-index:40; background:rgba(10,20,33,0.55);
+    display:none; align-items:center; justify-content:center; padding:20px;
+    backdrop-filter: blur(2px);
+  }
+  .wifi-overlay.open{ display:flex; }
+  .wifi-modal{
+    position:relative; background:var(--cream); border-radius:18px; max-width:340px; width:100%;
+    padding:28px 24px 26px; text-align:center; box-shadow:0 30px 60px -20px rgba(0,0,0,0.5);
+    border:1px solid var(--hair);
+  }
+  .wifi-modal .top-fade{ position:absolute; top:0; left:0; right:0; height:6px; border-radius:18px 18px 0 0;
+    background:linear-gradient(90deg, var(--gold), #e3c07a, var(--gold)); }
+  .wifi-close{
+    position:absolute; top:12px; right:12px; width:28px; height:28px; border:none; background:none;
+    color:var(--slate); cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .wifi-close svg{ width:16px; height:16px; }
+  .wifi-modal .icon-wrap{
+    width:52px; height:52px; border-radius:50%; background:var(--navy); margin:6px auto 12px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .wifi-modal .icon-wrap svg{ width:24px; height:24px; color:var(--gold); }
+  .wifi-modal h3{ font-family:'Playfair Display',serif; font-size:22px; color:var(--navy); margin-bottom:4px; }
+  .wifi-modal .sub{ font-size:14px; color:var(--slate); font-style:italic; margin-bottom:18px; }
+  .wifi-field{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:#fff; border:1px solid var(--hair); border-radius:10px; padding:10px 12px; margin-bottom:10px;
+    text-align:left;
+  }
+  .wifi-field .meta{ display:flex; flex-direction:column; overflow:hidden; }
+  .wifi-field .label{ font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--gold); font-weight:600; }
+  .wifi-field .value{ font-family:'Jost',sans-serif; font-size:16px; color:var(--navy); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .wifi-copy{
+    flex:none; width:34px; height:34px; border-radius:8px; border:1px solid var(--hair); background:var(--linen);
+    color:var(--navy); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .15s ease;
+  }
+  .wifi-copy:hover{ background:var(--gold); color:#fff; }
+  .wifi-copy svg{ width:16px; height:16px; }
+  .wifi-copy.copied{ background:var(--navy); color:var(--gold); }
+  .wifi-qr{ margin:16px auto 4px; width:150px; height:150px; border-radius:10px; border:1px solid var(--hair); background:#fff; padding:8px; }
+  .wifi-qr img{ width:100%; height:100%; display:block; }
+  .wifi-hint{ font-size:12px; color:var(--slate); margin-top:8px; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="grid-texture"></div>
+  <svg class="bg-anchor-big" viewBox="0 0 100 100"><use href="#ic-anchor"/></svg>
+  <div class="stars">
+    <svg class="star" style="width:14px;height:14px;top:16%;left:16%;" viewBox="0 0 24 24" fill="currentColor"><use href="#ic-star"/></svg>
+    <svg class="star" style="width:10px;height:10px;top:24%;right:20%;" viewBox="0 0 24 24" fill="currentColor"><use href="#ic-star"/></svg>
+    <svg class="star" style="width:12px;height:12px;top:10%;right:32%;" viewBox="0 0 24 24" fill="currentColor"><use href="#ic-star"/></svg>
+  </div>
+
+  <svg class="illus illus-boat" viewBox="0 0 300 180" fill="none" stroke="currentColor" stroke-width="1.6">
+    <use href="#ic-sailboat"/>
+  </svg>
+  <svg class="illus illus-mountain" viewBox="0 0 340 90" fill="none" stroke="currentColor" stroke-width="1.4">
+    <use href="#ic-mountains"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="emblem">
+      <svg class="rope" viewBox="0 0 100 100"><use href="#ic-rope"/></svg>
+      <svg class="anchor-icon" viewBox="0 0 100 100"><use href="#ic-anchor"/></svg>
+    </div>
+    <div class="eyebrow">Bar · Restaurant · Roses</div>
+    <h1>L'Àncora</h1>
+    <div class="tagline" id="tagline">Tot el que t'oferim</div>
+    <svg class="divider-wave" viewBox="0 0 70 12" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M0 6 Q 9 0, 17.5 6 T 35 6 T 52.5 6 T 70 6"/>
+    </svg>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="links" id="links"></div>
+  </div>
+</main>
+
+<div class="side-widget" id="sidewidget"></div>
+
+<footer>
+  <svg class="anchor-icon" viewBox="0 0 100 100"><use href="#ic-anchor"/></svg>
+  <p id="footertext">L'Àncora Bar Restaurant · Roses, Costa Brava<br>40 anys vora el mar · 1986–2026</p>
+</footer>
+
+<!-- ================= ICONOS (línea, reutilizables) ================= -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="ic-anchor" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+      <circle cx="50" cy="16" r="8"/><line x1="50" y1="24" x2="50" y2="85"/>
+      <line x1="30" y1="34" x2="70" y2="34"/>
+      <path d="M20 55 C20 78, 38 90, 50 90 C62 90, 80 78, 80 55"/>
+      <line x1="20" y1="46" x2="20" y2="64"/><line x1="80" y1="46" x2="80" y2="64"/>
+    </symbol>
+    <symbol id="ic-rope" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.2">
+      <circle cx="50" cy="50" r="46" stroke-dasharray="4 3"/>
+      <circle cx="50" cy="50" r="40"/>
+    </symbol>
+    <symbol id="ic-star" viewBox="0 0 24 24">
+      <path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z"/>
+    </symbol>
+    <symbol id="ic-sailboat" viewBox="0 0 300 180" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M60 150 C90 165, 210 165, 245 150 L225 150 C200 158, 105 158, 78 150 Z"/>
+      <path d="M150 145 L150 30"/>
+      <path d="M150 35 C150 70, 148 100, 150 145 L110 140 C115 100, 130 60, 150 35Z"/>
+      <path d="M155 45 C170 75, 178 105, 178 140 L155 140Z"/>
+      <path d="M20 130 C60 150, 240 150, 280 128" opacity="0.6"/>
+      <path d="M0 155 Q 20 148, 40 155 T 80 155 T 120 155 T 160 155 T 200 155 T 240 155 T 280 155 T 300 155" opacity="0.5"/>
+    </symbol>
+    <symbol id="ic-mountains" viewBox="0 0 340 90" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M0 85 L55 25 L95 60 L140 15 L200 85Z"/>
+      <path d="M170 85 L230 40 L270 68 L340 25 L340 85Z" opacity="0.7"/>
+      <path d="M0 85 L340 85" opacity="0.4"/>
+    </symbol>
+    <symbol id="ic-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+      <rect x="3" y="3" width="18" height="18" rx="5"/>
+      <circle cx="12" cy="12" r="4.2"/>
+      <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/>
+    </symbol>
+    <symbol id="ic-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+    </symbol>
+    <symbol id="ic-cocktail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 4h16L12 13v7"/><path d="M8 21h8"/><path d="M6 4c2 3 4 4 6 4s4-1 6-4"/>
+    </symbol>
+    <symbol id="ic-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+    </symbol>
+    <symbol id="ic-whatsapp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.5 12a8.5 8.5 0 10-3.7 7L21 20l-1.1-3.7c.4-.7.6-1.5.6-2.3z"/>
+    </symbol>
+    <symbol id="ic-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 6l6 6-6 6"/>
+    </symbol>
+    <symbol id="ic-review" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 5.5A2.5 2.5 0 016.5 3h11A2.5 2.5 0 0120 5.5v8A2.5 2.5 0 0117.5 16H10l-4.5 4v-4H6.5A2.5 2.5 0 014 13.5v-8z"/>
+      <path d="M12 6.6l1.05 2.15 2.35.35-1.7 1.68.4 2.37L12 12.05l-2.1 1.1.4-2.37-1.7-1.68 2.35-.35z" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="ic-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2 8.5c5.5-5.3 14.5-5.3 20 0"/>
+      <path d="M5.5 12.3c3.7-3.5 9.3-3.5 13 0"/>
+      <path d="M9 16c1.7-1.6 4.3-1.6 6 0"/>
+      <circle cx="12" cy="19.3" r="1.1" fill="currentColor" stroke="none"/>
+    </symbol>
+    <symbol id="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="9" width="12" height="12" rx="2"/>
+      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+    </symbol>
+    <symbol id="ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M6 6l12 12M18 6L6 18"/>
+    </symbol>
+  </defs>
+</svg>
+
+<script>
+/* ============================================================
+   ✏️  EDITA AQUÍ LOS ENLACES
+   - Cada tarjeta tiene un título, descripción, icono y URL.
+   - Para cambiar una URL: sustituye "#" por el enlace real.
+   ============================================================ */
+const LINKS = [
+  {
+    icon: "book", url: "#",
+    title: { ca: "Carta de menjar", es: "Carta de comida", en: "Food menu", fr: "Carte des plats", de: "Speisekarte" },
+    desc:  { ca: "Descobreix els nostres plats", es: "Descubre nuestros platos", en: "Discover our dishes", fr: "Découvrez nos plats", de: "Entdecke unsere Gerichte" }
+  },
+  {
+    icon: "cocktail", url: "#",
+    title: { ca: "Carta de begudes", es: "Carta de bebidas", en: "Drinks menu", fr: "Carte des boissons", de: "Getränkekarte" },
+    desc:  { ca: "Vins, còctels i més", es: "Vinos, cócteles y más", en: "Wines, cocktails and more", fr: "Vins, cocktails et plus", de: "Weine, Cocktails und mehr" }
+  },
+  {
+    icon: "review", url: "#",
+    title: { ca: "Deixa'ns una ressenya", es: "Déjanos una reseña", en: "Leave us a review", fr: "Laissez-nous un avis", de: "Bewerte uns" },
+    desc:  { ca: "La teva opinió ens importa", es: "Tu opinión nos importa", en: "Your opinion matters", fr: "Votre avis compte", de: "Deine Meinung zählt" }
+  },
+  {
+    icon: "calendar", url: "#",
+    title: { ca: "Reserva taula", es: "Reserva mesa", en: "Book a table", fr: "Réservez une table", de: "Tisch reservieren" },
+    desc:  { ca: "Assegura el teu lloc", es: "Asegura tu sitio", en: "Secure your spot", fr: "Réservez votre place", de: "Sichere dir deinen Platz" }
+  },
+  {
+    icon: "whatsapp", url: "#",
+    title: { ca: "Escriu-nos per WhatsApp", es: "Escríbenos por WhatsApp", en: "Message us on WhatsApp", fr: "Écrivez-nous sur WhatsApp", de: "Schreib uns auf WhatsApp" },
+    desc:  { ca: "Resposta ràpida", es: "Respuesta rápida", en: "Quick reply", fr: "Réponse rapide", de: "Schnelle Antwort" }
+  }
+];
+
+/* ============================================================
+   ✏️  EDITA AQUÍ LOS DATOS DEL WIFI
+   ============================================================ */
+const WIFI = {
+  ssid: "LANCORA_CLIENTS",
+  password: "PosaAquiLaContrasenya"
+};
+
+const UI = {
+  tagline:  { ca: "Tot el que t'oferim", es: "Todo lo que te ofrecemos", en: "Everything we offer", fr: "Tout ce que nous offrons", de: "Alles, was wir bieten" },
+  footer:   { ca: "40 anys vora el mar · 1986–2026", es: "40 años junto al mar · 1986–2026", en: "40 years by the sea · 1986–2026", fr: "40 ans au bord de la mer · 1986–2026", de: "40 Jahre am Meer · 1986–2026" },
+  wifi_link_title: { ca: "WiFi per a clients", es: "WiFi para clientes", en: "Guest WiFi", fr: "WiFi pour les clients", de: "Gäste-WLAN" },
+  wifi_link_desc:  { ca: "Connecta't gratis al local", es: "Conéctate gratis en el local", en: "Free connection in-house", fr: "Connexion gratuite sur place", de: "Kostenlose Verbindung vor Ort" },
+  wifi_title: { ca: "WiFi convidats", es: "WiFi invitados", en: "Guest WiFi", fr: "WiFi invités", de: "Gäste-WLAN" },
+  wifi_sub:   { ca: "Connecta't gratis durant la teva visita", es: "Conéctate gratis durante tu visita", en: "Connect for free during your visit", fr: "Connectez-vous gratuitement pendant votre visite", de: "Verbinde dich während deines Besuchs kostenlos" },
+  wifi_network: { ca: "Xarxa", es: "Red", en: "Network", fr: "Réseau", de: "Netzwerk" },
+  wifi_password_label: { ca: "Contrasenya", es: "Contraseña", en: "Password", fr: "Mot de passe", de: "Passwort" },
+  wifi_hint: { ca: "Escaneja amb la càmera per connectar-te automàticament", es: "Escanea con la cámara para conectarte automáticamente", en: "Scan with your camera to connect automatically", fr: "Scannez avec l'appareil photo pour vous connecter automatiquement", de: "Mit der Kamera scannen, um dich automatisch zu verbinden" }
+};
+
+const SUPPORTED_LANGS = ['ca', 'es', 'en', 'fr', 'de'];
+const LANG_NAMES = { ca: 'CA', es: 'ES', en: 'EN', fr: 'FR', de: 'DE' };
+
+function detectLang(){
+  const nav = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'ca']);
+  for(const l of nav){
+    const code = l.slice(0,2).toLowerCase();
+    if(SUPPORTED_LANGS.includes(code)) return code;
+  }
+  return 'ca';
+}
+
+let LANG = detectLang();
+function t(field){ return field[LANG] || field.ca; }
+
+function buildLinks(){
+  const cards = LINKS.map(l => `
+    <a class="link-card" href="${l.url}" target="_blank" rel="noopener">
+      <span class="icon-wrap"><svg viewBox="0 0 24 24"><use href="#ic-${l.icon}"/></svg></span>
+      <span class="txt">
+        <span class="name">${t(l.title)}</span>
+        <span class="desc">${t(l.desc)}</span>
+      </span>
+      <svg class="arrow" viewBox="0 0 24 24"><use href="#ic-arrow"/></svg>
+    </a>
+  `).join('');
+
+  const wifiCard = `
+    <button type="button" class="link-card" id="wifiOpenBtn">
+      <span class="icon-wrap"><svg viewBox="0 0 24 24"><use href="#ic-wifi"/></svg></span>
+      <span class="txt">
+        <span class="name">${t(UI.wifi_link_title)}</span>
+        <span class="desc">${t(UI.wifi_link_desc)}</span>
+      </span>
+      <svg class="arrow" viewBox="0 0 24 24"><use href="#ic-arrow"/></svg>
+    </button>
+  `;
+
+  document.getElementById('links').innerHTML = cards + wifiCard;
+  document.getElementById('wifiOpenBtn').addEventListener('click', openWifiModal);
+}
+
+function buildSideWidget(){
+  const box = document.getElementById('sidewidget');
+  const langBtns = SUPPORTED_LANGS.map(l =>
+    `<button class="lang-btn ${l===LANG?'active':''}" data-lang="${l}">${LANG_NAMES[l]}</button>`
+  ).join('');
+  box.innerHTML = `
+    ${langBtns}
+    <div class="sep"></div>
+    <a class="ig-link" href="https://instagram.com/ancoraroses" target="_blank" rel="noopener" aria-label="Instagram @ancoraroses">
+      <svg viewBox="0 0 24 24"><use href="#ic-instagram"/></svg>
+    </a>
+  `;
+  box.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      LANG = btn.dataset.lang;
+      renderAll();
+    });
+  });
+}
+
+function updateStaticText(){
+  document.getElementById('tagline').textContent = t(UI.tagline);
+  document.getElementById('footertext').innerHTML =
+    `L'Àncora Bar Restaurant · Roses, Costa Brava<br>${t(UI.footer)}`;
+  document.documentElement.lang = LANG;
+}
+
+/* ---------- WIFI MODAL ---------- */
+function buildWifiModal(){
+  document.getElementById('wifiTitle').textContent = t(UI.wifi_title);
+  document.getElementById('wifiSub').textContent = t(UI.wifi_sub);
+  document.getElementById('wifiSsidLabel').textContent = t(UI.wifi_network);
+  document.getElementById('wifiPassLabel').textContent = t(UI.wifi_password_label);
+  document.getElementById('wifiHint').textContent = t(UI.wifi_hint);
+  document.getElementById('wifiSsidValue').textContent = WIFI.ssid;
+  document.getElementById('wifiPassValue').textContent = WIFI.password;
+
+  const qrData = `WIFI:T:WPA;S:${WIFI.ssid};P:${WIFI.password};H:false;;`;
+  document.getElementById('wifiQrImg').src =
+    `https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=0&data=${encodeURIComponent(qrData)}`;
+}
+
+function openWifiModal(){
+  document.getElementById('wifiOverlay').classList.add('open');
+}
+function closeWifiModal(){
+  document.getElementById('wifiOverlay').classList.remove('open');
+}
+
+function setupWifiModalEvents(){
+  document.getElementById('wifiClose').addEventListener('click', closeWifiModal);
+  document.getElementById('wifiOverlay').addEventListener('click', (e) => {
+    if(e.target.id === 'wifiOverlay') closeWifiModal();
+  });
+  document.querySelectorAll('.wifi-copy').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const field = btn.dataset.copy;
+      const text = field === 'ssid' ? WIFI.ssid : WIFI.password;
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.classList.add('copied');
+        setTimeout(() => btn.classList.remove('copied'), 1200);
+      } catch(e) {
+        // clipboard API not available; the value remains visible to copy manually
+      }
+    });
+  });
+}
+
+function renderAll(){
+  buildLinks();
+  buildSideWidget();
+  updateStaticText();
+  buildWifiModal();
+}
+
+renderAll();
+setupWifiModalEvents();
+</script>
+<div class="wifi-overlay" id="wifiOverlay">
+  <div class="wifi-modal">
+    <div class="top-fade"></div>
+    <button class="wifi-close" id="wifiClose" aria-label="Tancar"><svg viewBox="0 0 24 24"><use href="#ic-close"/></svg></button>
+    <div class="icon-wrap"><svg viewBox="0 0 24 24"><use href="#ic-wifi"/></svg></div>
+    <h3 id="wifiTitle">WiFi convidats</h3>
+    <div class="sub" id="wifiSub">Connecta't gratis durant la teva visita</div>
+
+    <div class="wifi-field">
+      <div class="meta"><span class="label" id="wifiSsidLabel">Xarxa</span><span class="value" id="wifiSsidValue">L'ANCORA_CLIENTS</span></div>
+      <button class="wifi-copy" data-copy="ssid" aria-label="Copiar nom de la xarxa"><svg viewBox="0 0 24 24"><use href="#ic-copy"/></svg></button>
+    </div>
+    <div class="wifi-field">
+      <div class="meta"><span class="label" id="wifiPassLabel">Contrasenya</span><span class="value" id="wifiPassValue">••••••••</span></div>
+      <button class="wifi-copy" data-copy="password" aria-label="Copiar contrasenya"><svg viewBox="0 0 24 24"><use href="#ic-copy"/></svg></button>
+    </div>
+
+    <div class="wifi-qr"><img id="wifiQrImg" alt="Codi QR per connectar-se al WiFi"></div>
+    <div class="wifi-hint" id="wifiHint">Escaneja amb la càmera per connectar-te automàticament</div>
+  </div>
+</div>
+
+</body>
+</html>
