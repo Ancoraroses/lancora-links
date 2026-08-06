@@ -329,7 +329,7 @@ const LINKS = [
     desc:  { ca: "La teva opinió ens importa", es: "Tu opinión nos importa", en: "Your opinion matters", fr: "Votre avis compte", de: "Deine Meinung zählt" }
   },
   {
-    icon: "calendar", url: "#",
+    icon: "calendar", url: "https://ancoraroses.github.io/lancora-links/",
     title: { ca: "Reserva taula", es: "Reserva mesa", en: "Book a table", fr: "Réservez une table", de: "Tisch reservieren" },
     desc:  { ca: "Assegura el teu lloc", es: "Asegura tu sitio", en: "Secure your spot", fr: "Réservez votre place", de: "Sichere dir deinen Platz" }
   },
@@ -344,7 +344,7 @@ const LINKS = [
    ✏️  EDITA AQUÍ LOS DATOS DEL WIFI
    ============================================================ */
 const WIFI = {
-  ssid: "LAncoraWiFi",
+  ssid: "LAncora_WiFi",
   password: "AncoraRoses2026"
 };
 
@@ -478,8 +478,7 @@ function renderAll(){
   buildWifiModal();
 }
 
-renderAll();
-setupWifiModalEvents();
+document.addEventListener('DOMContentLoaded', function(){ renderAll(); setupWifiModalEvents(); });
 </script>
 <div class="wifi-overlay" id="wifiOverlay">
   <div class="wifi-modal">
