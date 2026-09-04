@@ -208,14 +208,14 @@ var WAITERS    = ['Sandra','Josselin','Alberto','Anas','Abdellah'];
 
 // ── SETUP ──────────────────────────────────────────
 function init() {
-  var saved = localStorage.getItem('lancora_script_url');
-  if (saved) {
-    SCRIPT_URL = saved;
-    document.getElementById('setup').style.display    = 'none';
-    document.getElementById('dashPage').className     = 'page show';
-    document.getElementById('periodBtns').style.display = 'flex';
-    loadData();
-  }
+  // URL hardcoded — no cal configuració manual
+  SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw-HEGd93z5tdMFDt6OjG9OwaK4ls94JwOtobNvLj7C5lvdq4rPAE9vQNzHaDjeXmZgDg/exec";
+  var saved = localStorage.getItem('lancora_script_url') || SCRIPT_URL;
+  localStorage.setItem('lancora_script_url', SCRIPT_URL);
+  document.getElementById('setup').style.display    = 'none';
+  document.getElementById('dashPage').className     = 'page show';
+  document.getElementById('periodBtns').style.display = 'flex';
+  loadData();
 }
 
 function saveUrl() {
