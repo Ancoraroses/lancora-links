@@ -3,96 +3,141 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>L'Àncora · La teva opinió</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<title>L'Ancora - La teva opinió</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --navy:#0b3c5d;--navy-dark:#082a41;--gold:#c89b3c;
-    --gold-light:#e4c477;--sand:#f7f1e3;--sea:#2e7d9a;
-    --white:#ffffff;--star-empty:#d8cdb0;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;min-height:100vh;
-    font-family:'Poppins',Arial,sans-serif;
-    background:linear-gradient(160deg,var(--sand) 0%,#eee3c8 100%);
-    display:flex;align-items:center;justify-content:center;padding:24px;
-  }
-  .card{
-    background:var(--white);max-width:480px;width:100%;
-    border-radius:28px;box-shadow:0 20px 45px rgba(11,60,93,0.18);
-    padding:40px 32px 32px;text-align:center;
-    position:relative;overflow:hidden;
-  }
-  .card::before{
-    content:"";position:absolute;top:-60px;right:-60px;
-    width:160px;height:160px;
-    background:radial-gradient(circle,var(--gold-light) 0%,transparent 70%);
-    opacity:0.5;border-radius:50%;
-  }
-  .wave{
-    position:absolute;bottom:0;left:0;width:100%;height:38px;
-    background:var(--sea);opacity:0.08;
-    border-radius:50% 50% 0 0 / 100% 100% 0 0;
-  }
-  .lang-switch{
-    display:flex;justify-content:center;gap:8px;
-    margin-bottom:22px;position:relative;z-index:2;
-  }
-  .lang-switch button{
-    border:1.5px solid var(--navy);background:transparent;color:var(--navy);
-    padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;
-    cursor:pointer;transition:all .2s;letter-spacing:.5px;font-family:'Poppins',sans-serif;
-  }
-  .lang-switch button.active,.lang-switch button:hover{background:var(--navy);color:var(--white);}
-  .logo{
-    width:110px;height:110px;margin:0 auto 18px;
-    border-radius:50%;border:3px solid var(--gold);
-    object-fit:cover;display:block;background:var(--sand);
-  }
-  /* Badge camarero (QR individual) */
-  .waiter-badge{
-    background:rgba(200,155,60,.1);border:1.5px solid var(--gold);border-radius:16px;
-    padding:12px 16px;margin:0 0 20px;
-    display:flex;align-items:center;gap:12px;
-    position:relative;z-index:2;text-align:left;
-  }
-  .waiter-avatar{
-    width:44px;height:44px;border-radius:50%;
-    background:var(--navy);color:var(--gold-light);
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;flex-shrink:0;
-  }
-  .badge-label{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--sea);margin-bottom:2px;}
-  .badge-name{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--navy-dark);font-weight:600;}
-  /* Selector camarero (QR genèric) */
-  .waiter-selector{margin:0 0 20px;position:relative;z-index:2;}
-  .sel-label{
-    font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
-    color:var(--navy);margin-bottom:10px;text-align:center;
-  }
-  .waiter-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-  .w-chip{
-    border:1.5px solid #e2d5b0;border-radius:12px;padding:10px 8px;
-    text-align:center;cursor:pointer;font-family:'Poppins',sans-serif;
-    font-size:13px;color:#7a8a9e;background:var(--sand);transition:all .18s;
-  }
-  .w-chip:hover,.w-chip:active{border-color:var(--navy);color:var(--navy);}
-  .w-chip.sel{border-color:var(--gold);background:rgba(200,155,60,.12);color:var(--navy-dark);font-weight:600;}
-  .w-chip.full{grid-column:1/-1;color:#9aa5ab;font-size:12px;}
-  /* Main */
-  h1{
-    font-family:'Cormorant Garamond','Georgia',serif;color:var(--navy-dark);
-    font-size:30px;margin:0 0 6px;letter-spacing:.5px;position:relative;z-index:2;
-  }
-  p.subtitle{color:#5c6b73;font-size:15px;margin:0 0 16px;line-height:1.5;position:relative;z-index:2;}
-  .warn{font-size:12px;color:#c8763c;font-weight:600;margin:-8px 0 12px;position:relative;z-index:2;}
-  .stars{display:flex;justify-content:center;gap:10px;margin:10px 0 30px;position:relative;z-index:2;}
-  .stars svg{width:44px;height:44px;cursor:pointer;fill:var(--star-empty);transition:transform .15s,fill .15s;}
-  .stars svg:hover{transform:scale(1.15);}
-  .stars svg.lit{fill:var(--gold);}
-  .redirect-msg{font-size:14px;color:var(--sea);font-weight:600;margin-top:6px;position:relative;z-index:2;}
-  .footer-note{font-size:12px;color:#9aa5ab;margin-top:8px;position:relative;z-index:2;}
+:root{
+  --navy:#0b3c5d;--navy-dark:#082a41;--gold:#c89b3c;
+  --gold-light:#e4c477;--sand:#f7f1e3;--sea:#2e7d9a;
+  --white:#fff;--star-empty:#d8cdb0;--red:#c0392b;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:"Poppins",Arial,sans-serif;
+  background:linear-gradient(160deg,var(--sand) 0%,#eee3c8 100%);
+  min-height:100vh;display:flex;align-items:center;
+  justify-content:center;padding:24px;
+}
+.card{
+  background:var(--white);max-width:480px;width:100%;
+  border-radius:28px;box-shadow:0 20px 45px rgba(11,60,93,.18);
+  padding:40px 32px 32px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.card::before{
+  content:"";position:absolute;top:-60px;right:-60px;
+  width:160px;height:160px;
+  background:radial-gradient(circle,var(--gold-light) 0%,transparent 70%);
+  opacity:.5;border-radius:50%;
+}
+.wave{position:absolute;bottom:0;left:0;width:100%;height:38px;
+  background:var(--sea);opacity:.08;border-radius:50% 50% 0 0/100% 100% 0 0;}
+.lang-switch{display:flex;justify-content:center;gap:8px;margin-bottom:22px;position:relative;z-index:2;}
+.lang-switch button{
+  border:1.5px solid var(--navy);background:transparent;color:var(--navy);
+  padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;
+  cursor:pointer;transition:all .2s;letter-spacing:.5px;font-family:"Poppins",sans-serif;
+}
+.lang-switch button.active,.lang-switch button:hover{background:var(--navy);color:var(--white);}
+.logo{width:110px;height:110px;margin:0 auto 18px;border-radius:50%;
+  border:3px solid var(--gold);object-fit:cover;display:block;background:var(--sand);}
+/* Badge camarero */
+.waiter-badge{
+  background:rgba(200,155,60,.1);border:1.5px solid var(--gold);border-radius:16px;
+  padding:12px 16px;margin:0 0 20px;
+  display:flex;align-items:center;gap:12px;position:relative;z-index:2;text-align:left;
+}
+.waiter-avatar{
+  width:44px;height:44px;border-radius:50%;background:var(--navy);color:var(--gold-light);
+  display:flex;align-items:center;justify-content:center;
+  font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:600;flex-shrink:0;
+}
+.badge-label{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--sea);margin-bottom:2px;}
+.badge-name{font-family:"Cormorant Garamond",serif;font-size:20px;color:var(--navy-dark);font-weight:600;}
+/* Selector */
+.waiter-selector{margin:0 0 20px;position:relative;z-index:2;}
+.sel-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--navy);margin-bottom:10px;}
+.waiter-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.w-chip{
+  border:1.5px solid #e2d5b0;border-radius:12px;padding:10px 8px;
+  text-align:center;cursor:pointer;font-family:"Poppins",sans-serif;
+  font-size:13px;color:#7a8a9e;background:var(--sand);transition:all .18s;
+}
+.w-chip:hover,.w-chip:active{border-color:var(--navy);color:var(--navy);}
+.w-chip.sel{border-color:var(--gold);background:rgba(200,155,60,.12);color:var(--navy-dark);font-weight:600;}
+.w-chip.full{grid-column:1/-1;color:#9aa5ab;font-size:12px;}
+h1{
+  font-family:"Cormorant Garamond","Georgia",serif;color:var(--navy-dark);
+  font-size:30px;margin:0 0 6px;letter-spacing:.5px;position:relative;z-index:2;
+}
+p.subtitle{color:#5c6b73;font-size:15px;margin:0 0 16px;line-height:1.5;position:relative;z-index:2;}
+.warn{font-size:12px;color:#c8763c;font-weight:600;margin:-8px 0 12px;position:relative;z-index:2;}
+/* Stars */
+.stars{display:flex;justify-content:center;gap:10px;margin:10px 0 30px;position:relative;z-index:2;}
+.stars svg{width:44px;height:44px;cursor:pointer;fill:var(--star-empty);transition:transform .15s,fill .15s;}
+.stars svg:hover{transform:scale(1.15);}
+.stars svg.lit{fill:var(--gold);}
+
+/* ── COMPLAINT FORM (inline) ── */
+.complaint-form{
+  display:none;
+  position:relative;z-index:2;
+  animation:fadeUp .3s ease;
+  text-align:left;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.complaint-form.show{display:block;}
+.cf-title{
+  font-family:"Cormorant Garamond",serif;font-size:20px;
+  color:var(--navy-dark);margin-bottom:6px;text-align:center;
+}
+.cf-sub{font-size:13px;color:#5c6b73;margin-bottom:18px;text-align:center;line-height:1.5;}
+.cf-label{
+  display:block;font-size:11px;font-weight:600;letter-spacing:1px;
+  text-transform:uppercase;color:var(--navy);margin-bottom:6px;margin-top:14px;
+}
+textarea.cf-text{
+  width:100%;min-height:100px;border:1.5px solid #dde3ea;border-radius:12px;
+  padding:13px;font-family:"Poppins",sans-serif;font-size:14px;color:var(--navy-dark);
+  resize:none;outline:none;background:var(--sand);line-height:1.5;
+  transition:border-color .2s,box-shadow .2s;
+}
+textarea.cf-text:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(11,60,93,.08);background:var(--white);}
+input.cf-input{
+  width:100%;border:1.5px solid #dde3ea;border-radius:12px;
+  padding:11px 13px;font-family:"Poppins",sans-serif;font-size:14px;color:var(--navy-dark);
+  outline:none;background:var(--sand);transition:border-color .2s;
+}
+input.cf-input:focus{border-color:var(--navy);background:var(--white);}
+.cf-send{
+  width:100%;margin-top:18px;
+  background:var(--navy);color:var(--white);
+  font-family:"Poppins",sans-serif;font-size:14px;font-weight:600;
+  padding:13px;border:none;border-radius:12px;cursor:pointer;
+  letter-spacing:.5px;transition:background .2s,transform .15s;
+}
+.cf-send:hover{background:var(--navy-dark);transform:translateY(-1px);}
+.cf-send:disabled{background:#dde3ea;color:#9aa5ab;cursor:not-allowed;transform:none;}
+
+/* ── SUCCESS ── */
+.success-msg{
+  display:none;position:relative;z-index:2;
+  text-align:center;animation:fadeUp .35s ease;
+}
+.success-msg.show{display:block;}
+.success-icon{
+  width:68px;height:68px;border-radius:50%;margin:0 auto 16px;
+  display:flex;align-items:center;justify-content:center;font-size:30px;
+  animation:popIn .4s cubic-bezier(.175,.885,.32,1.275);
+}
+@keyframes popIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.success-icon.pos{background:#e8f4ec;}
+.success-icon.neg{background:#fef3cd;}
+.success-title{font-family:"Cormorant Garamond",serif;font-size:22px;color:var(--navy-dark);margin-bottom:8px;}
+.success-body{font-size:14px;color:#5c6b73;line-height:1.6;max-width:300px;margin:0 auto;}
+
+.redirect-msg{font-size:14px;color:var(--sea);font-weight:600;margin-top:6px;position:relative;z-index:2;}
+.footer-note{font-size:12px;color:#9aa5ab;margin-top:20px;position:relative;z-index:2;}
 </style>
 </head>
 <body>
@@ -107,7 +152,7 @@
 
   <img class="logo" src="https://lh3.googleusercontent.com/d/1Sn6cRZPGXz9UCWmdOR2Ea6JmohuCCZUl" alt="L'Ancora">
 
-  <!-- Badge individual — hidden by default, shown via JS -->
+  <!-- Badge individual -->
   <div id="wBadge" style="display:none">
     <div class="waiter-badge">
       <div class="waiter-avatar" id="wInitial">J</div>
@@ -118,7 +163,7 @@
     </div>
   </div>
 
-  <!-- Selector genèric — visible by default, hidden via JS when ?c= detected -->
+  <!-- Selector genèric -->
   <div id="wSelector" class="waiter-selector">
     <div class="sel-label" id="selLabel">¿Quién te ha atendido?</div>
     <div class="waiter-grid">
@@ -131,148 +176,232 @@
     </div>
   </div>
 
-  <h1 id="hTitle">¿Cómo ha sido tu experiencia?</h1>
-  <p class="subtitle" id="hSub">Tu opinión nos ayuda a mejorar cada día en L'Àncora.</p>
-  <p class="warn" id="wWarn" style="display:none">⚠️ Selecciona primero quién te ha atendido</p>
-
-  <div class="stars" id="stars">
-    <svg data-v="1" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
-    <svg data-v="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
-    <svg data-v="3" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
-    <svg data-v="4" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
-    <svg data-v="5" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+  <!-- Stars screen -->
+  <div id="starsScreen">
+    <h1 id="hTitle">¿Cómo ha sido tu experiencia?</h1>
+    <p class="subtitle" id="hSub">Tu opinión nos ayuda a mejorar cada día en L'Ancora.</p>
+    <p class="warn" id="wWarn" style="display:none">⚠️ Selecciona primero quién te ha atendido</p>
+    <div class="stars" id="stars">
+      <svg data-v="1" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+      <svg data-v="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+      <svg data-v="3" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+      <svg data-v="4" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+      <svg data-v="5" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+    </div>
+    <div class="redirect-msg" id="rMsg" style="display:none">Gracias, redirigiendo…</div>
   </div>
 
-  <div class="redirect-msg" id="rMsg" style="display:none">Gracias, redirigiendo…</div>
-  <p class="footer-note" id="fNote">L'Àncora Bar Restaurant · Roses</p>
+  <!-- Complaint form (1-3 stars) -->
+  <div class="complaint-form" id="cfForm">
+    <div class="cf-title" id="cfTitle">Cuéntanos qué ha fallado</div>
+    <div class="cf-sub" id="cfSub">Tu mensaje llega directamente a nuestro equipo. Lo leeremos hoy mismo.</div>
+    <label class="cf-label" id="cfLabelMsg">Tu comentario</label>
+    <textarea class="cf-text" id="cfMessage" rows="4" placeholder="Escríbenos aquí..."></textarea>
+    <label class="cf-label" id="cfLabelName">Nombre (opcional)</label>
+    <input class="cf-input" type="text" id="cfName" placeholder="Tu nombre">
+    <label class="cf-label" id="cfLabelEmail">Email (opcional, para responderte)</label>
+    <input class="cf-input" type="email" id="cfEmail" placeholder="tu@email.com">
+    <button class="cf-send" id="cfSendBtn" onclick="sendComplaint()" id="cfLabelSend">Enviar mensaje</button>
+  </div>
+
+  <!-- Success messages -->
+  <div class="success-msg" id="successPos">
+    <div class="success-icon pos">⭐</div>
+    <div class="success-title" id="spTitle">Gràcies / Gracias!</div>
+    <p class="success-body" id="spBody">Nos alegra que hayas disfrutado. Ahora te llevamos a Google para que tu valoración ayude a otros visitantes.</p>
+  </div>
+
+  <div class="success-msg" id="successNeg">
+    <div class="success-icon neg">✉️</div>
+    <div class="success-title" id="snTitle">Mensaje recibido</div>
+    <p class="success-body" id="snBody">Sentimos que tu experiencia no haya sido perfecta. Nuestro equipo lo leerá hoy y tomará medidas.</p>
+  </div>
+
+  <p class="footer-note" id="fNote">L'Ancora Bar Restaurant · Roses</p>
 </div>
 
 <script>
-var GOOGLE_URL = "https://g.page/r/CbUHHhOQWx2cEBE/review";
-var FORM_URL   = "https://forms.gle/nr3uLNdPd2JcMoRJ7";
-var LOG_URL    = "https://script.google.com/macros/s/AKfycbw-HEGd93z5tdMFDt6OjG9OwaK4ls94JwOtobNvLj7C5lvdq4rPAE9vQNzHaDjeXmZgDg/exec";
+var LOG_URL = "https://script.google.com/macros/s/AKfycbw-HEGd93z5tdMFDt6OjG9OwaK4ls94JwOtobNvLj7C5lvdq4rPAE9vQNzHaDjeXmZgDg/exec";
 
 var T = {
-  es:{title:"¿Cómo ha sido tu experiencia?",sub:"Tu opinión nos ayuda a mejorar cada día en L'Àncora.",foot:"L'Àncora Bar Restaurant · Roses",redir:"Gracias, redirigiendo…",sel:"¿Quién te ha atendido?",no:"No lo recuerdo",warn:"⚠️ Selecciona primero quién te ha atendido",by:"Has sido atendido/a por"},
-  fr:{title:"Comment s'est passée votre expérience ?",sub:"Votre avis nous aide à nous améliorer chaque jour à L'Àncora.",foot:"L'Àncora Bar Restaurant · Roses",redir:"Merci, redirection en cours…",sel:"Qui vous a servi(e) ?",no:"Je ne m'en souviens pas",warn:"⚠️ Veuillez d'abord sélectionner votre serveur",by:"Servi(e) par"},
-  en:{title:"How was your experience?",sub:"Your feedback helps us improve every day at L'Àncora.",foot:"L'Àncora Bar Restaurant · Roses",redir:"Thank you, redirecting…",sel:"Who served you?",no:"I don't remember",warn:"⚠️ Please select who served you first",by:"Served by"}
+  es:{
+    title:"¿Cómo ha sido tu experiencia?",sub:"Tu opinión nos ayuda a mejorar cada día en L'Ancora.",
+    foot:"L'Ancora Bar Restaurant · Roses",redir:"Gracias, redirigiendo…",
+    sel:"¿Quién te ha atendido?",no:"No lo recuerdo",warn:"⚠️ Selecciona primero quién te ha atendido",
+    by:"Has sido atendido/a por",
+    cfTitle:"Cuéntanos qué ha fallado",cfSub:"Tu mensaje llega directamente a nuestro equipo. Lo leeremos hoy mismo.",
+    cfMsg:"Tu comentario",cfName:"Nombre (opcional)",cfEmail:"Email (opcional, para responderte)",
+    cfSend:"Enviar mensaje",cfSending:"Enviando…",
+    spTitle:"Gràcies / Gracias!",spBody:"Nos alegra que hayas disfrutado. Ahora te llevamos a Google.",
+    snTitle:"Mensaje recibido",snBody:"Sentimos que tu experiencia no haya sido perfecta. Nuestro equipo lo leerá hoy y tomará medidas."
+  },
+  fr:{
+    title:"Comment s'est passée votre expérience ?",sub:"Votre avis nous aide à nous améliorer chaque jour.",
+    foot:"L'Ancora Bar Restaurant · Roses",redir:"Merci, redirection en cours…",
+    sel:"Qui vous a servi(e) ?",no:"Je ne m'en souviens pas",warn:"⚠️ Veuillez d'abord sélectionner votre serveur",
+    by:"Servi(e) par",
+    cfTitle:"Qu'est-ce qui n'a pas fonctionné ?",cfSub:"Votre message arrive directement à notre équipe.",
+    cfMsg:"Votre commentaire",cfName:"Nom (optionnel)",cfEmail:"Email (optionnel, pour vous répondre)",
+    cfSend:"Envoyer le message",cfSending:"Envoi en cours…",
+    spTitle:"Merci !",spBody:"Nous sommes ravis que vous ayez apprécié. Redirection vers Google…",
+    snTitle:"Message reçu",snBody:"Nous sommes désolés. Notre équipe le lira aujourd'hui."
+  },
+  en:{
+    title:"How was your experience?",sub:"Your feedback helps us improve every day at L'Ancora.",
+    foot:"L'Ancora Bar Restaurant · Roses",redir:"Thank you, redirecting…",
+    sel:"Who served you?",no:"I don't remember",warn:"⚠️ Please select who served you first",
+    by:"Served by",
+    cfTitle:"Tell us what went wrong",cfSub:"Your message goes directly to our team. We'll read it today.",
+    cfMsg:"Your comment",cfName:"Name (optional)",cfEmail:"Email (optional, so we can reply)",
+    cfSend:"Send message",cfSending:"Sending…",
+    spTitle:"Thank you!",spBody:"We're glad you enjoyed your visit. Redirecting to Google…",
+    snTitle:"Message received",snBody:"We're sorry your experience wasn't perfect. Our team will read it today."
+  }
 };
 
-var lang = "es";
-var waiter = "";
-var generic = true;
+var lang = "es", waiter = "", generic = true, waiterChosen = false, locked = false, starVal = 0;
 
-// Safe URL param reader (no URLSearchParams for max compatibility)
-function getParam(name) {
-  var match = window.location.search.match(new RegExp('[?&]' + name + '=([^&]*)'));
-  return match ? decodeURIComponent(match[1].replace(/\+/g,' ')) : '';
+function getParam(name){
+  var m = window.location.search.match(new RegExp("[?&]"+name+"=([^&]*)"));
+  return m ? decodeURIComponent(m[1].replace(/\+/g," ")) : "";
 }
 
-// Init: detect ?c= param
-var NAMES = {sandra:"Sandra", josselin:"Josselin", alberto:"Alberto", anas:"Anas", abdellah:"Abdellah"};
-var cParam = getParam('c').toLowerCase().trim();
-
-if (cParam && NAMES[cParam]) {
-  // QR individual: show badge, hide selector
-  generic = false;
-  waiter = NAMES[cParam];
-  document.getElementById('wBadge').style.display = 'block';
-  document.getElementById('wInitial').textContent = NAMES[cParam].charAt(0);
-  document.getElementById('wName').textContent = NAMES[cParam];
-  document.getElementById('wSelector').style.display = 'none';
+var NAMES = {sandra:"Sandra",josselin:"Josselin",alberto:"Alberto",anas:"Anas",abdellah:"Abdellah"};
+var cParam = getParam("c").toLowerCase().trim();
+if(cParam && NAMES[cParam]){
+  generic=false; waiter=NAMES[cParam]; waiterChosen=true;
+  document.getElementById("wBadge").style.display="block";
+  document.getElementById("wInitial").textContent=NAMES[cParam].charAt(0);
+  document.getElementById("wName").textContent=NAMES[cParam];
+  document.getElementById("wSelector").style.display="none";
 } else {
-  // QR generic: selector already visible (default), hide badge
-  generic = true;
-  document.getElementById('wBadge').style.display = 'none';
-  document.getElementById('wSelector').style.display = 'block';
+  generic=true;
+  document.getElementById("wBadge").style.display="none";
+  document.getElementById("wSelector").style.display="block";
 }
 
-// Language
-function detectLang() {
-  var n = (navigator.language || navigator.userLanguage || 'es').toLowerCase();
-  if (n.indexOf('fr') === 0) return 'fr';
-  if (n.indexOf('en') === 0) return 'en';
-  return 'es';
+function detectLang(){
+  var n=(navigator.language||navigator.userLanguage||"es").toLowerCase();
+  if(n.indexOf("fr")===0)return"fr";
+  if(n.indexOf("en")===0)return"en";
+  return"es";
 }
-
-function setLang(l) {
-  lang = l;
-  var t = T[l];
-  document.getElementById('hTitle').textContent = t.title;
-  document.getElementById('hSub').textContent = t.sub;
-  document.getElementById('fNote').textContent = t.foot;
-  document.getElementById('rMsg').textContent = t.redir;
-  document.getElementById('selLabel').textContent = t.sel;
-  document.getElementById('noChip').textContent = t.no;
-  document.getElementById('wWarn').textContent = t.warn;
-  document.getElementById('wLabel').textContent = t.by;
-  var btns = document.querySelectorAll('.lang-switch button');
-  for (var i = 0; i < btns.length; i++) {
-    if (btns[i].getAttribute('data-lang') === l) {
-      btns[i].className = 'active';
-    } else {
-      btns[i].className = '';
-    }
-  }
+function setLang(l){
+  lang=l; var t=T[l];
+  document.getElementById("hTitle").textContent=t.title;
+  document.getElementById("hSub").textContent=t.sub;
+  document.getElementById("fNote").textContent=t.foot;
+  document.getElementById("selLabel").textContent=t.sel;
+  document.getElementById("noChip").textContent=t.no;
+  document.getElementById("wWarn").textContent=t.warn;
+  document.getElementById("wLabel").textContent=t.by;
+  document.getElementById("cfTitle").textContent=t.cfTitle;
+  document.getElementById("cfSub").textContent=t.cfSub;
+  document.getElementById("cfSendBtn").textContent=t.cfSend;
+  document.getElementById("spTitle").textContent=t.spTitle;
+  document.getElementById("spBody").textContent=t.spBody;
+  document.getElementById("snTitle").textContent=t.snTitle;
+  document.getElementById("snBody").textContent=t.snBody;
+  var btns=document.querySelectorAll(".lang-switch button");
+  for(var i=0;i<btns.length;i++) btns[i].className=(btns[i].getAttribute("data-lang")===l?"active":"");
 }
 setLang(detectLang());
 
-// Waiter picker
-function pickWaiter(name, btn) {
-  waiter = name;
-  waiterChosen = true;
-  var chips = document.querySelectorAll('.w-chip');
-  for (var i = 0; i < chips.length; i++) chips[i].className = chips[i].className.replace(' sel','');
-  btn.className += ' sel';
-  document.getElementById('wWarn').style.display = 'none';
+function pickWaiter(name,btn){
+  waiter=name; waiterChosen=true;
+  var chips=document.querySelectorAll(".w-chip");
+  for(var i=0;i<chips.length;i++) chips[i].className=chips[i].className.replace(" sel","");
+  btn.className+=" sel";
+  document.getElementById("wWarn").style.display="none";
 }
 
-// Stars
-var sc = document.getElementById('stars');
-var svgs = sc.querySelectorAll('svg');
-var locked = false;
-var waiterChosen = false;  // true once any chip is tapped
+var sc=document.getElementById("stars");
+var svgs=sc.querySelectorAll("svg");
 
-function paint(n) {
-  for (var i = 0; i < svgs.length; i++) {
-    if (Number(svgs[i].getAttribute('data-v')) <= n) {
-      svgs[i].className = 'lit';
-    } else {
-      svgs[i].className = '';
-    }
-  }
+function paint(n){
+  for(var i=0;i<svgs.length;i++)
+    svgs[i].className=(Number(svgs[i].getAttribute("data-v"))<=n?"lit":"");
 }
 
-for (var i = 0; i < svgs.length; i++) {
-  (function(sv) {
-    sv.onmouseover = function() { if (!locked) paint(Number(sv.getAttribute('data-v'))); };
-    sv.onmouseout  = function() { if (!locked) paint(0); };
-    sv.onclick = function() {
-      if (generic && !waiterChosen) {
-        document.getElementById('wWarn').style.display = 'block';
-        document.getElementById('wSelector').scrollIntoView({behavior:'smooth', block:'center'});
+for(var i=0;i<svgs.length;i++){
+  (function(sv){
+    sv.onmouseover=function(){ if(!locked) paint(Number(sv.getAttribute("data-v"))); };
+    sv.onmouseout=function(){  if(!locked) paint(starVal); };
+    sv.onclick=function(){
+      if(generic && !waiterChosen){
+        document.getElementById("wWarn").style.display="block";
+        document.getElementById("wSelector").scrollIntoView({behavior:"smooth",block:"center"});
         return;
       }
-      if (locked) return;
-      locked = true;
-      var v = Number(sv.getAttribute('data-v'));
-      paint(v);
-      document.getElementById('rMsg').style.display = 'block';
-      // Log to Google Sheets before redirect
-      try {
-        new Image().src = LOG_URL
-          + '?action=log'
-          + '&waiter=' + encodeURIComponent(waiter || 'Desconegut')
-          + '&stars=' + v
-          + '&lang=' + lang
-          + '&_=' + Date.now();
-      } catch(ex) {}
+      if(locked) return;
+      locked=true;
+      starVal=Number(sv.getAttribute("data-v"));
+      paint(starVal);
 
-      setTimeout(function() {
-        window.location.href = (v >= 4) ? GOOGLE_URL : FORM_URL;
-      }, 700);
+      // Log click to sheet
+      try{
+        new Image().src=LOG_URL+"?action=log&waiter="+encodeURIComponent(waiter||"Desconegut")+"&stars="+starVal+"&lang="+lang+"&_="+Date.now();
+      }catch(ex){}
+
+      if(starVal>=4){
+        // Positive: show success then redirect to Google
+        document.getElementById("starsScreen").style.display="none";
+        document.getElementById("wSelector").style.display="none";
+        document.getElementById("wBadge").style.display="none";
+        document.getElementById("successPos").className="success-msg show";
+        document.getElementById("rMsg").style.display="block";
+        setTimeout(function(){
+          window.location.href="https://g.page/r/CbUHHhOQWx2cEBE/review";
+        },1400);
+      } else {
+        // Negative: show inline complaint form
+        document.getElementById("starsScreen").style.display="none";
+        document.getElementById("wSelector").style.display="none";
+        document.getElementById("wBadge").style.display="none";
+        document.getElementById("cfForm").className="complaint-form show";
+      }
     };
   })(svgs[i]);
+}
+
+// JSONP helper
+function jsonp(url, cb){
+  var id="cb"+Date.now();
+  window[id]=function(data){ cb(data); delete window[id]; var el=document.getElementById("s_"+id); if(el)el.remove(); };
+  var s=document.createElement("script"); s.id="s_"+id; s.src=url+"&callback="+id; document.head.appendChild(s);
+}
+
+function sendComplaint(){
+  var msg  = document.getElementById("cfMessage").value.trim();
+  var name = document.getElementById("cfName").value.trim();
+  var email= document.getElementById("cfEmail").value.trim();
+  var btn  = document.getElementById("cfSendBtn");
+
+  btn.disabled=true;
+  btn.textContent=T[lang].cfSending;
+
+  var url = LOG_URL
+    +"?action=mail"
+    +"&waiter="+encodeURIComponent(waiter||"Desconegut")
+    +"&stars="+starVal
+    +"&lang="+lang
+    +"&message="+encodeURIComponent(msg||"(sense comentari)")
+    +"&name="+encodeURIComponent(name||"Anònim")
+    +"&email="+encodeURIComponent(email||"no facilitat")
+    +"&_="+Date.now();
+
+  jsonp(url, function(data){
+    document.getElementById("cfForm").className="complaint-form";
+    document.getElementById("successNeg").className="success-msg show";
+  });
+
+  // Fallback if JSONP fails
+  setTimeout(function(){
+    if(document.getElementById("cfForm").className.indexOf("show")>=0){
+      document.getElementById("cfForm").className="complaint-form";
+      document.getElementById("successNeg").className="success-msg show";
+    }
+  }, 4000);
 }
 </script>
 </body>
