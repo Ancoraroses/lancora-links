@@ -127,7 +127,7 @@
       <div class="w-chip" onclick="pickWaiter('Alberto',this)">Alberto</div>
       <div class="w-chip" onclick="pickWaiter('Anas',this)">Anas</div>
       <div class="w-chip" onclick="pickWaiter('Abdellah',this)">Abdellah</div>
-      <div class="w-chip full" id="noChip" onclick="pickWaiter('',this)">No lo recuerdo</div>
+      <div class="w-chip full" id="noChip" onclick="pickWaiter('Desconegut',this)">No lo recuerdo</div>
     </div>
   </div>
 
@@ -220,6 +220,7 @@ setLang(detectLang());
 // Waiter picker
 function pickWaiter(name, btn) {
   waiter = name;
+  waiterChosen = true;
   var chips = document.querySelectorAll('.w-chip');
   for (var i = 0; i < chips.length; i++) chips[i].className = chips[i].className.replace(' sel','');
   btn.className += ' sel';
@@ -230,6 +231,7 @@ function pickWaiter(name, btn) {
 var sc = document.getElementById('stars');
 var svgs = sc.querySelectorAll('svg');
 var locked = false;
+var waiterChosen = false;  // true once any chip is tapped
 
 function paint(n) {
   for (var i = 0; i < svgs.length; i++) {
@@ -246,9 +248,8 @@ for (var i = 0; i < svgs.length; i++) {
     sv.onmouseover = function() { if (!locked) paint(Number(sv.getAttribute('data-v'))); };
     sv.onmouseout  = function() { if (!locked) paint(0); };
     sv.onclick = function() {
-      if (generic && waiter === '') {
+      if (generic && !waiterChosen) {
         document.getElementById('wWarn').style.display = 'block';
-        // Scroll to selector
         document.getElementById('wSelector').scrollIntoView({behavior:'smooth', block:'center'});
         return;
       }
