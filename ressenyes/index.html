@@ -150,6 +150,7 @@
 <script>
 var GOOGLE_URL = "https://g.page/r/CbUHHhOQWx2cEBE/review";
 var FORM_URL   = "https://forms.gle/nr3uLNdPd2JcMoRJ7";
+var LOG_URL    = "https://script.google.com/macros/s/AKfycbw-HEGd93z5tdMFDt6OjG9OwaK4ls94JwOtobNvLj7C5lvdq4rPAE9vQNzHaDjeXmZgDg/exec";
 
 var T = {
   es:{title:"¿Cómo ha sido tu experiencia?",sub:"Tu opinión nos ayuda a mejorar cada día en L'Àncora.",foot:"L'Àncora Bar Restaurant · Roses",redir:"Gracias, redirigiendo…",sel:"¿Quién te ha atendido?",no:"No lo recuerdo",warn:"⚠️ Selecciona primero quién te ha atendido",by:"Has sido atendido/a por"},
@@ -256,9 +257,19 @@ for (var i = 0; i < svgs.length; i++) {
       var v = Number(sv.getAttribute('data-v'));
       paint(v);
       document.getElementById('rMsg').style.display = 'block';
+      // Log to Google Sheets before redirect
+      try {
+        new Image().src = LOG_URL
+          + '?action=log'
+          + '&waiter=' + encodeURIComponent(waiter || 'Desconegut')
+          + '&stars=' + v
+          + '&lang=' + lang
+          + '&_=' + Date.now();
+      } catch(ex) {}
+
       setTimeout(function() {
         window.location.href = (v >= 4) ? GOOGLE_URL : FORM_URL;
-      }, 600);
+      }, 700);
     };
   })(svgs[i]);
 }
