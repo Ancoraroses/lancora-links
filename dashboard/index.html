@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'Àncora · Dashboard Ressenyes</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0b3c5d;--navy-dark:#082a41;--navy-card:#0f4a73;
+  --gold:#c89b3c;--gold-light:#e4c477;
+  --sand:#f7f1e3;--sea:#2e7d9a;
+  --white:#fff;--muted:#8fa8ba;
+  --green:#2e9b6a;--red:#c0392b;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:'Poppins',sans-serif;
+  background:var(--navy-dark);
+  min-height:100vh;color:var(--white);
+  padding:0 0 40px;
+}
+/* HEADER */
+.header{
+  background:var(--navy);
+  border-bottom:2px solid var(--gold);
+  padding:20px 24px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;
+}
+.header-left{display:flex;align-items:center;gap:14px;}
+.logo{
+  width:52px;height:52px;border-radius:50%;
+  border:2px solid var(--gold);object-fit:cover;
+}
+.brand-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;color:var(--gold-light);font-weight:600;
+}
+.brand-sub{font-size:11px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;}
+.period-btns{display:flex;gap:6px;flex-wrap:wrap;}
+.pbtn{
+  font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;
+  padding:6px 14px;border-radius:20px;cursor:pointer;letter-spacing:.5px;
+  border:1.5px solid rgba(200,155,60,.4);background:transparent;color:var(--muted);
+  transition:all .2s;
+}
+.pbtn.active,.pbtn:hover{background:var(--gold);border-color:var(--gold);color:var(--navy-dark);}
+/* SETUP SCREEN */
+#setup{
+  max-width:480px;margin:60px auto;
+  background:var(--navy-card);border-radius:20px;
+  border:1px solid rgba(200,155,60,.25);
+  padding:36px 32px;text-align:center;
+}
+#setup h2{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--gold-light);margin-bottom:10px;}
+#setup p{font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.6;}
+#setup input{
+  width:100%;background:rgba(255,255,255,.07);border:1.5px solid rgba(200,155,60,.3);
+  border-radius:10px;padding:12px 14px;color:var(--white);font-size:13px;
+  font-family:'Poppins',sans-serif;outline:none;margin-bottom:14px;
+}
+#setup input:focus{border-color:var(--gold);}
+#setup button{
+  width:100%;background:var(--gold);color:var(--navy-dark);font-weight:600;
+  font-family:'Poppins',sans-serif;font-size:14px;padding:13px;
+  border:none;border-radius:10px;cursor:pointer;letter-spacing:.5px;
+}
+/* GRID */
+.page{display:none;padding:24px 16px 0;max-width:900px;margin:0 auto;}
+.page.show{display:block;}
+/* SUMMARY CARDS */
+.summary{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px;}
+.scard{
+  background:var(--navy-card);border-radius:16px;
+  border:1px solid rgba(200,155,60,.2);
+  padding:18px 20px;
+}
+.scard-label{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.scard-value{font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--gold-light);line-height:1;}
+.scard-sub{font-size:11px;color:var(--muted);margin-top:4px;}
+/* WAITER CARDS */
+.section-title{
+  font-family:'Cormorant Garamond',serif;font-size:20px;
+  color:var(--gold-light);margin:28px 0 14px;letter-spacing:.5px;
+}
+.waiter-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:28px;}
+.wcard{
+  background:var(--navy-card);border-radius:16px;
+  border:1px solid rgba(200,155,60,.2);padding:20px;
+}
+.wcard-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.wcard-avatar{
+  width:44px;height:44px;border-radius:50%;
+  background:var(--navy);border:2px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-size:20px;
+  color:var(--gold-light);font-weight:600;flex-shrink:0;
+}
+.wcard-name{font-size:16px;font-weight:600;color:var(--white);}
+.wcard-total{font-size:11px;color:var(--muted);margin-top:2px;}
+/* BAR */
+.stat-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.stat-label{font-size:11px;color:var(--muted);width:80px;flex-shrink:0;}
+.bar-wrap{flex:1;background:rgba(255,255,255,.07);border-radius:6px;height:10px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:6px;transition:width .6s ease;}
+.bar-google{background:linear-gradient(90deg,var(--green),#3cc98a);}
+.bar-form{background:linear-gradient(90deg,var(--red),#e74c3c);}
+.stat-count{font-size:12px;font-weight:600;color:var(--white);min-width:28px;text-align:right;}
+/* STAR DIST */
+.star-dist{margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08);}
+.star-dist-title{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.star-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.star-num{font-size:11px;color:var(--gold);width:14px;text-align:center;}
+.star-bar{flex:1;background:rgba(255,255,255,.07);border-radius:4px;height:7px;overflow:hidden;}
+.star-fill{height:100%;border-radius:4px;background:var(--gold);opacity:.8;}
+.star-cnt{font-size:11px;color:var(--muted);min-width:22px;text-align:right;}
+/* RANKING */
+.ranking{background:var(--navy-card);border-radius:16px;border:1px solid rgba(200,155,60,.2);padding:20px;margin-bottom:28px;}
+.rank-row{
+  display:flex;align-items:center;gap:14px;
+  padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);
+}
+.rank-row:last-child{border-bottom:none;}
+.rank-pos{
+  width:28px;height:28px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:600;flex-shrink:0;
+}
+.rank-pos.p1{background:var(--gold);color:var(--navy-dark);}
+.rank-pos.p2{background:#9aa5ab;color:var(--navy-dark);}
+.rank-pos.p3{background:#c8763c;color:var(--white);}
+.rank-pos.other{background:rgba(255,255,255,.1);color:var(--muted);}
+.rank-name{flex:1;font-size:14px;font-weight:600;}
+.rank-stars{font-size:12px;color:var(--gold);margin-right:8px;}
+.rank-count{font-size:20px;font-family:'Cormorant Garamond',serif;color:var(--gold-light);}
+.rank-label{font-size:10px;color:var(--muted);}
+/* REFRESH */
+.refresh-bar{
+  text-align:center;padding:10px;
+  font-size:11px;color:var(--muted);
+  border-top:1px solid rgba(255,255,255,.06);
+  margin-top:20px;
+}
+.refresh-bar a{color:var(--gold);text-decoration:none;cursor:pointer;}
+/* LOADING */
+.loading{text-align:center;padding:60px 20px;color:var(--muted);}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin:0 3px;animation:blink 1.2s infinite;}
+.dot:nth-child(2){animation-delay:.2s;}
+.dot:nth-child(3){animation-delay:.4s;}
+@keyframes blink{0%,100%{opacity:.2}50%{opacity:1}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <img class="logo" src="https://lh3.googleusercontent.com/d/1Sn6cRZPGXz9UCWmdOR2Ea6JmohuCCZUl" alt="L'Ancora">
+    <div>
+      <div class="brand-name">L'Àncora · Dashboard</div>
+      <div class="brand-sub">Mètriques de ressenyes</div>
+    </div>
+  </div>
+  <div class="period-btns" id="periodBtns" style="display:none">
+    <button class="pbtn active" onclick="setPeriod(7,this)">7 dies</button>
+    <button class="pbtn" onclick="setPeriod(30,this)">30 dies</button>
+    <button class="pbtn" onclick="setPeriod(90,this)">3 mesos</button>
+    <button class="pbtn" onclick="setPeriod(9999,this)">Tot</button>
+  </div>
+</div>
+
+<!-- SETUP -->
+<div id="setup">
+  <h2>Configura el dashboard</h2>
+  <p>Enganxa aquí la URL del teu Apps Script.<br>Només cal fer-ho una vegada.</p>
+  <input type="text" id="scriptUrl" placeholder="https://script.google.com/macros/s/.../exec">
+  <button onclick="saveUrl()">Guardar i carregar dades</button>
+</div>
+
+<!-- DASHBOARD -->
+<div class="page" id="dashPage">
+  <div id="loadingEl" class="loading">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <p style="margin-top:16px;font-size:13px;">Carregant dades…</p>
+  </div>
+  <div id="content" style="display:none">
+    <!-- Summary -->
+    <div class="summary" id="summaryCards"></div>
+    <!-- Ranking -->
+    <div class="section-title">Rànquing de camarers</div>
+    <div class="ranking" id="rankingEl"></div>
+    <!-- Waiter details -->
+    <div class="section-title">Detall per camarero</div>
+    <div class="waiter-cards" id="waiterCards"></div>
+    <!-- Refresh -->
+    <div class="refresh-bar">
+      Actualitzat: <span id="lastUpdate">—</span> · <a onclick="loadData()">↻ Refrescar</a>
+      · <a onclick="clearSetup()" style="color:var(--muted)">Canviar URL</a>
+    </div>
+  </div>
+</div>
+
+<script>
+var SCRIPT_URL = '';
+var allData    = [];
+var period     = 7;
+var WAITERS    = ['Sandra','Josselin','Alberto','Anas','Abdellah'];
+
+// ── SETUP ──────────────────────────────────────────
+function init() {
+  var saved = localStorage.getItem('lancora_script_url');
+  if (saved) {
+    SCRIPT_URL = saved;
+    document.getElementById('setup').style.display    = 'none';
+    document.getElementById('dashPage').className     = 'page show';
+    document.getElementById('periodBtns').style.display = 'flex';
+    loadData();
+  }
+}
+
+function saveUrl() {
+  var val = document.getElementById('scriptUrl').value.trim();
+  if (!val || val.indexOf('script.google.com') === -1) {
+    alert('Enganxa una URL vàlida de Google Apps Script');
+    return;
+  }
+  localStorage.setItem('lancora_script_url', val);
+  SCRIPT_URL = val;
+  document.getElementById('setup').style.display    = 'none';
+  document.getElementById('dashPage').className     = 'page show';
+  document.getElementById('periodBtns').style.display = 'flex';
+  loadData();
+}
+
+function clearSetup() {
+  localStorage.removeItem('lancora_script_url');
+  location.reload();
+}
+
+// ── DATA ────────────────────────────────────────────
+function loadData() {
+  document.getElementById('loadingEl').style.display = 'block';
+  document.getElementById('content').style.display   = 'none';
+  var cb = 'cb' + Date.now();
+  window[cb] = function(data) {
+    allData = data || [];
+    delete window[cb];
+    var el = document.getElementById('s_' + cb);
+    if (el) el.remove();
+    render();
+  };
+  var s = document.createElement('script');
+  s.id  = 's_' + cb;
+  s.src = SCRIPT_URL + '?action=data&callback=' + cb + '&_=' + Date.now();
+  s.onerror = function() {
+    document.getElementById('loadingEl').innerHTML = '<p style="color:#e74c3c">Error carregant dades. Comprova la URL del script.</p>';
+  };
+  document.head.appendChild(s);
+}
+
+function setPeriod(days, btn) {
+  period = days;
+  document.querySelectorAll('.pbtn').forEach(function(b){ b.className = 'pbtn'; });
+  btn.className = 'pbtn active';
+  render();
+}
+
+function filterData() {
+  if (period >= 9999) return allData;
+  var cutoff = new Date(Date.now() - period * 864e5);
+  return allData.filter(function(r) {
+    return new Date(r.Timestamp) >= cutoff;
+  });
+}
+
+// ── RENDER ───────────────────────────────────────────
+function render() {
+  var data = filterData();
+  document.getElementById('loadingEl').style.display = 'none';
+  document.getElementById('content').style.display   = 'block';
+  document.getElementById('lastUpdate').textContent   = new Date().toLocaleTimeString('ca-ES');
+
+  // Stats per waiter
+  var stats = {};
+  WAITERS.forEach(function(w) {
+    stats[w] = {total:0, google:0, form:0, stars:[0,0,0,0,0]};
+  });
+  stats['Desconegut'] = {total:0, google:0, form:0, stars:[0,0,0,0,0]};
+
+  var totalGoogle = 0, totalForm = 0;
+  data.forEach(function(r) {
+    var w = r.Camarero || 'Desconegut';
+    if (!stats[w]) stats[w] = {total:0, google:0, form:0, stars:[0,0,0,0,0]};
+    var st = parseInt(r.Estrellas) || 0;
+    stats[w].total++;
+    if (r.Destino === 'Google') { stats[w].google++; totalGoogle++; }
+    else { stats[w].form++; totalForm++; }
+    if (st >= 1 && st <= 5) stats[w].stars[st-1]++;
+  });
+
+  // ── Summary cards
+  var avgStr = data.length
+    ? (data.reduce(function(s,r){ return s + (parseInt(r.Estrellas)||0); }, 0) / data.length).toFixed(1)
+    : '—';
+  document.getElementById('summaryCards').innerHTML =
+    scard('Total registres', data.length, 'en el període seleccionat') +
+    scard('→ Google Reviews', totalGoogle, 'redirigits a Google (4-5 ⭐)') +
+    scard('→ Formulari intern', totalForm, 'enviats al formulari (1-3 ⭐)') +
+    scard('Valoració mitjana', avgStr === 'NaN' ? '—' : avgStr + ' ⭐', 'de totes les valoracions');
+
+  // ── Ranking
+  var ranked = Object.keys(stats)
+    .filter(function(w){ return w !== 'Desconegut' && stats[w].total > 0; })
+    .sort(function(a,b){ return stats[b].google - stats[a].google; });
+
+  var rankHtml = '';
+  if (ranked.length === 0) {
+    rankHtml = '<p style="color:var(--muted);font-size:13px;padding:10px 0">Encara no hi ha dades per al període seleccionat.</p>';
+  } else {
+    ranked.forEach(function(w, i) {
+      var pos = i + 1;
+      var cls = pos === 1 ? 'p1' : pos === 2 ? 'p2' : pos === 3 ? 'p3' : 'other';
+      var avgW = stats[w].total
+        ? (stats[w].stars.reduce(function(s,c,i){ return s+(c*(i+1)); },0) / stats[w].total).toFixed(1)
+        : '—';
+      rankHtml += '<div class="rank-row">' +
+        '<div class="rank-pos ' + cls + '">' + pos + '</div>' +
+        '<div class="rank-name">' + w + '</div>' +
+        '<div class="rank-stars">' + avgW + ' ⭐</div>' +
+        '<div><div class="rank-count">' + stats[w].google + '</div>' +
+        '<div class="rank-label">→ Google</div></div>' +
+        '</div>';
+    });
+  }
+  document.getElementById('rankingEl').innerHTML = rankHtml;
+
+  // ── Waiter detail cards
+  var maxTotal = Math.max(1, Math.max.apply(null, ranked.map(function(w){ return stats[w].total; })));
+  var cardsHtml = '';
+  (ranked.length ? ranked : WAITERS).forEach(function(w) {
+    var s = stats[w] || {total:0, google:0, form:0, stars:[0,0,0,0,0]};
+    var gPct  = s.total ? Math.round(s.google/s.total*100) : 0;
+    var fPct  = s.total ? Math.round(s.form/s.total*100)   : 0;
+    var maxSt = Math.max(1, Math.max.apply(null, s.stars));
+    var starBars = s.stars.map(function(cnt, i) {
+      return '<div class="star-row">' +
+        '<span class="star-num">' + (5-i) + '</span>' +
+        '<div class="star-bar"><div class="star-fill" style="width:' + Math.round(s.stars[4-i]/maxSt*100) + '%"></div></div>' +
+        '<span class="star-cnt">' + s.stars[4-i] + '</span>' +
+        '</div>';
+    }).reverse().join('');
+
+    cardsHtml += '<div class="wcard">' +
+      '<div class="wcard-header">' +
+        '<div class="wcard-avatar">' + w.charAt(0) + '</div>' +
+        '<div><div class="wcard-name">' + w + '</div>' +
+        '<div class="wcard-total">' + s.total + ' registres totals</div></div>' +
+      '</div>' +
+      '<div class="stat-row">' +
+        '<span class="stat-label">→ Google</span>' +
+        '<div class="bar-wrap"><div class="bar-fill bar-google" style="width:' + gPct + '%"></div></div>' +
+        '<span class="stat-count">' + s.google + '</span>' +
+      '</div>' +
+      '<div class="stat-row">' +
+        '<span class="stat-label">Formulari</span>' +
+        '<div class="bar-wrap"><div class="bar-fill bar-form" style="width:' + fPct + '%"></div></div>' +
+        '<span class="stat-count">' + s.form + '</span>' +
+      '</div>' +
+      '<div class="star-dist"><div class="star-dist-title">Distribució d\'estrelles</div>' + starBars + '</div>' +
+    '</div>';
+  });
+  document.getElementById('waiterCards').innerHTML = cardsHtml;
+}
+
+function scard(label, value, sub) {
+  return '<div class="scard">' +
+    '<div class="scard-label">' + label + '</div>' +
+    '<div class="scard-value">' + value + '</div>' +
+    '<div class="scard-sub">' + sub + '</div>' +
+    '</div>';
+}
+
+init();
+</script>
+</body>
+</html>
