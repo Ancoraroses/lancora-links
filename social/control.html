@@ -205,10 +205,17 @@
 
   <div id="import-section" class="import-box" style="display:none;">
     <h3>Cargar lista de Entradium</h3>
-    <p>Exporta el CSV de asistentes desde Entradium y pega aquí el contenido. Detecta columnas de nombre, referencia, teléfono y email automáticamente (busca cabeceras como "nombre", "referencia"/"pedido", "telefono", "email").</p>
-    <textarea id="csv-input" placeholder="nombre,referencia,telefono,email&#10;Maria Lopez,EN48213,600111222,maria@mail.com"></textarea>
-    <div class="row">
-      <button id="import-btn">Cargar lista</button>
+    <p>Selecciona el archivo Excel (.xlsx) o CSV que te descargas de Entradium. Detecta automáticamente las columnas de nombre, referencia, teléfono y email (busca cabeceras como "nombre", "referencia"/"pedido", "telefono", "email").</p>
+    <input type="file" id="excel-input" accept=".xlsx,.xls,.csv">
+    <div id="import-file-status" class="hint" style="margin-top:8px;"></div>
+    <p class="toggle-import" id="toggle-paste" style="text-align:left;margin:14px 0 0;">¿Prefieres pegar el texto CSV a mano en vez de subir el archivo?</p>
+    <div id="paste-area" style="display:none;margin-top:8px;">
+      <textarea id="csv-input" placeholder="nombre,referencia,telefono,email&#10;Maria Lopez,EN48213,600111222,maria@mail.com"></textarea>
+      <div class="row">
+        <button id="import-btn">Cargar lista pegada</button>
+      </div>
+    </div>
+    <div class="row" style="margin-top:14px;">
       <button class="secondary" id="cancel-import">Cancelar</button>
     </div>
   </div>
@@ -228,6 +235,9 @@
     <button id="add-btn">Añadir</button>
   </div>
 </div>
+
+<!-- Librería para leer archivos Excel (.xlsx/.xls) directamente en el navegador -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 <script type="module">
 // ---------------------------------------------------------------------
@@ -285,12 +295,13 @@ onValue(guestsRef, (snapshot) => {
   setConnStatus(false);
 });
 
-function parseCSV(text){
-  const lines = text.trim().split(/\r?\n/).filter(l => l.trim());
-  if(lines.length === 0) return [];
-
-  const delim = lines[0].includes(';') ? ';' : ',';
-  const header = lines[0].split(delim).map(h => h.trim().toLowerCase());
+// Convierte una lista de filas (cada fila es un array de celdas: la
+// primera fila son las cabeceras) en objetos de invitado. La usan tanto
+// la importación desde un archivo Excel/CSV como el texto CSV pegado a
+// mano, así detectan las columnas exactamente de la misma forma.
+function rowsToGuests(rows){
+  if(!rows || rows.length === 0) return [];
+  const header = (rows[0] || []).map(h => String(h == null ? '' : h).trim().toLowerCase());
 
   const findCol = (keywords) => header.findIndex(h => keywords.some(k => h.includes(k)));
   const nameIdx = findCol(['nombre','name']);
@@ -298,11 +309,11 @@ function parseCSV(text){
   const phoneIdx = findCol(['telefono','teléfono','phone','movil','móvil']);
   const emailIdx = findCol(['email','correo']);
 
-  const rows = [];
-  for(let i = 1; i < lines.length; i++){
-    const cols = lines[i].split(delim).map(c => c.trim());
-    if(cols.length === 1 && !cols[0]) continue;
-    rows.push({
+  const out = [];
+  for(let i = 1; i < rows.length; i++){
+    const cols = (rows[i] || []).map(c => String(c == null ? '' : c).trim());
+    if(cols.length === 0 || cols.every(c => !c)) continue;
+    out.push({
       id: 'ent-' + i + '-' + Date.now(),
       name: nameIdx >= 0 ? cols[nameIdx] : cols[0] || 'Sin nombre',
       ref: refIdx >= 0 ? cols[refIdx] : '',
@@ -312,7 +323,34 @@ function parseCSV(text){
       served: false
     });
   }
-  return rows;
+  return out;
+}
+
+function parseCSV(text){
+  const lines = text.trim().split(/\r?\n/).filter(l => l.trim());
+  if(lines.length === 0) return [];
+  const delim = lines[0].includes(';') ? ';' : ',';
+  const rows = lines.map(l => l.split(delim));
+  return rowsToGuests(rows);
+}
+
+// Sube la lista de invitados a Firebase, sustituyendo la lista actual.
+function importGuests(parsed){
+  if(!parsed || parsed.length === 0) return false;
+  const obj = {};
+  parsed.forEach(p => {
+    obj[p.id] = {
+      name: p.name,
+      ref: p.ref,
+      phone: p.phone,
+      email: p.email,
+      noticket: p.noticket,
+      served: p.served,
+      seq: nextSeq()
+    };
+  });
+  set(guestsRef, obj).catch(e => console.error('No se pudo guardar la lista importada', e));
+  return true;
 }
 
 function render(){
@@ -407,29 +445,56 @@ document.getElementById('show-reset-link').onclick = () => {
   }
 };
 
+document.getElementById('toggle-paste').onclick = () => {
+  const area = document.getElementById('paste-area');
+  area.style.display = area.style.display === 'none' ? 'block' : 'none';
+};
+
 document.getElementById('import-btn').onclick = () => {
   const text = document.getElementById('csv-input').value;
   if(!text.trim()) return;
-  const parsed = parseCSV(text);
-  if(parsed.length === 0) return;
-
-  const obj = {};
-  parsed.forEach(p => {
-    obj[p.id] = {
-      name: p.name,
-      ref: p.ref,
-      phone: p.phone,
-      email: p.email,
-      noticket: p.noticket,
-      served: p.served,
-      seq: nextSeq()
-    };
-  });
-
-  set(guestsRef, obj).catch(e => console.error('No se pudo guardar la lista importada', e));
-  toggleImport(false);
-  document.getElementById('csv-input').value = '';
+  if(importGuests(parseCSV(text))){
+    toggleImport(false);
+    document.getElementById('csv-input').value = '';
+  }
 };
+
+// Importar directamente desde el archivo Excel (.xlsx/.xls) o CSV que
+// Carlos se descarga de Entradium: no hace falta abrirlo ni copiar nada,
+// solo elegir el archivo.
+document.getElementById('excel-input').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  const status = document.getElementById('import-file-status');
+  if(!file) return;
+  status.textContent = 'Leyendo ' + file.name + '...';
+
+  const reader = new FileReader();
+  reader.onload = (evt) => {
+    try{
+      const data = new Uint8Array(evt.target.result);
+      const workbook = XLSX.read(data, { type: 'array' });
+      const sheet = workbook.Sheets[workbook.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: false, defval: '' });
+      const parsed = rowsToGuests(rows);
+      if(parsed.length === 0){
+        status.textContent = 'No se han encontrado datos en "' + file.name + '". Revisa que la primera fila tenga las cabeceras (nombre, referencia...).';
+        return;
+      }
+      importGuests(parsed);
+      status.textContent = '';
+      toggleImport(false);
+    } catch(err){
+      console.error('Error al leer el archivo de Entradium', err);
+      status.textContent = 'No se pudo leer "' + file.name + '". Comprueba que es el Excel o CSV exportado de Entradium.';
+    } finally {
+      e.target.value = '';
+    }
+  };
+  reader.onerror = () => {
+    status.textContent = 'No se pudo leer el archivo.';
+  };
+  reader.readAsArrayBuffer(file);
+});
 
 document.getElementById('add-btn').onclick = () => {
   const input = document.getElementById('new-name');
