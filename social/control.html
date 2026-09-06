@@ -187,6 +187,25 @@
     margin-bottom:10px;
     text-decoration:underline;
   }
+
+  .summary{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+    margin-bottom:16px;
+  }
+  .summary .stat .num{font-size:1.05rem;}
+  .shot-badge{color:var(--gold);font-weight:600;}
+
+  .history-item{
+    background:white;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:12px 14px;
+    margin-bottom:8px;
+  }
+  .history-item .h-date{font-weight:700;margin-bottom:6px;}
+  .history-item .h-detail{font-size:0.82rem;color:#5a5348;line-height:1.6;}
 </style>
 </head>
 <body>
@@ -201,6 +220,22 @@
     <div class="stat"><div class="num" id="s-total">0</div><div class="lbl">En lista</div></div>
     <div class="stat served"><div class="num" id="s-served">0</div><div class="lbl">Servidos</div></div>
     <div class="stat pending"><div class="num" id="s-pending">0</div><div class="lbl">Pendientes</div></div>
+  </div>
+
+  <div class="summary" id="event-summary" style="display:none;">
+    <div class="stat"><div class="num" id="s-revenue">0€</div><div class="lbl">Ingresos</div></div>
+    <div class="stat"><div class="num" id="s-shots">0/20</div><div class="lbl">Chupitos gratis</div></div>
+    <div class="stat"><div class="num" id="s-dancers">0€</div><div class="lbl">Bailarines</div></div>
+  </div>
+
+  <div class="toggle-import" id="show-history-link" style="text-align:left;">📅 ver histórico de eventos</div>
+
+  <div id="history-section" class="import-box" style="display:none;">
+    <h3>Histórico de eventos</h3>
+    <div id="history-list"></div>
+    <div class="row" style="margin-top:6px;">
+      <button class="secondary" id="close-history">Cerrar</button>
+    </div>
   </div>
 
   <div id="import-section" class="import-box" style="display:none;">
@@ -221,7 +256,7 @@
   </div>
 
   <div class="toggle-import" id="show-import-link" style="display:none;">+ cargar / reemplazar lista de Entradium</div>
-  <div class="toggle-import" id="show-reset-link" style="display:none;">🗑 vaciar todo (nuevo evento)</div>
+  <div class="toggle-import" id="show-reset-link" style="display:none;">🔒 cerrar evento (guarda histórico y vacía la lista)</div>
 
   <div class="searchbar" id="search-wrap" style="display:none;">
     <input id="search-input" type="text" placeholder="Nombre o número de referencia...">
@@ -248,7 +283,7 @@
 // ---------------------------------------------------------------------
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
-  getDatabase, ref, onValue, set
+  getDatabase, ref, onValue, set, update
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
@@ -264,12 +299,49 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const guestsRef = ref(db, 'guests');
+const eventsRef = ref(db, 'events');
+
+// Reglas de precios y pagos de un tardeo de L'Àncora Social:
+//  - Entrada comprada por Entradium: 10€
+//  - Entrada pagada aquí mismo, en la puerta ("sin ticket"): 12€
+//  - Las primeras 20 personas en llegar (de cualquier tipo) tienen un chupito gratis
+//  - A los bailarines se les paga 2€ por cada una de las primeras 30 personas
+//    que han venido, y 3€ por cada persona a partir de la 31
+const PRECIO_ENTRADIUM = 10;
+const PRECIO_PUERTA = 12;
+const CHUPITOS_GRATIS = 20;
+const TRAMO_BAILARINES = 30;
+const PAGO_BAILARIN_TRAMO1 = 2;
+const PAGO_BAILARIN_TRAMO2 = 3;
 
 let people = [];
+let pastEvents = [];
 let seqCounter = Date.now();
 function nextSeq(){
   seqCounter += 1;
   return seqCounter;
+}
+
+// Todos los cálculos de dinero se basan solo en la gente que de verdad ha
+// venido (marcada como "Servido"), nunca en quien solo está en la lista
+// sin haberse presentado. El orden de llegada (servedAt) decide a quién
+// le toca el chupito gratis; el total a pagar a los bailarines solo
+// depende del número total de personas, no de quiénes sean.
+function computeEventStats(guestList){
+  const served = guestList.filter(p => p.served)
+    .slice()
+    .sort((a, b) => (a.servedAt || 0) - (b.servedAt || 0));
+  const totalServed = served.length;
+  const entradiumCount = served.filter(p => !p.noticket).length;
+  const doorCount = served.filter(p => p.noticket).length;
+  const revenue = entradiumCount * PRECIO_ENTRADIUM + doorCount * PRECIO_PUERTA;
+  const freeShotGuests = served.slice(0, CHUPITOS_GRATIS);
+  const freeShotIds = new Set(freeShotGuests.map(p => p.id));
+  const freeShotsGiven = freeShotGuests.length;
+  const tramo1 = Math.min(totalServed, TRAMO_BAILARINES);
+  const tramo2 = Math.max(totalServed - TRAMO_BAILARINES, 0);
+  const dancerPayment = tramo1 * PAGO_BAILARIN_TRAMO1 + tramo2 * PAGO_BAILARIN_TRAMO2;
+  return { totalServed, entradiumCount, doorCount, revenue, freeShotIds, freeShotsGiven, dancerPayment };
 }
 
 function setConnStatus(online){
@@ -294,6 +366,35 @@ onValue(guestsRef, (snapshot) => {
   console.error('Error leyendo datos de Firebase', error);
   setConnStatus(false);
 });
+
+// Histórico de eventos ya cerrados (se guardan al pulsar "cerrar evento").
+onValue(eventsRef, (snapshot) => {
+  const val = snapshot.val() || {};
+  pastEvents = Object.keys(val)
+    .map(id => ({ id, ...val[id] }))
+    .sort((a, b) => (b.closedAt || 0) - (a.closedAt || 0));
+  renderHistory();
+});
+
+function renderHistory(){
+  const container = document.getElementById('history-list');
+  if(!container) return;
+  if(pastEvents.length === 0){
+    container.innerHTML = '<p style="color:#a89a80;font-size:0.85rem;">Todavía no hay eventos cerrados.</p>';
+    return;
+  }
+  container.innerHTML = pastEvents.map(ev => `
+    <div class="history-item">
+      <div class="h-date">${ev.closedAtLabel || ''}</div>
+      <div class="h-detail">
+        ${ev.totalServed} asistentes (${ev.entradiumCount} Entradium · ${ev.doorCount} en puerta)<br>
+        Ingresos estimados: <strong>${ev.revenue}€</strong><br>
+        Chupitos gratis dados: ${ev.freeShotsGiven}<br>
+        A pagar a bailarines: <strong>${ev.dancerPayment}€</strong>
+      </div>
+    </div>
+  `).join('');
+}
 
 // Convierte una lista de filas (cada fila es un array de celdas: la
 // primera fila son las cabeceras) en objetos de invitado. La usan tanto
@@ -360,6 +461,17 @@ function render(){
   document.getElementById('show-import-link').style.display = hasPeople ? 'block' : 'none';
   document.getElementById('show-reset-link').style.display = hasPeople ? 'block' : 'none';
 
+  const stats = computeEventStats(people);
+  const summaryEl = document.getElementById('event-summary');
+  if(hasPeople){
+    summaryEl.style.display = 'grid';
+    document.getElementById('s-revenue').textContent = stats.revenue + '€';
+    document.getElementById('s-shots').textContent = stats.freeShotsGiven + '/' + CHUPITOS_GRATIS;
+    document.getElementById('s-dancers').textContent = stats.dancerPayment + '€';
+  } else {
+    summaryEl.style.display = 'none';
+  }
+
   const list = document.getElementById('list');
   list.innerHTML = '';
 
@@ -394,11 +506,13 @@ function render(){
     nameEl.textContent = p.name;
     const meta = document.createElement('div');
     meta.className = 'meta';
-    if(p.noticket){
-      meta.innerHTML = 'sin ticket · paga en barra';
-    } else {
-      meta.innerHTML = p.ref ? `ref <span class="ref">${p.ref}</span>` : 'sin número de referencia';
+    let metaHtml = p.noticket
+      ? 'sin ticket · paga en barra'
+      : (p.ref ? `ref <span class="ref">${p.ref}</span>` : 'sin número de referencia');
+    if(p.served && stats.freeShotIds.has(p.id)){
+      metaHtml += ' · <span class="shot-badge">🍹 chupito gratis</span>';
     }
+    meta.innerHTML = metaHtml;
     pname.appendChild(nameEl);
     pname.appendChild(meta);
 
@@ -421,14 +535,19 @@ function updateStats(){
   document.getElementById('s-pending').textContent = people.filter(p => !p.served).length;
 }
 
-// Marcar/desmarcar como servido: escribimos solo el campo "served" de
-// ese invitado concreto (no toda la lista), así dos móviles pueden
-// marcar a dos personas distintas al mismo tiempo sin pisarse los datos.
+// Marcar/desmarcar como servido: escribimos solo los campos de ese
+// invitado concreto (no toda la lista), así dos móviles pueden marcar a
+// dos personas distintas al mismo tiempo sin pisarse los datos.
+// "servedAt" guarda el momento exacto en que llega cada persona: es lo
+// que decide el orden real de llegada para el chupito gratis.
 function toggleServed(id){
   const p = people.find(x => x.id === id);
   if(!p) return;
-  set(ref(db, 'guests/' + id + '/served'), !p.served)
-    .catch(e => console.error('No se pudo guardar el cambio', e));
+  const newServed = !p.served;
+  update(ref(db, 'guests/' + id), {
+    served: newServed,
+    servedAt: newServed ? Date.now() : null
+  }).catch(e => console.error('No se pudo guardar el cambio', e));
 }
 
 function toggleImport(show){
@@ -439,9 +558,37 @@ document.getElementById('search-input').addEventListener('input', render);
 
 document.getElementById('show-import-link').onclick = () => toggleImport(true);
 document.getElementById('cancel-import').onclick = () => toggleImport(false);
+
+document.getElementById('show-history-link').onclick = () => {
+  document.getElementById('history-section').style.display = 'block';
+};
+document.getElementById('close-history').onclick = () => {
+  document.getElementById('history-section').style.display = 'none';
+};
+
+// Cerrar evento: guarda un resumen (fecha, asistentes, ingresos, chupitos
+// y pago a bailarines) en el histórico y después vacía la lista para el
+// próximo tardeo. Se hace en una sola operación para que no se pueda
+// quedar a medias (o se guarda todo, o no se borra nada).
 document.getElementById('show-reset-link').onclick = () => {
-  if(confirm('¿Vaciar toda la lista actual? Úsalo solo al empezar un evento nuevo.')){
-    set(guestsRef, null).catch(e => console.error('No se pudo vaciar la lista', e));
+  if(confirm('¿Cerrar este evento? Se guardará el resumen (asistentes, ingresos y pago a bailarines) en el histórico y se vaciará la lista para el próximo tardeo.')){
+    const stats = computeEventStats(people);
+    const now = new Date();
+    const eventId = 'evt-' + now.getTime();
+    update(ref(db), {
+      ['events/' + eventId]: {
+        closedAt: now.getTime(),
+        closedAtLabel: now.toLocaleString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+        totalServed: stats.totalServed,
+        entradiumCount: stats.entradiumCount,
+        doorCount: stats.doorCount,
+        revenue: stats.revenue,
+        freeShotsGiven: stats.freeShotsGiven,
+        dancerPayment: stats.dancerPayment,
+        totalInList: people.length
+      },
+      guests: null
+    }).catch(e => console.error('No se pudo cerrar el evento', e));
   }
 };
 
@@ -508,6 +655,7 @@ document.getElementById('add-btn').onclick = () => {
     email: '',
     noticket: true,
     served: true,
+    servedAt: Date.now(),
     seq: nextSeq()
   }).catch(e => console.error('No se pudo añadir', e));
   input.value = '';
