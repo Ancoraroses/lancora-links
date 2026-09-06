@@ -217,6 +217,60 @@
     font-size:1.2rem;
     cursor:pointer;
   }
+
+  /* Escáner de QR a pantalla completa: así siempre se ve entero, sin
+     depender de hacer scroll ni de dónde esté colocado en la página. */
+  .scanner-overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#12100d;
+    z-index:1000;
+    flex-direction:column;
+    padding:16px;
+    padding-top:max(16px, env(safe-area-inset-top));
+  }
+  .scanner-overlay.active{display:flex;}
+  .scanner-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:14px;
+  }
+  .scanner-head h3{margin:0;color:var(--paper);font-size:1.1rem;}
+  .scanner-close{
+    background:none;
+    border:1px solid rgba(250,246,239,0.35);
+    color:var(--paper);
+    border-radius:9px;
+    padding:8px 14px;
+    font-size:0.85rem;
+    font-weight:600;
+  }
+  #qr-reader{border-radius:14px;overflow:hidden;}
+  .scan-result-big{
+    display:none;
+    margin-top:18px;
+    padding:26px 18px;
+    border-radius:16px;
+    text-align:center;
+    font-size:1.5rem;
+    font-weight:800;
+    line-height:1.3;
+  }
+  .scan-result-big .sub{display:block;font-size:1rem;font-weight:600;margin-top:8px;opacity:0.9;}
+  .scan-again-btn{
+    display:none;
+    margin-top:18px;
+    background:var(--coral);
+    color:white;
+    border:none;
+    border-radius:12px;
+    padding:16px;
+    font-weight:700;
+    font-size:1rem;
+  }
+  .scanner-hint{font-size:0.8rem;color:rgba(250,246,239,0.6);margin-top:12px;text-align:center;}
 </style>
 </head>
 <body>
@@ -247,15 +301,6 @@
     <div class="hint">Escribe el nombre o pide el número de referencia del ticket, o pulsa 📷 para escanear</div>
   </div>
 
-  <div id="scanner-section" class="import-box" style="display:none;">
-    <h3>Escanear entrada</h3>
-    <p>Apunta la cámara al código QR de la entrada. Si coincide con alguien de la lista, se marca como servido automáticamente.</p>
-    <div id="qr-reader" style="width:100%;border-radius:10px;overflow:hidden;"></div>
-    <div id="qr-result" style="display:none;margin-top:12px;padding:12px;border-radius:10px;text-align:center;font-weight:700;"></div>
-    <div class="row" style="margin-top:14px;">
-      <button class="secondary" id="close-scanner">Cerrar cámara</button>
-    </div>
-  </div>
 
   <div class="addbar" id="add-noticket-wrap" style="display:none;">
     <input id="new-name" type="text" placeholder="Añadir sin ticket (paga en barra)...">
@@ -296,6 +341,19 @@
   </div>
 
   <div class="toggle-import" id="show-reset-link" style="display:none;text-align:left;">🔒 cerrar evento (guarda histórico y vacía la lista)</div>
+</div>
+
+<!-- Escáner de QR a pantalla completa, fuera de .wrap para que cubra
+     toda la pantalla siempre, sin depender de hacer scroll. -->
+<div id="scanner-overlay" class="scanner-overlay">
+  <div class="scanner-head">
+    <h3>📷 Escanear entrada</h3>
+    <button class="scanner-close" id="close-scanner">✕ Cerrar</button>
+  </div>
+  <div id="qr-reader"></div>
+  <div id="qr-result" class="scan-result-big"></div>
+  <button class="scan-again-btn" id="scan-again-btn">Escanear otra entrada</button>
+  <div class="scanner-hint">Apunta la cámara al código QR de la entrada</div>
 </div>
 
 <!-- Librería para leer archivos Excel (.xlsx/.xls) directamente en el navegador -->
@@ -597,6 +655,7 @@ function toggleImport(show){
 // ---------------------------------------------------------------------
 let html5QrCode = null;
 let lastScan = { text: null, time: 0 };
+let errorClearTimer = null;
 
 function findGuestByQr(text){
   const norm = (text || '').trim().toLowerCase();
@@ -604,15 +663,20 @@ function findGuestByQr(text){
   return people.find(p => p.qr && String(p.qr).trim().toLowerCase() === norm) || null;
 }
 
-function showScanResult(kind, text){
+function showScanResult(kind, mainText, subText){
+  if(errorClearTimer){ clearTimeout(errorClearTimer); errorClearTimer = null; }
   const el = document.getElementById('qr-result');
   el.style.display = 'block';
-  el.textContent = text;
+  el.innerHTML = mainText + (subText ? '<span class="sub">' + subText + '</span>' : '');
   if(kind === 'ok'){ el.style.background = '#e3f6ea'; el.style.color = '#1f6b3f'; }
   else if(kind === 'warn'){ el.style.background = '#fdf1da'; el.style.color = '#8a6512'; }
   else { el.style.background = '#fbe4e0'; el.style.color = '#a53a2a'; }
 }
 
+// Al reconocer una entrada (encontrada en la lista, esté ya servida o
+// no) apagamos la cámara enseguida y mostramos un mensaje grande. Si no
+// se reconoce (código no encontrado), dejamos la cámara encendida para
+// que se pueda volver a intentar, y el aviso desaparece solo.
 function onScanSuccess(decodedText){
   const now = Date.now();
   // Evita procesar el mismo código varias veces seguidas mientras la
@@ -622,20 +686,31 @@ function onScanSuccess(decodedText){
 
   const guest = findGuestByQr(decodedText);
   if(!guest){
-    showScanResult('err', '✗ Entrada no encontrada en esta lista');
+    showScanResult('err', '✗ No encontrada', 'Esta entrada no está en la lista actual');
+    errorClearTimer = setTimeout(() => {
+      document.getElementById('qr-result').style.display = 'none';
+    }, 2000);
     return;
   }
+
+  stopScanner();
+  document.getElementById('qr-reader').style.display = 'none';
+  document.getElementById('scan-again-btn').style.display = 'block';
+
   if(guest.served){
-    showScanResult('warn', '⚠ ' + guest.name + ' — ya estaba marcado como servido');
+    showScanResult('warn', '⚠ Ya venía', guest.name + ' ya estaba marcado como servido');
     return;
   }
   update(ref(db, 'guests/' + guest.id), { served: true, servedAt: Date.now() })
     .catch(e => console.error('No se pudo marcar como servido desde el QR', e));
-  showScanResult('ok', '✓ ' + guest.name + ' — bienvenido/a');
+  showScanResult('ok', '✓ ACEPTADO', guest.name);
 }
 
 function startScanner(){
+  document.getElementById('qr-reader').style.display = 'block';
+  document.getElementById('qr-reader').innerHTML = '';
   document.getElementById('qr-result').style.display = 'none';
+  document.getElementById('scan-again-btn').style.display = 'none';
   lastScan = { text: null, time: 0 };
   if(typeof Html5Qrcode === 'undefined'){
     alert('No se pudo cargar el lector de QR (revisa tu conexión a internet) y vuelve a intentarlo.');
@@ -655,18 +730,24 @@ function startScanner(){
 
 function stopScanner(){
   if(html5QrCode){
-    html5QrCode.stop().then(() => html5QrCode.clear()).catch(() => {});
+    const instance = html5QrCode;
     html5QrCode = null;
+    instance.stop().then(() => instance.clear()).catch(() => {});
   }
 }
 
 document.getElementById('show-scanner-link').onclick = () => {
-  document.getElementById('scanner-section').style.display = 'block';
+  document.getElementById('scanner-overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
   startScanner();
 };
 document.getElementById('close-scanner').onclick = () => {
   stopScanner();
-  document.getElementById('scanner-section').style.display = 'none';
+  document.getElementById('scanner-overlay').classList.remove('active');
+  document.body.style.overflow = '';
+};
+document.getElementById('scan-again-btn').onclick = () => {
+  startScanner();
 };
 
 document.getElementById('search-input').addEventListener('input', render);
