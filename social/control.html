@@ -43,6 +43,7 @@
     font-size:72px;
     opacity:0.15;
   }
+  header{text-align:center;}
   header h1{margin:0 0 4px;font-size:1.3rem;}
   header p{margin:0;font-size:0.85rem;opacity:0.85;}
 
@@ -175,11 +176,11 @@
     color:var(--ink);
   }
 
-  .addbar{display:flex;gap:8px;margin-top:16px;}
+  .addbar{display:flex;gap:8px;margin-top:16px;margin-bottom:16px;}
   .addbar input{flex:1;padding:9px 11px;border-radius:9px;border:1px solid var(--line);font-size:0.85rem;}
   .addbar button{background:var(--coral);color:white;border:none;border-radius:9px;padding:0 14px;font-weight:600;font-size:0.8rem;}
 
-  .section-label{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px;color:#a89a80;margin:18px 0 8px 4px;font-weight:700;}
+  .section-label{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px;color:#a89a80;margin:18px 0 8px;font-weight:700;text-align:center;}
   .toggle-import{
     font-size:0.72rem;
     color:var(--teal);
@@ -206,6 +207,16 @@
   }
   .history-item .h-date{font-weight:700;margin-bottom:6px;}
   .history-item .h-detail{font-size:0.82rem;color:#5a5348;line-height:1.6;}
+
+  .qr-btn{
+    flex-shrink:0;
+    width:48px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:white;
+    font-size:1.2rem;
+    cursor:pointer;
+  }
 </style>
 </head>
 <body>
@@ -228,16 +239,36 @@
     <div class="stat"><div class="num" id="s-dancers">0€</div><div class="lbl">Bailarines</div></div>
   </div>
 
-  <div class="toggle-import" id="show-history-link" style="text-align:left;">📅 ver histórico de eventos</div>
+  <div class="searchbar" id="search-wrap" style="display:none;">
+    <div style="display:flex;gap:8px;">
+      <input id="search-input" type="text" placeholder="Nombre o número de referencia..." style="flex:1;">
+      <button id="show-scanner-link" type="button" class="qr-btn" title="Escanear entrada (QR)">📷</button>
+    </div>
+    <div class="hint">Escribe el nombre o pide el número de referencia del ticket, o pulsa 📷 para escanear</div>
+  </div>
 
-  <div id="history-section" class="import-box" style="display:none;">
-    <h3>Histórico de eventos</h3>
-    <div id="history-list"></div>
-    <div class="row" style="margin-top:6px;">
-      <button class="secondary" id="close-history">Cerrar</button>
+  <div id="scanner-section" class="import-box" style="display:none;">
+    <h3>Escanear entrada</h3>
+    <p>Apunta la cámara al código QR de la entrada. Si coincide con alguien de la lista, se marca como servido automáticamente.</p>
+    <div id="qr-reader" style="width:100%;border-radius:10px;overflow:hidden;"></div>
+    <div id="qr-result" style="display:none;margin-top:12px;padding:12px;border-radius:10px;text-align:center;font-weight:700;"></div>
+    <div class="row" style="margin-top:14px;">
+      <button class="secondary" id="close-scanner">Cerrar cámara</button>
     </div>
   </div>
 
+  <div class="addbar" id="add-noticket-wrap" style="display:none;">
+    <input id="new-name" type="text" placeholder="Añadir sin ticket (paga en barra)...">
+    <button id="add-btn">Añadir</button>
+  </div>
+
+  <div id="list"></div>
+
+  <!-- Acciones menos frecuentes / delicadas, al final de la página para
+       que no se puedan pulsar sin querer durante el servicio. -->
+  <div class="section-label">Gestión del evento</div>
+
+  <div class="toggle-import" id="show-import-link" style="display:none;text-align:left;">+ cargar / reemplazar lista de Entradium</div>
   <div id="import-section" class="import-box" style="display:none;">
     <h3>Cargar lista de Entradium</h3>
     <p>Selecciona el archivo Excel (.xlsx) o CSV que te descargas de Entradium. Detecta automáticamente las columnas de nombre, referencia, teléfono y email (busca cabeceras como "nombre", "referencia"/"pedido", "telefono", "email").</p>
@@ -255,24 +286,22 @@
     </div>
   </div>
 
-  <div class="toggle-import" id="show-import-link" style="display:none;">+ cargar / reemplazar lista de Entradium</div>
-  <div class="toggle-import" id="show-reset-link" style="display:none;">🔒 cerrar evento (guarda histórico y vacía la lista)</div>
-
-  <div class="searchbar" id="search-wrap" style="display:none;">
-    <input id="search-input" type="text" placeholder="Nombre o número de referencia...">
-    <div class="hint">Escribe el nombre o pide el número de referencia del ticket</div>
+  <div class="toggle-import" id="show-history-link" style="text-align:left;">📅 ver histórico de eventos</div>
+  <div id="history-section" class="import-box" style="display:none;">
+    <h3>Histórico de eventos</h3>
+    <div id="history-list"></div>
+    <div class="row" style="margin-top:6px;">
+      <button class="secondary" id="close-history">Cerrar</button>
+    </div>
   </div>
 
-  <div id="list"></div>
-
-  <div class="addbar" id="add-noticket-wrap" style="display:none;">
-    <input id="new-name" type="text" placeholder="Añadir sin ticket (paga en barra)...">
-    <button id="add-btn">Añadir</button>
-  </div>
+  <div class="toggle-import" id="show-reset-link" style="display:none;text-align:left;">🔒 cerrar evento (guarda histórico y vacía la lista)</div>
 </div>
 
 <!-- Librería para leer archivos Excel (.xlsx/.xls) directamente en el navegador -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<!-- Librería para escanear códigos QR con la cámara del móvil -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
 
 <script type="module">
 // ---------------------------------------------------------------------
@@ -409,6 +438,10 @@ function rowsToGuests(rows){
   const refIdx = findCol(['referencia','pedido','reference','order','ticket']);
   const phoneIdx = findCol(['telefono','teléfono','phone','movil','móvil']);
   const emailIdx = findCol(['email','correo']);
+  // La columna "QR" de la exportación de Entradium trae el mismo texto
+  // exacto que codifica el código QR impreso en cada entrada, así que
+  // podemos usarlo para reconocer a cada persona al escanear su ticket.
+  const qrIdx = findCol(['qr']);
 
   const out = [];
   for(let i = 1; i < rows.length; i++){
@@ -420,6 +453,7 @@ function rowsToGuests(rows){
       ref: refIdx >= 0 ? cols[refIdx] : '',
       phone: phoneIdx >= 0 ? cols[phoneIdx] : '',
       email: emailIdx >= 0 ? cols[emailIdx] : '',
+      qr: qrIdx >= 0 ? cols[qrIdx] : '',
       noticket: false,
       served: false
     });
@@ -445,6 +479,7 @@ function importGuests(parsed){
       ref: p.ref,
       phone: p.phone,
       email: p.email,
+      qr: p.qr || '',
       noticket: p.noticket,
       served: p.served,
       seq: nextSeq()
@@ -553,6 +588,86 @@ function toggleServed(id){
 function toggleImport(show){
   document.getElementById('import-section').style.display = show ? 'block' : 'none';
 }
+
+// ---------------------------------------------------------------------
+// Escaneo de QR con la cámara del móvil. El código QR de cada entrada de
+// Entradium coincide exactamente con la columna "QR" del Excel/CSV que
+// se importa, así que basta con comparar el texto leído por la cámara
+// con ese campo guardado en cada invitado.
+// ---------------------------------------------------------------------
+let html5QrCode = null;
+let lastScan = { text: null, time: 0 };
+
+function findGuestByQr(text){
+  const norm = (text || '').trim().toLowerCase();
+  if(!norm) return null;
+  return people.find(p => p.qr && String(p.qr).trim().toLowerCase() === norm) || null;
+}
+
+function showScanResult(kind, text){
+  const el = document.getElementById('qr-result');
+  el.style.display = 'block';
+  el.textContent = text;
+  if(kind === 'ok'){ el.style.background = '#e3f6ea'; el.style.color = '#1f6b3f'; }
+  else if(kind === 'warn'){ el.style.background = '#fdf1da'; el.style.color = '#8a6512'; }
+  else { el.style.background = '#fbe4e0'; el.style.color = '#a53a2a'; }
+}
+
+function onScanSuccess(decodedText){
+  const now = Date.now();
+  // Evita procesar el mismo código varias veces seguidas mientras la
+  // cámara lo sigue viendo en pantalla.
+  if(decodedText === lastScan.text && (now - lastScan.time) < 3000) return;
+  lastScan = { text: decodedText, time: now };
+
+  const guest = findGuestByQr(decodedText);
+  if(!guest){
+    showScanResult('err', '✗ Entrada no encontrada en esta lista');
+    return;
+  }
+  if(guest.served){
+    showScanResult('warn', '⚠ ' + guest.name + ' — ya estaba marcado como servido');
+    return;
+  }
+  update(ref(db, 'guests/' + guest.id), { served: true, servedAt: Date.now() })
+    .catch(e => console.error('No se pudo marcar como servido desde el QR', e));
+  showScanResult('ok', '✓ ' + guest.name + ' — bienvenido/a');
+}
+
+function startScanner(){
+  document.getElementById('qr-result').style.display = 'none';
+  lastScan = { text: null, time: 0 };
+  if(typeof Html5Qrcode === 'undefined'){
+    alert('No se pudo cargar el lector de QR (revisa tu conexión a internet) y vuelve a intentarlo.');
+    return;
+  }
+  html5QrCode = new Html5Qrcode('qr-reader');
+  html5QrCode.start(
+    { facingMode: 'environment' },
+    { fps: 10, qrbox: 240 },
+    onScanSuccess,
+    () => { /* fotograma sin QR legible: se ignora, sigue intentando */ }
+  ).catch(err => {
+    console.error('No se pudo iniciar la cámara', err);
+    alert('No se pudo acceder a la cámara. Revisa que el navegador tenga permiso de cámara para esta página.');
+  });
+}
+
+function stopScanner(){
+  if(html5QrCode){
+    html5QrCode.stop().then(() => html5QrCode.clear()).catch(() => {});
+    html5QrCode = null;
+  }
+}
+
+document.getElementById('show-scanner-link').onclick = () => {
+  document.getElementById('scanner-section').style.display = 'block';
+  startScanner();
+};
+document.getElementById('close-scanner').onclick = () => {
+  stopScanner();
+  document.getElementById('scanner-section').style.display = 'none';
+};
 
 document.getElementById('search-input').addEventListener('input', render);
 
