@@ -46,6 +46,19 @@
   header h1{margin:0 0 4px;font-size:1.3rem;}
   header p{margin:0;font-size:0.85rem;opacity:0.85;}
 
+  .conn-status{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:0.72rem;
+    margin-top:8px;
+    padding:3px 9px;
+    border-radius:999px;
+    background:rgba(255,255,255,0.15);
+  }
+  .conn-dot{width:7px;height:7px;border-radius:50%;background:#e8603c;}
+  .conn-status.online .conn-dot{background:#4fd67a;}
+
   .stats{
     display:grid;
     grid-template-columns:repeat(3,1fr);
@@ -181,6 +194,7 @@
   <header>
     <h1>🍹 Control de barra · L'Àncora Social</h1>
     <p>Busca por nombre o número de referencia · Entradium</p>
+    <div class="conn-status" id="conn-status"><span class="conn-dot"></span><span id="conn-text">Conectando...</span></div>
   </header>
 
   <div class="stats">
@@ -215,27 +229,61 @@
   </div>
 </div>
 
-<script>
-const STORAGE_KEY = 'lancora-entradium-guests';
+<script type="module">
+// ---------------------------------------------------------------------
+// Conexión a Firebase (Realtime Database). Los datos ahora se guardan
+// en la nube en lugar de en el navegador de cada móvil, así que todos
+// los dispositivos que abran esta página ven y actualizan la misma
+// lista de invitados en tiempo real.
+// ---------------------------------------------------------------------
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getDatabase, ref, onValue, set
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBwfoTj5OONhFtdyvl4STHvkB2nOLO2hWk",
+  authDomain: "lancora-social.firebaseapp.com",
+  databaseURL: "https://lancora-social-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "lancora-social",
+  storageBucket: "lancora-social.firebasestorage.app",
+  messagingSenderId: "453756091430",
+  appId: "1:453756091430:web:f5b236a7c17eb5ddfd3ae7"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const guestsRef = ref(db, 'guests');
+
 let people = [];
+let seqCounter = Date.now();
+function nextSeq(){
+  seqCounter += 1;
+  return seqCounter;
+}
 
-function loadState(){
-  try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    people = raw ? JSON.parse(raw) : [];
-  } catch(e){
-    people = [];
-  }
+function setConnStatus(online){
+  const el = document.getElementById('conn-status');
+  const txt = document.getElementById('conn-text');
+  el.classList.toggle('online', online);
+  txt.textContent = online ? 'Sincronizado' : 'Conectando...';
+}
+
+// Nos suscribimos a los cambios de la base de datos: cada vez que
+// cualquier móvil añade, importa o marca a alguien como servido,
+// esta función se vuelve a ejecutar automáticamente en todos los
+// dispositivos abiertos.
+onValue(guestsRef, (snapshot) => {
+  const val = snapshot.val() || {};
+  people = Object.keys(val)
+    .map(id => ({ id, ...val[id] }))
+    .sort((a, b) => (a.seq || 0) - (b.seq || 0));
+  setConnStatus(true);
   render();
-}
-
-function saveState(){
-  try{
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(people));
-  } catch(e){
-    console.error('No se pudo guardar', e);
-  }
-}
+}, (error) => {
+  console.error('Error leyendo datos de Firebase', error);
+  setConnStatus(false);
+});
 
 function parseCSV(text){
   const lines = text.trim().split(/\r?\n/).filter(l => l.trim());
@@ -335,12 +383,14 @@ function updateStats(){
   document.getElementById('s-pending').textContent = people.filter(p => !p.served).length;
 }
 
+// Marcar/desmarcar como servido: escribimos solo el campo "served" de
+// ese invitado concreto (no toda la lista), así dos móviles pueden
+// marcar a dos personas distintas al mismo tiempo sin pisarse los datos.
 function toggleServed(id){
   const p = people.find(x => x.id === id);
   if(!p) return;
-  p.served = !p.served;
-  saveState();
-  render();
+  set(ref(db, 'guests/' + id + '/served'), !p.served)
+    .catch(e => console.error('No se pudo guardar el cambio', e));
 }
 
 function toggleImport(show){
@@ -353,9 +403,7 @@ document.getElementById('show-import-link').onclick = () => toggleImport(true);
 document.getElementById('cancel-import').onclick = () => toggleImport(false);
 document.getElementById('show-reset-link').onclick = () => {
   if(confirm('¿Vaciar toda la lista actual? Úsalo solo al empezar un evento nuevo.')){
-    people = [];
-    saveState();
-    render();
+    set(guestsRef, null).catch(e => console.error('No se pudo vaciar la lista', e));
   }
 };
 
@@ -364,35 +412,44 @@ document.getElementById('import-btn').onclick = () => {
   if(!text.trim()) return;
   const parsed = parseCSV(text);
   if(parsed.length === 0) return;
-  people = parsed;
-  saveState();
+
+  const obj = {};
+  parsed.forEach(p => {
+    obj[p.id] = {
+      name: p.name,
+      ref: p.ref,
+      phone: p.phone,
+      email: p.email,
+      noticket: p.noticket,
+      served: p.served,
+      seq: nextSeq()
+    };
+  });
+
+  set(guestsRef, obj).catch(e => console.error('No se pudo guardar la lista importada', e));
   toggleImport(false);
   document.getElementById('csv-input').value = '';
-  render();
 };
 
 document.getElementById('add-btn').onclick = () => {
   const input = document.getElementById('new-name');
   const name = input.value.trim();
   if(!name) return;
-  people.push({
-    id: 'noticket-' + Date.now(),
+  const id = 'noticket-' + Date.now();
+  set(ref(db, 'guests/' + id), {
     name,
     ref: '',
     phone: '',
     email: '',
     noticket: true,
-    served: true
-  });
+    served: true,
+    seq: nextSeq()
+  }).catch(e => console.error('No se pudo añadir', e));
   input.value = '';
-  saveState();
-  render();
 };
 document.getElementById('new-name').addEventListener('keydown', e => {
   if(e.key === 'Enter') document.getElementById('add-btn').click();
 });
-
-loadState();
 </script>
 </body>
 </html>
