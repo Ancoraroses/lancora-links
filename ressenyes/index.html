@@ -148,6 +148,7 @@ input.cf-input:focus{border-color:var(--navy);background:var(--white);}
     <button data-lang="es" onclick="setLang('es')">ES</button>
     <button data-lang="fr" onclick="setLang('fr')">FR</button>
     <button data-lang="en" onclick="setLang('en')">EN</button>
+    <button data-lang="nl" onclick="setLang('nl')">NL</button>
   </div>
 
   <img class="logo" src="https://lh3.googleusercontent.com/d/1Sn6cRZPGXz9UCWmdOR2Ea6JmohuCCZUl" alt="L'Ancora">
@@ -256,6 +257,17 @@ var T = {
     cfSend:"Send message",cfSending:"Sending…",
     spTitle:"Thank you!",spBody:"We're glad you enjoyed your visit. Redirecting to Google…",
     snTitle:"Message received",snBody:"We're sorry your experience wasn't perfect. Our team will read it today."
+  },
+  nl:{
+    title:"Hoe was uw ervaring?",sub:"Uw mening helpt ons elke dag te verbeteren bij L'Ancora.",
+    foot:"L'Ancora Bar Restaurant · Roses",redir:"Bedankt, u wordt doorgestuurd…",
+    sel:"Wie heeft u geholpen?",no:"Dat weet ik niet meer",warn:"⚠️ Selecteer eerst wie u geholpen heeft",
+    by:"Bediend door",
+    cfTitle:"Vertel ons wat er misging",cfSub:"Uw bericht komt rechtstreeks bij ons team terecht. We lezen het vandaag nog.",
+    cfMsg:"Uw opmerking",cfName:"Naam (optioneel)",cfEmail:"E-mail (optioneel, om te reageren)",
+    cfSend:"Bericht versturen",cfSending:"Versturen…",
+    spTitle:"Bedankt!",spBody:"Fijn dat u heeft genoten. U wordt nu doorgestuurd naar Google…",
+    snTitle:"Bericht ontvangen",snBody:"Het spijt ons dat uw ervaring niet perfect was. Ons team leest dit vandaag nog."
   }
 };
 
@@ -284,6 +296,7 @@ function detectLang(){
   var n=(navigator.language||navigator.userLanguage||"es").toLowerCase();
   if(n.indexOf("fr")===0)return"fr";
   if(n.indexOf("en")===0)return"en";
+  if(n.indexOf("nl")===0)return"nl";
   return"es";
 }
 function setLang(l){
