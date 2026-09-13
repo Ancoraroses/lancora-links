@@ -68,7 +68,7 @@
   .mono{ font-family:'Jost',sans-serif; letter-spacing:2px; }
   .hint{ font-size:12.5px; color:var(--slate); margin-top:14px; max-width:280px; margin-inline:auto; }
 
-  input[type=text], input[type=tel], input[type=password], input[type=month]{
+  input[type=text], input[type=tel], input[type=password], input[type=month], input[type=number]{
     width:100%; border:1px solid var(--hair); background:#fff; border-radius:10px;
     padding:11px 14px; font-family:'Jost',sans-serif; font-size:15px; color:var(--navy);
   }
@@ -228,6 +228,11 @@
           <button id="personal-sello" class="btn-primary small">+ Segell manual</button>
           <button id="personal-ig" class="btn-outline">+ Participació IG</button>
         </div>
+        <div class="row" style="margin-top:10px;">
+          <input id="personal-importe" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Import del tiquet (€)">
+          <button id="personal-tiquet" class="btn-outline" style="flex:none; padding:9px 14px;">+ Participacions</button>
+        </div>
+        <p class="muted" style="margin-top:6px; font-size:11.5px;">1 participació pel sorteig per cada 30€ de tiquet.</p>
         <button id="personal-eliminar" class="btn-danger">Eliminar client</button>
       </div>
 
@@ -332,11 +337,11 @@ async function listAllClients(){
     return Object.values(snap.val()).sort((a,b)=>(b.sellos||0)-(a.sellos||0));
   }catch(e){ console.error(e); return []; }
 }
-async function addParticipation(month, phone, nombre){
+async function addParticipation(month, phone, nombre, inc=1){
   const ref = db.ref(`${ROOT}/participaciones/${month}/${phone}`);
   let existing = null;
   try{ const snap = await ref.once("value"); existing = snap.exists() ? snap.val() : null; }catch(e){}
-  const count = existing ? existing.count + 1 : 1;
+  const count = (existing ? existing.count : 0) + inc;
   await ref.set({ phone, nombre: nombre || existing?.nombre || "", count });
 }
 async function listParticipations(month){
@@ -373,7 +378,7 @@ const UI = {
   cliente_btn_confirmar: { ca:"Confirmar i registrar visita", es:"Confirmar y registrar visita", en:"Confirm and log visit", fr:"Confirmer et enregistrer la visite", de:"Bestätigen und registrieren", nl:"Bevestigen en registreren" },
   cliente_msg_ya: { ca:"Avui ja tens el segell registrat. Fins la propera!", es:"Hoy ya tienes el sello registrado. ¡Hasta la próxima!", en:"You've already logged today's stamp. See you next time!", fr:"Vous avez déjà enregistré le tampon d'aujourd'hui. À bientôt !", de:"Du hast deinen heutigen Stempel schon erhalten. Bis zum nächsten Mal!", nl:"Je hebt vandaag al een stempel geregistreerd. Tot de volgende keer!" },
   cliente_msg_premio: { ca:"Segell registrat i premi desbloquejat! Ensenya la pantalla al personal.", es:"¡Sello registrado y premio desbloqueado! Enseña la pantalla al personal.", en:"Stamp logged and reward unlocked! Show this screen to staff.", fr:"Tampon enregistré et récompense débloquée ! Montrez cet écran au personnel.", de:"Stempel registriert und Prämie freigeschaltet! Zeig diesen Bildschirm dem Personal.", nl:"Stempel geregistreerd en beloning ontgrendeld! Laat dit scherm aan het personeel zien." },
-  cliente_msg_ok: { ca:"Segell registrat. Ja tens una participació pel sorteig d'aquest mes.", es:"Sello registrado. Ya tienes una participación para el sorteo de este mes.", en:"Stamp logged. You now have one entry in this month's raffle.", fr:"Tampon enregistré. Vous avez une participation au tirage de ce mois-ci.", de:"Stempel registriert. Du hast jetzt eine Teilnahme an der Verlosung dieses Monats.", nl:"Stempel geregistreerd. Je hebt nu een deelname aan de trekking van deze maand." },
+  cliente_msg_ok: { ca:"Segell registrat. Cada 30€ del teu tiquet et donen una participació pel sorteig — demana-ho al personal en pagar.", es:"Sello registrado. Cada 30€ de tu tique te dan una participación para el sorteo — pídelo al personal al pagar.", en:"Stamp logged. Every €30 on your bill earns a raffle entry — ask staff when you pay.", fr:"Tampon enregistré. Chaque tranche de 30€ sur votre addition donne une participation au tirage — demandez-le au personnel en payant.", de:"Stempel registriert. Pro 30€ auf deiner Rechnung bekommst du eine Verlosungsteilnahme — frag das Personal beim Bezahlen.", nl:"Stempel geregistreerd. Elke €30 op je rekening levert een deelname aan de trekking op — vraag ernaar bij het personeel bij het afrekenen." },
   cliente_sub: {
     ca:(n,tt,r)=>`${n} de ${tt} segells · ${r} premis aconseguits`,
     es:(n,tt,r)=>`${n} de ${tt} sellos · ${r} premios conseguidos`,
@@ -473,7 +478,6 @@ async function registrarVisita(cliente, nombreNuevo){
   if(sellos >= SELLOS_OBJETIVO){ sellos = 0; recompensas += 1; premio = true; }
   const actualizado = { ...cliente, sellos, recompensas, lastVisitDate: hoy, totalVisits: (cliente.totalVisits||0)+1 };
   await saveClient(p, actualizado);
-  await addParticipation(monthStr(), p, cliente.nombre || nombreNuevo || "");
   mostrarDone(actualizado, premio ? t(UI.cliente_msg_premio) : t(UI.cliente_msg_ok));
 }
 
@@ -555,7 +559,6 @@ document.getElementById("personal-sello").addEventListener("click", async ()=>{
   if(sellos >= SELLOS_OBJETIVO){ sellos = 0; recompensas += 1; }
   clienteActivo = { ...clienteActivo, sellos, recompensas, lastVisitDate: todayStr(), totalVisits:(clienteActivo.totalVisits||0)+1 };
   await saveClient(clienteActivo.phone, clienteActivo);
-  await addParticipation(monthStr(), clienteActivo.phone, clienteActivo.nombre);
   document.getElementById("personal-cliente-meta").textContent = `${clienteActivo.sellos}/${SELLOS_OBJETIVO} segells · ${clienteActivo.totalVisits||0} visites totals · ${clienteActivo.recompensas||0} premis`;
   const msg = document.getElementById("personal-mensaje");
   msg.textContent = "Segell manual afegit."; msg.hidden = false;
@@ -566,6 +569,19 @@ document.getElementById("personal-ig").addEventListener("click", async ()=>{
   await addParticipation(monthStr(), clienteActivo.phone, clienteActivo.nombre);
   const msg = document.getElementById("personal-mensaje");
   msg.textContent = "Participació extra d'Instagram afegida pel sorteig d'aquest mes."; msg.hidden = false;
+});
+
+document.getElementById("personal-tiquet").addEventListener("click", async ()=>{
+  if(!clienteActivo) return;
+  const msg = document.getElementById("personal-mensaje");
+  const importeInput = document.getElementById("personal-importe");
+  const importe = parseFloat(importeInput.value);
+  if(isNaN(importe) || importe <= 0){ msg.textContent = "Introdueix un import vàlid."; msg.hidden = false; return; }
+  const participaciones = Math.floor(importe / 30);
+  if(participaciones <= 0){ msg.textContent = `Amb ${importe.toFixed(2)}€ no arriba als 30€ per sumar cap participació.`; msg.hidden = false; return; }
+  await addParticipation(monthStr(), clienteActivo.phone, clienteActivo.nombre, participaciones);
+  msg.textContent = `${participaciones} participació(ns) afegida(es) pel sorteig d'aquest mes (tiquet de ${importe.toFixed(2)}€).`; msg.hidden = false;
+  importeInput.value = "";
 });
 
 document.getElementById("personal-eliminar").addEventListener("click", async ()=>{
