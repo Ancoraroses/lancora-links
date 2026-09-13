@@ -427,10 +427,18 @@ const clienteDone = document.getElementById("cliente-done");
 const clienteBlocked = document.getElementById("cliente-blocked");
 let necesitaAlta = false;
 
+const STAFF_KEY = "tripulacio26";
+const urlParams = new URLSearchParams(window.location.search);
+const isStaff = urlParams.get("staff") === STAFF_KEY;
+
+if(!isStaff){
+  document.querySelector("nav.tabs").style.display = "none";
+}
+
 (function comprobarCodigo(){
-  const params = new URLSearchParams(window.location.search);
-  const c = params.get("c");
-  if(c && c.toUpperCase() !== codigoDelDia()){
+  const c = urlParams.get("c");
+  const codigoValido = c && c.toUpperCase() === codigoDelDia();
+  if(!codigoValido && !isStaff){
     clienteBlocked.hidden = false;
     clienteForm.hidden = true;
   }
