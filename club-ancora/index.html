@@ -228,11 +228,13 @@
           <button id="personal-sello" class="btn-primary small">+ Segell manual</button>
           <button id="personal-ig" class="btn-outline">+ Participació IG</button>
         </div>
-        <div class="row" style="margin-top:10px;">
+        <div style="height:8px"></div>
+        <input id="personal-ticket" type="text" inputmode="numeric" placeholder="Núm. de tiquet">
+        <div class="row" style="margin-top:8px;">
           <input id="personal-importe" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Import del tiquet (€)">
           <button id="personal-tiquet" class="btn-outline" style="flex:none; padding:9px 14px;">+ Participacions</button>
         </div>
-        <p class="muted" style="margin-top:6px; font-size:11.5px;">1 participació pel sorteig per cada 30€ de tiquet.</p>
+        <p class="muted" style="margin-top:6px; font-size:11.5px;">1 participació pel sorteig per cada 30€ de tiquet. Cada núm. de tiquet només compta un cop.</p>
         <button id="personal-eliminar" class="btn-danger">Eliminar client</button>
       </div>
 
@@ -571,17 +573,38 @@ document.getElementById("personal-ig").addEventListener("click", async ()=>{
   msg.textContent = "Participació extra d'Instagram afegida pel sorteig d'aquest mes."; msg.hidden = false;
 });
 
+function sanitizeKey(s){ return (s||"").trim().replace(/[.#$\[\]]/g, "-"); }
+
 document.getElementById("personal-tiquet").addEventListener("click", async ()=>{
   if(!clienteActivo) return;
   const msg = document.getElementById("personal-mensaje");
+  const ticketInput = document.getElementById("personal-ticket");
   const importeInput = document.getElementById("personal-importe");
+  const ticketId = sanitizeKey(ticketInput.value);
   const importe = parseFloat(importeInput.value);
+
+  if(!ticketId){ msg.textContent = "Introdueix el número de tiquet."; msg.hidden = false; return; }
   if(isNaN(importe) || importe <= 0){ msg.textContent = "Introdueix un import vàlid."; msg.hidden = false; return; }
+
+  const mes = monthStr();
+  const ticketRef = db.ref(`${ROOT}/tiquets/${mes}/${ticketId}`);
+  const existente = await ticketRef.once("value");
+  if(existente.exists()){
+    const prev = existente.val();
+    msg.textContent = `El tiquet ${ticketId} ja es va registrar (${prev.importe}€, ${prev.nombre || prev.phone}).`;
+    msg.hidden = false;
+    return;
+  }
+
   const participaciones = Math.floor(importe / 30);
-  if(participaciones <= 0){ msg.textContent = `Amb ${importe.toFixed(2)}€ no arriba als 30€ per sumar cap participació.`; msg.hidden = false; return; }
-  await addParticipation(monthStr(), clienteActivo.phone, clienteActivo.nombre, participaciones);
-  msg.textContent = `${participaciones} participació(ns) afegida(es) pel sorteig d'aquest mes (tiquet de ${importe.toFixed(2)}€).`; msg.hidden = false;
-  importeInput.value = "";
+  await ticketRef.set({ ticketId, phone: clienteActivo.phone, nombre: clienteActivo.nombre || "", importe, participaciones, timestamp: Date.now() });
+  if(participaciones > 0){ await addParticipation(mes, clienteActivo.phone, clienteActivo.nombre, participaciones); }
+
+  msg.textContent = participaciones > 0
+    ? `Tiquet ${ticketId} registrat: ${participaciones} participació(ns) (${importe.toFixed(2)}€).`
+    : `Tiquet ${ticketId} registrat (${importe.toFixed(2)}€), no arriba als 30€ per participació.`;
+  msg.hidden = false;
+  ticketInput.value = ""; importeInput.value = "";
 });
 
 document.getElementById("personal-eliminar").addEventListener("click", async ()=>{
@@ -596,6 +619,15 @@ document.getElementById("personal-eliminar").addEventListener("click", async ()=
       const meses = snap.val();
       const updates = {};
       Object.keys(meses).forEach(m=>{ if(meses[m] && meses[m][phone]) updates[`${ROOT}/participaciones/${m}/${phone}`] = null; });
+      if(Object.keys(updates).length) await db.ref().update(updates);
+    }
+    const snapTickets = await db.ref(`${ROOT}/tiquets`).once("value");
+    if(snapTickets.exists()){
+      const meses = snapTickets.val();
+      const updates = {};
+      Object.keys(meses).forEach(m=>{
+        Object.keys(meses[m]||{}).forEach(tid=>{ if(meses[m][tid] && meses[m][tid].phone === phone) updates[`${ROOT}/tiquets/${m}/${tid}`] = null; });
+      });
       if(Object.keys(updates).length) await db.ref().update(updates);
     }
   }catch(e){ console.error(e); }
