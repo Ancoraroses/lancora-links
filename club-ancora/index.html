@@ -96,6 +96,11 @@
     padding:9px; font-family:'Jost',sans-serif; font-size:13px; font-weight:600; cursor:pointer; flex:1;
   }
   button.btn-outline:hover{ background:var(--gold); color:#fff; }
+  button.btn-danger{
+    width:100%; background:#fff; color:var(--err); border:1px solid var(--err); border-radius:10px;
+    padding:9px; font-family:'Jost',sans-serif; font-size:13px; font-weight:600; cursor:pointer; margin-top:10px;
+  }
+  button.btn-danger:hover{ background:var(--err); color:#fff; }
   button.btn-icon{
     background:#fff; border:1px solid var(--hair); border-radius:10px; width:42px; color:var(--navy); cursor:pointer;
   }
@@ -223,6 +228,7 @@
           <button id="personal-sello" class="btn-primary small">+ Segell manual</button>
           <button id="personal-ig" class="btn-outline">+ Participació IG</button>
         </div>
+        <button id="personal-eliminar" class="btn-danger">Eliminar client</button>
       </div>
 
       <p id="personal-mensaje" class="ok-text" hidden></p>
@@ -560,6 +566,28 @@ document.getElementById("personal-ig").addEventListener("click", async ()=>{
   await addParticipation(monthStr(), clienteActivo.phone, clienteActivo.nombre);
   const msg = document.getElementById("personal-mensaje");
   msg.textContent = "Participació extra d'Instagram afegida pel sorteig d'aquest mes."; msg.hidden = false;
+});
+
+document.getElementById("personal-eliminar").addEventListener("click", async ()=>{
+  if(!clienteActivo) return;
+  const ok = confirm(`Segur que vols eliminar ${clienteActivo.nombre || clienteActivo.phone}? S'esborraran els seus segells i totes les seves participacions. Aquesta acció no es pot desfer.`);
+  if(!ok) return;
+  const phone = clienteActivo.phone;
+  await db.ref(`${ROOT}/clientes/${phone}`).remove();
+  try{
+    const snap = await db.ref(`${ROOT}/participaciones`).once("value");
+    if(snap.exists()){
+      const meses = snap.val();
+      const updates = {};
+      Object.keys(meses).forEach(m=>{ if(meses[m] && meses[m][phone]) updates[`${ROOT}/participaciones/${m}/${phone}`] = null; });
+      if(Object.keys(updates).length) await db.ref().update(updates);
+    }
+  }catch(e){ console.error(e); }
+  document.getElementById("personal-cliente").hidden = true;
+  const msg = document.getElementById("personal-mensaje");
+  msg.textContent = "Client eliminat, segells i participacions esborrats."; msg.hidden = false;
+  document.getElementById("personal-phone").value = "";
+  clienteActivo = null;
 });
 
 document.getElementById("personal-cargar").addEventListener("click", async ()=>{
