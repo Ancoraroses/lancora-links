@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Club Àncora — L'Àncora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1c3454;
+    --navy-ink:#16283f;
+    --gold:#c8963e;
+    --gold-soft:#e0bd7c;
+    --cream:#f5f0e6;
+    --linen:#efe7d6;
+    --slate:#5b6b7a;
+    --hair:rgba(28,52,84,0.18);
+    --ok:#2f7a4f;
+    --err:#a3372c;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream); color:var(--navy);
+    font-family:'Jost', -apple-system, sans-serif;
+    font-size:16px; line-height:1.5;
+  }
+  h1,h2,h3{ font-family:'Playfair Display', Georgia, serif; font-weight:700; }
+  .wrap{ max-width:440px; margin:0 auto; }
+
+  /* -------- header -------- */
+  header{
+    background:linear-gradient(180deg, var(--navy) 0%, var(--navy-ink) 100%);
+    color:var(--cream); text-align:center; padding:34px 20px 26px; position:relative; overflow:hidden;
+  }
+  header::before{
+    content:''; position:absolute; inset:10px; border:1px solid rgba(200,150,62,0.35);
+    border-radius:2px; pointer-events:none;
+  }
+  .emblem{ width:56px; height:56px; margin:0 auto 10px; position:relative; }
+  .emblem svg.rope{ position:absolute; inset:0; width:100%; height:100%; color:var(--gold); }
+  .emblem svg.anchor-icon{ position:absolute; inset:0; margin:auto; width:24px; height:24px; color:var(--cream); }
+  header .eyebrow{
+    font-size:11.5px; letter-spacing:3px; text-transform:uppercase; color:var(--gold-soft); font-weight:600; margin-bottom:2px;
+  }
+  header h1{ font-size:28px; letter-spacing:0.3px; }
+  header .tagline{ font-size:13px; color:rgba(245,240,230,0.75); margin-top:4px; }
+
+  /* -------- tabs -------- */
+  nav.tabs{ display:flex; border-bottom:1px solid var(--hair); background:#fff; }
+  nav.tabs button{
+    flex:1; background:none; border:none; padding:13px 4px; font-family:'Jost',sans-serif;
+    font-size:12.5px; font-weight:500; color:var(--slate); cursor:pointer;
+    border-bottom:2px solid transparent;
+  }
+  nav.tabs button.active{ color:var(--navy); border-bottom-color:var(--gold); font-weight:600; }
+
+  main{ padding:22px 20px 40px; background:var(--cream); min-height:420px; }
+  .view{ }
+  .view[hidden]{ display:none; }
+
+  .lead{ font-size:14.5px; color:var(--navy); margin-bottom:16px; }
+  .muted{ font-size:13px; color:var(--slate); }
+  .center{ text-align:center; }
+  .cap{ text-transform:capitalize; }
+  .mono{ font-family:'Jost',sans-serif; letter-spacing:2px; }
+  .hint{ font-size:12.5px; color:var(--slate); margin-top:14px; max-width:280px; margin-inline:auto; }
+
+  input[type=text], input[type=tel], input[type=password], input[type=month]{
+    width:100%; border:1px solid var(--hair); background:#fff; border-radius:10px;
+    padding:11px 14px; font-family:'Jost',sans-serif; font-size:15px; color:var(--navy);
+  }
+  input:focus{ outline:none; border-color:var(--gold); }
+  label.check{ display:flex; gap:8px; align-items:flex-start; font-size:12.5px; color:var(--slate); margin-top:10px; }
+  label.check input{ width:auto; margin-top:3px; }
+
+  .error{ color:var(--err); font-size:12.5px; margin-top:8px; }
+  .ok-text{ color:var(--ok); font-size:13px; margin-top:10px; }
+
+  button.btn-primary{
+    width:100%; background:var(--navy); color:var(--cream); border:none; border-radius:10px;
+    padding:12px; font-family:'Jost',sans-serif; font-size:14.5px; font-weight:600; cursor:pointer;
+    margin-top:14px; transition:background .15s ease;
+  }
+  button.btn-primary:hover{ background:var(--navy-ink); }
+  button.btn-primary.small{ width:auto; flex:1; padding:9px; font-size:13px; margin-top:0; }
+  button.btn-secondary{
+    width:100%; background:var(--linen); color:var(--navy); border:1px solid var(--hair); border-radius:10px;
+    padding:11px; font-family:'Jost',sans-serif; font-size:14px; font-weight:500; cursor:pointer; margin-top:12px;
+  }
+  button.btn-secondary:hover{ background:var(--gold); color:#fff; border-color:var(--gold); }
+  button.btn-outline{
+    background:#fff; color:var(--gold); border:1px solid var(--gold); border-radius:10px;
+    padding:9px; font-family:'Jost',sans-serif; font-size:13px; font-weight:600; cursor:pointer; flex:1;
+  }
+  button.btn-outline:hover{ background:var(--gold); color:#fff; }
+  button.btn-icon{
+    background:#fff; border:1px solid var(--hair); border-radius:10px; width:42px; color:var(--navy); cursor:pointer;
+  }
+  .row{ display:flex; gap:8px; }
+
+  .card{
+    background:#fff; border:1px solid var(--hair); border-radius:14px; padding:14px 16px; margin-top:14px;
+  }
+  .card .name{ font-family:'Playfair Display',serif; font-weight:700; font-size:16px; color:var(--navy); }
+
+  .stamps{ display:flex; gap:8px; justify-content:center; margin:18px 0; }
+  .stamp{
+    width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    border:2px solid var(--hair);
+  }
+  .stamp.filled{ background:var(--navy); border-color:var(--navy); }
+  .stamp svg{ width:16px; height:16px; color:var(--hair); }
+  .stamp.filled svg{ color:var(--gold); }
+
+  .notice{ background:var(--linen); border:1px solid var(--hair); border-radius:10px; padding:14px; font-size:13.5px; color:var(--navy); text-align:center; }
+
+  .qr-frame{
+    width:210px; height:210px; margin:16px auto; border:1px solid var(--hair); border-radius:12px;
+    background:#fff; padding:10px; display:flex; align-items:center; justify-content:center;
+  }
+  .qr-frame img{ width:100%; height:100%; display:block; }
+
+  .draw-box{
+    border:1px solid var(--hair); border-radius:14px; background:#fff; padding:34px 16px; margin-top:16px;
+    text-align:center; min-height:90px; display:flex; flex-direction:column; justify-content:center; gap:4px;
+  }
+  .draw-name{ font-family:'Playfair Display',serif; font-size:19px; color:var(--navy); }
+
+  .divider{ height:1px; background:var(--hair); margin:20px 0 14px; }
+
+  .list-row{ display:flex; justify-content:space-between; font-size:13px; padding:7px 0; border-bottom:1px solid var(--linen); }
+  .list-row .n{ color:var(--navy); }
+  .list-row .m{ color:var(--slate); }
+  #personal-lista{ max-height:220px; overflow-y:auto; margin-top:10px; }
+
+  .side-widget{
+    position:fixed; right:14px; bottom:14px; z-index:30;
+    background:var(--navy); border:1px solid var(--gold); border-radius:30px;
+    display:flex; align-items:center; gap:2px; padding:5px 6px;
+    box-shadow:0 4px 16px rgba(28,52,84,0.28);
+  }
+  .side-widget .lang-btn{
+    font-family:'Jost',sans-serif; font-size:10.5px; font-weight:600; letter-spacing:0.5px;
+    padding:6px 8px; border-radius:16px; border:none; background:none;
+    color:var(--cream); cursor:pointer; opacity:0.55; transition:opacity .15s ease;
+  }
+  .side-widget .lang-btn:hover{ opacity:1; }
+  .side-widget .lang-btn.active{ opacity:1; background:var(--gold); color:var(--navy-ink); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="emblem">
+    <svg class="rope" viewBox="0 0 100 100"><use href="#ic-rope"/></svg>
+    <svg class="anchor-icon" viewBox="0 0 100 100"><use href="#ic-anchor"/></svg>
+  </div>
+  <div class="eyebrow">Bar · Restaurant · Roses</div>
+  <h1>Club Àncora</h1>
+  <div class="tagline" id="header-tagline">Fidelitat de migdia entre setmana · sorteig mensual</div>
+</header>
+
+<nav class="tabs">
+  <button data-tab="cliente" class="active">Client</button>
+  <button data-tab="pantalla">Pantalla</button>
+  <button data-tab="personal">Personal</button>
+  <button data-tab="sorteo">Sorteig</button>
+</nav>
+
+<main class="wrap">
+
+  <section id="view-cliente" class="view">
+    <div id="cliente-blocked" class="notice" hidden>Aquest enllaç ja no és vàlid. Escaneja el QR de la pantalla del restaurant per registrar la teva visita d'avui.</div>
+
+    <div id="cliente-form">
+      <p class="lead" id="cliente-lead">Introdueix el teu mòbil per registrar la teva visita d'avui.</p>
+      <input id="cliente-phone" type="tel" inputmode="numeric" placeholder="600 000 000">
+      <div id="cliente-alta" hidden>
+        <div style="height:10px"></div>
+        <input id="cliente-nombre" type="text" placeholder="El teu nom (opcional)">
+        <label class="check"><input type="checkbox" id="cliente-consent"><span id="cliente-consent-label">Accepto que L'Àncora faci servir el meu mòbil per gestionar el Club Àncora i el sorteig mensual.</span></label>
+      </div>
+      <p id="cliente-error" class="error" hidden></p>
+      <button id="cliente-submit" class="btn-primary">Registrar la meva visita</button>
+    </div>
+
+    <div id="cliente-done" hidden>
+      <p id="cliente-mensaje" class="lead center" style="margin-top:6px"></p>
+      <div id="cliente-stamps" class="stamps"></div>
+      <p id="cliente-sub" class="muted center"></p>
+      <button id="cliente-reset" class="btn-secondary">Fet</button>
+    </div>
+  </section>
+
+  <section id="view-pantalla" class="view" hidden>
+    <p id="pantalla-fecha" class="muted center cap"></p>
+    <div class="qr-frame"><img id="pantalla-qr" alt="Codi QR del dia per registrar la visita"></div>
+    <p id="pantalla-codigo" class="muted center mono"></p>
+    <p class="hint center">Es renova automàticament cada dia. No cal fer res: deixa aquesta pantalla oberta a la barra.</p>
+  </section>
+
+  <section id="view-personal" class="view" hidden>
+    <div id="personal-gate">
+      <p class="muted center" style="margin-bottom:14px;">Zona restringida al personal.</p>
+      <input id="personal-pin" type="password" inputmode="numeric" placeholder="PIN" style="text-align:center; max-width:140px; margin:0 auto; display:block;">
+      <p id="personal-pin-error" class="error center" hidden style="max-width:260px; margin-inline:auto;"></p>
+      <button id="personal-entrar" class="btn-primary" style="max-width:200px; margin:14px auto 0; display:block;">Entrar</button>
+    </div>
+
+    <div id="personal-panel" hidden>
+      <div class="row">
+        <input id="personal-phone" type="tel" inputmode="numeric" placeholder="Mòbil del client">
+        <button id="personal-buscar" class="btn-icon">🔍</button>
+      </div>
+
+      <div id="personal-cliente" class="card" hidden>
+        <p id="personal-cliente-nombre" class="name"></p>
+        <p id="personal-cliente-meta" class="muted" style="margin-top:2px;"></p>
+        <div class="row" style="margin-top:12px;">
+          <button id="personal-sello" class="btn-primary small">+ Segell manual</button>
+          <button id="personal-ig" class="btn-outline">+ Participació IG</button>
+        </div>
+      </div>
+
+      <p id="personal-mensaje" class="ok-text" hidden></p>
+
+      <div class="divider"></div>
+      <button id="personal-cargar" class="btn-secondary">Carregar llistat de clients</button>
+      <div id="personal-lista"></div>
+    </div>
+  </section>
+
+  <section id="view-sorteo" class="view" hidden>
+    <div class="row">
+      <input id="sorteo-mes" type="month">
+      <button id="sorteo-refrescar" class="btn-icon">↻</button>
+    </div>
+    <p id="sorteo-resumen" class="muted" style="margin-top:12px;"></p>
+    <div class="draw-box">
+      <p id="sorteo-nombre" class="draw-name">Encara no s'ha fet el sorteig d'aquest mes.</p>
+      <p id="sorteo-phone" class="muted"></p>
+    </div>
+    <div class="row" style="margin-top:14px;">
+      <button id="sorteo-fer" class="btn-primary" style="margin-top:0;">Fer el sorteig</button>
+      <button id="sorteo-csv" class="btn-secondary" style="margin-top:0; width:auto; padding:11px 16px;">CSV</button>
+    </div>
+  </section>
+
+</main>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="ic-anchor" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+      <circle cx="50" cy="16" r="8"/><line x1="50" y1="24" x2="50" y2="85"/>
+      <line x1="30" y1="34" x2="70" y2="34"/>
+      <path d="M20 55 C20 78, 38 90, 50 90 C62 90, 80 78, 80 55"/>
+      <line x1="20" y1="46" x2="20" y2="64"/><line x1="80" y1="46" x2="80" y2="64"/>
+    </symbol>
+    <symbol id="ic-rope" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.2">
+      <circle cx="50" cy="50" r="46" stroke-dasharray="4 3"/>
+      <circle cx="50" cy="50" r="40"/>
+    </symbol>
+  </defs>
+</svg>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+<script>
+/* ============================================================
+   ✏️  CONFIGURACIÓ DE FIREBASE — ENGANXA AQUÍ LES TEVES CLAUS
+   Firebase Console → Configuració del projecte → Les teves apps
+   → SDK. Pots reutilitzar el mateix projecte "lancora-social" que
+   ja feu servir pel control de barra dels tardeos: aquesta eina
+   guarda les seves dades sota el camí "club-ancora/…", que no
+   toca res del que ja hi ha.
+   ============================================================ */
+const firebaseConfig = {
+  apiKey: "ENGANXA_AQUI",
+  authDomain: "ENGANXA_AQUI",
+  databaseURL: "ENGANXA_AQUI",
+  projectId: "ENGANXA_AQUI",
+  storageBucket: "ENGANXA_AQUI",
+  messagingSenderId: "ENGANXA_AQUI",
+  appId: "ENGANXA_AQUI"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const ROOT = "club-ancora";
+
+const SELLOS_OBJETIVO = 5;
+const PIN_DEMO = "0000";
+
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+function monthStr(d = new Date()){ return d.toISOString().slice(0,7); }
+function monthLabel(m){
+  const [y, mo] = m.split("-").map(Number);
+  const nombres = ["gener","febrer","març","abril","maig","juny","juliol","agost","setembre","octubre","novembre","desembre"];
+  return `${nombres[mo-1]} ${y}`;
+}
+function cleanPhone(p){ return (p||"").replace(/\D/g,""); }
+function codigoDelDia(date = new Date()){
+  const dateStr = date.toISOString().slice(0,10);
+  const str = dateStr + "club-ancora-2026";
+  let hash = 0;
+  for (let i=0;i<str.length;i++){ hash = (hash*31 + str.charCodeAt(i)) >>> 0; }
+  return hash.toString(36).toUpperCase().slice(0,6);
+}
+
+async function getClient(phone){
+  try{
+    const snap = await db.ref(`${ROOT}/clientes/${phone}`).once("value");
+    return snap.exists() ? snap.val() : null;
+  }catch(e){ console.error(e); return null; }
+}
+async function saveClient(phone, data){
+  return db.ref(`${ROOT}/clientes/${phone}`).set(data);
+}
+async function listAllClients(){
+  try{
+    const snap = await db.ref(`${ROOT}/clientes`).once("value");
+    if(!snap.exists()) return [];
+    return Object.values(snap.val()).sort((a,b)=>(b.sellos||0)-(a.sellos||0));
+  }catch(e){ console.error(e); return []; }
+}
+async function addParticipation(month, phone, nombre){
+  const ref = db.ref(`${ROOT}/participaciones/${month}/${phone}`);
+  let existing = null;
+  try{ const snap = await ref.once("value"); existing = snap.exists() ? snap.val() : null; }catch(e){}
+  const count = existing ? existing.count + 1 : 1;
+  await ref.set({ phone, nombre: nombre || existing?.nombre || "", count });
+}
+async function listParticipations(month){
+  try{
+    const snap = await db.ref(`${ROOT}/participaciones/${month}`).once("value");
+    if(!snap.exists()) return [];
+    return Object.values(snap.val());
+  }catch(e){ console.error(e); return []; }
+}
+
+/* -------- idiomes -------- */
+const SUPPORTED_LANGS = ["ca","es","en","fr","de","nl"];
+const LANG_NAMES = { ca:"CA", es:"ES", en:"EN", fr:"FR", de:"DE", nl:"NL" };
+function detectLang(){
+  const nav = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "ca"]);
+  for(const l of nav){ const code = l.slice(0,2).toLowerCase(); if(SUPPORTED_LANGS.includes(code)) return code; }
+  return "ca";
+}
+let LANG = detectLang();
+function t(field){ return (field && (field[LANG] || field.ca)) || ""; }
+
+const UI = {
+  tagline: { ca:"Fidelitat de migdia entre setmana · sorteig mensual", es:"Fidelidad de mediodía entre semana · sorteo mensual", en:"Weekday lunch loyalty · monthly raffle", fr:"Fidélité déjeuner en semaine · tirage mensuel", de:"Treueprogramm fürs Mittagessen · monatliche Verlosung", nl:"Loyaliteitsprogramma lunch doordeweeks · maandelijkse trekking" },
+  tab_cliente: { ca:"Client", es:"Cliente", en:"Client", fr:"Client", de:"Kunde", nl:"Klant" },
+  tab_pantalla: { ca:"Pantalla", es:"Pantalla", en:"Screen", fr:"Écran", de:"Bildschirm", nl:"Scherm" },
+  tab_personal: { ca:"Personal", es:"Personal", en:"Staff", fr:"Personnel", de:"Personal", nl:"Personeel" },
+  tab_sorteo: { ca:"Sorteig", es:"Sorteo", en:"Draw", fr:"Tirage", de:"Verlosung", nl:"Trekking" },
+  cliente_lead: { ca:"Introdueix el teu mòbil per registrar la teva visita d'avui.", es:"Introduce tu móvil para registrar tu visita de hoy.", en:"Enter your phone number to log today's visit.", fr:"Indiquez votre mobile pour enregistrer votre visite du jour.", de:"Gib deine Handynummer ein, um deinen heutigen Besuch zu registrieren.", nl:"Voer je mobiele nummer in om je bezoek van vandaag te registreren." },
+  cliente_placeholder_nombre: { ca:"El teu nom (opcional)", es:"Tu nombre (opcional)", en:"Your name (optional)", fr:"Votre nom (facultatif)", de:"Dein Name (optional)", nl:"Je naam (optioneel)" },
+  cliente_consent: { ca:"Accepto que L'Àncora faci servir el meu mòbil per gestionar el Club Àncora i el sorteig mensual.", es:"Acepto que L'Àncora use mi móvil para gestionar el Club Àncora y el sorteo mensual.", en:"I agree that L'Àncora may use my phone number to manage Club Àncora and the monthly raffle.", fr:"J'accepte que L'Àncora utilise mon mobile pour gérer le Club Àncora et le tirage mensuel.", de:"Ich stimme zu, dass L'Àncora meine Handynummer für den Club Àncora und die monatliche Verlosung verwendet.", nl:"Ik ga ermee akkoord dat L'Àncora mijn mobiele nummer gebruikt voor de Club Àncora en de maandelijkse trekking." },
+  cliente_error_phone: { ca:"Introdueix un número de mòbil vàlid.", es:"Introduce un número de móvil válido.", en:"Enter a valid phone number.", fr:"Indiquez un numéro de mobile valide.", de:"Gib eine gültige Handynummer ein.", nl:"Voer een geldig mobiel nummer in." },
+  cliente_error_consent: { ca:"Cal acceptar l'ús de les dades per continuar.", es:"Debes aceptar el uso de los datos para continuar.", en:"You need to accept the data use to continue.", fr:"Vous devez accepter l'utilisation des données pour continuer.", de:"Du musst der Datennutzung zustimmen, um fortzufahren.", nl:"Je moet akkoord gaan met het gebruik van je gegevens om door te gaan." },
+  cliente_btn_registrar: { ca:"Registrar la meva visita", es:"Registrar mi visita", en:"Log my visit", fr:"Enregistrer ma visite", de:"Meinen Besuch registrieren", nl:"Mijn bezoek registreren" },
+  cliente_btn_confirmar: { ca:"Confirmar i registrar visita", es:"Confirmar y registrar visita", en:"Confirm and log visit", fr:"Confirmer et enregistrer la visite", de:"Bestätigen und registrieren", nl:"Bevestigen en registreren" },
+  cliente_msg_ya: { ca:"Avui ja tens el segell registrat. Fins la propera!", es:"Hoy ya tienes el sello registrado. ¡Hasta la próxima!", en:"You've already logged today's stamp. See you next time!", fr:"Vous avez déjà enregistré le tampon d'aujourd'hui. À bientôt !", de:"Du hast deinen heutigen Stempel schon erhalten. Bis zum nächsten Mal!", nl:"Je hebt vandaag al een stempel geregistreerd. Tot de volgende keer!" },
+  cliente_msg_premio: { ca:"Segell registrat i premi desbloquejat! Ensenya la pantalla al personal.", es:"¡Sello registrado y premio desbloqueado! Enseña la pantalla al personal.", en:"Stamp logged and reward unlocked! Show this screen to staff.", fr:"Tampon enregistré et récompense débloquée ! Montrez cet écran au personnel.", de:"Stempel registriert und Prämie freigeschaltet! Zeig diesen Bildschirm dem Personal.", nl:"Stempel geregistreerd en beloning ontgrendeld! Laat dit scherm aan het personeel zien." },
+  cliente_msg_ok: { ca:"Segell registrat. Ja tens una participació pel sorteig d'aquest mes.", es:"Sello registrado. Ya tienes una participación para el sorteo de este mes.", en:"Stamp logged. You now have one entry in this month's raffle.", fr:"Tampon enregistré. Vous avez une participation au tirage de ce mois-ci.", de:"Stempel registriert. Du hast jetzt eine Teilnahme an der Verlosung dieses Monats.", nl:"Stempel geregistreerd. Je hebt nu een deelname aan de trekking van deze maand." },
+  cliente_sub: {
+    ca:(n,tt,r)=>`${n} de ${tt} segells · ${r} premis aconseguits`,
+    es:(n,tt,r)=>`${n} de ${tt} sellos · ${r} premios conseguidos`,
+    en:(n,tt,r)=>`${n} of ${tt} stamps · ${r} rewards earned`,
+    fr:(n,tt,r)=>`${n} sur ${tt} tampons · ${r} récompenses obtenues`,
+    de:(n,tt,r)=>`${n} von ${tt} Stempeln · ${r} Prämien erhalten`,
+    nl:(n,tt,r)=>`${n} van ${tt} stempels · ${r} beloningen behaald`
+  },
+  cliente_btn_fet: { ca:"Fet", es:"Hecho", en:"Done", fr:"Terminé", de:"Fertig", nl:"Klaar" },
+  cliente_blocked: { ca:"Aquest enllaç ja no és vàlid. Escaneja el QR de la pantalla del restaurant per registrar la teva visita d'avui.", es:"Este enlace ya no es válido. Escanea el QR de la pantalla del restaurante para registrar tu visita de hoy.", en:"This link is no longer valid. Scan the QR shown on screen at the restaurant to log today's visit.", fr:"Ce lien n'est plus valide. Scannez le QR affiché au restaurant pour enregistrer votre visite du jour.", de:"Dieser Link ist nicht mehr gültig. Scanne den im Restaurant angezeigten QR-Code, um deinen heutigen Besuch zu registrieren.", nl:"Deze link is niet meer geldig. Scan de QR-code op het scherm in het restaurant om je bezoek van vandaag te registreren." }
+};
+
+function buildSideWidget(){
+  let box = document.getElementById("sidewidget");
+  if(!box){ box = document.createElement("div"); box.id = "sidewidget"; box.className = "side-widget"; document.body.appendChild(box); }
+  box.innerHTML = SUPPORTED_LANGS.map(l => `<button class="lang-btn ${l===LANG?"active":""}" data-lang="${l}">${LANG_NAMES[l]}</button>`).join("");
+  box.querySelectorAll(".lang-btn").forEach(btn=>{
+    btn.addEventListener("click", ()=>{ LANG = btn.dataset.lang; applyLang(); });
+  });
+}
+
+function applyLang(){
+  document.documentElement.lang = LANG;
+  document.getElementById("header-tagline").textContent = t(UI.tagline);
+  document.querySelector('[data-tab="cliente"]').textContent = t(UI.tab_cliente);
+  document.querySelector('[data-tab="pantalla"]').textContent = t(UI.tab_pantalla);
+  document.querySelector('[data-tab="personal"]').textContent = t(UI.tab_personal);
+  document.querySelector('[data-tab="sorteo"]').textContent = t(UI.tab_sorteo);
+  document.getElementById("cliente-lead").textContent = t(UI.cliente_lead);
+  document.getElementById("cliente-nombre").placeholder = t(UI.cliente_placeholder_nombre);
+  document.getElementById("cliente-consent-label").textContent = t(UI.cliente_consent);
+  document.getElementById("cliente-submit").textContent = necesitaAlta ? t(UI.cliente_btn_confirmar) : t(UI.cliente_btn_registrar);
+  document.getElementById("cliente-blocked").textContent = t(UI.cliente_blocked);
+  document.getElementById("cliente-reset").textContent = t(UI.cliente_btn_fet);
+  buildSideWidget();
+}
+
+/* -------- tabs -------- */
+document.querySelectorAll("nav.tabs button").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll("nav.tabs button").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".view").forEach(v=>v.hidden = true);
+    btn.classList.add("active");
+    document.getElementById(`view-${btn.dataset.tab}`).hidden = false;
+  });
+});
+
+/* -------- vista client -------- */
+const clientePhone = document.getElementById("cliente-phone");
+const clienteAlta = document.getElementById("cliente-alta");
+const clienteNombre = document.getElementById("cliente-nombre");
+const clienteConsent = document.getElementById("cliente-consent");
+const clienteError = document.getElementById("cliente-error");
+const clienteSubmit = document.getElementById("cliente-submit");
+const clienteForm = document.getElementById("cliente-form");
+const clienteDone = document.getElementById("cliente-done");
+const clienteBlocked = document.getElementById("cliente-blocked");
+let necesitaAlta = false;
+
+(function comprobarCodigo(){
+  const params = new URLSearchParams(window.location.search);
+  const c = params.get("c");
+  if(c && c.toUpperCase() !== codigoDelDia()){
+    clienteBlocked.hidden = false;
+    clienteForm.hidden = true;
+  }
+})();
+
+function pintarSegells(container, sellos){
+  container.innerHTML = "";
+  for(let i=0;i<SELLOS_OBJETIVO;i++){
+    const d = document.createElement("div");
+    d.className = "stamp" + (i < sellos ? " filled" : "");
+    d.innerHTML = `<svg viewBox="0 0 100 100"><use href="#ic-anchor"/></svg>`;
+    container.appendChild(d);
+  }
+}
+
+async function registrarVisita(cliente, nombreNuevo){
+  const p = cleanPhone(clientePhone.value);
+  const hoy = todayStr();
+  if(cliente.lastVisitDate === hoy){
+    mostrarDone(cliente, t(UI.cliente_msg_ya));
+    return;
+  }
+  let sellos = (cliente.sellos||0) + 1;
+  let recompensas = cliente.recompensas || 0;
+  let premio = false;
+  if(sellos >= SELLOS_OBJETIVO){ sellos = 0; recompensas += 1; premio = true; }
+  const actualizado = { ...cliente, sellos, recompensas, lastVisitDate: hoy, totalVisits: (cliente.totalVisits||0)+1 };
+  await saveClient(p, actualizado);
+  await addParticipation(monthStr(), p, cliente.nombre || nombreNuevo || "");
+  mostrarDone(actualizado, premio ? t(UI.cliente_msg_premio) : t(UI.cliente_msg_ok));
+}
+
+function mostrarDone(cliente, mensaje){
+  clienteForm.hidden = true;
+  clienteDone.hidden = false;
+  document.getElementById("cliente-mensaje").textContent = mensaje;
+  pintarSegells(document.getElementById("cliente-stamps"), cliente.sellos);
+  document.getElementById("cliente-sub").textContent = t(UI.cliente_sub)(cliente.sellos, SELLOS_OBJETIVO, cliente.recompensas||0);
+}
+
+clienteSubmit.addEventListener("click", async ()=>{
+  clienteError.hidden = true;
+  const p = cleanPhone(clientePhone.value);
+  if(p.length < 9){ clienteError.textContent = t(UI.cliente_error_phone); clienteError.hidden = false; return; }
+
+  if(!necesitaAlta){
+    const c = await getClient(p);
+    if(c){ await registrarVisita(c); }
+    else{ necesitaAlta = true; clienteAlta.hidden = false; clienteSubmit.textContent = t(UI.cliente_btn_confirmar); }
+    return;
+  }
+
+  if(!clienteConsent.checked){ clienteError.textContent = t(UI.cliente_error_consent); clienteError.hidden = false; return; }
+  const nuevo = { phone:p, nombre: clienteNombre.value.trim(), sellos:0, recompensas:0, totalVisits:0, lastVisitDate:null, consentido:true, createdAt: todayStr() };
+  await registrarVisita(nuevo, nuevo.nombre);
+});
+
+document.getElementById("cliente-reset").addEventListener("click", ()=>{
+  clientePhone.value = ""; clienteNombre.value = ""; clienteConsent.checked = false;
+  necesitaAlta = false; clienteAlta.hidden = true; clienteSubmit.textContent = t(UI.cliente_btn_registrar);
+  clienteError.hidden = true; clienteDone.hidden = true; clienteForm.hidden = false;
+});
+
+applyLang();
+
+/* -------- pantalla -------- */
+function pintarPantalla(){
+  const ahora = new Date();
+  const codigo = codigoDelDia(ahora);
+  const base = window.location.origin + window.location.pathname;
+  const url = `${base}?c=${codigo}`;
+  document.getElementById("pantalla-fecha").textContent = ahora.toLocaleDateString("ca-ES", { weekday:"long", day:"numeric", month:"long" });
+  document.getElementById("pantalla-qr").src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(url)}`;
+  document.getElementById("pantalla-codigo").textContent = `Codi de seguretat: ${codigo}`;
+}
+pintarPantalla();
+setInterval(pintarPantalla, 60000);
+
+/* -------- personal -------- */
+const personalGate = document.getElementById("personal-gate");
+const personalPanel = document.getElementById("personal-panel");
+let clienteActivo = null;
+
+document.getElementById("personal-entrar").addEventListener("click", ()=>{
+  const pin = document.getElementById("personal-pin").value;
+  const err = document.getElementById("personal-pin-error");
+  if(pin === PIN_DEMO){ personalGate.hidden = true; personalPanel.hidden = false; }
+  else{ err.textContent = "PIN incorrecte. (Demo: 0000 — canvia'l per un de real abans de fer-ho servir a producció.)"; err.hidden = false; }
+});
+
+document.getElementById("personal-buscar").addEventListener("click", async ()=>{
+  const p = cleanPhone(document.getElementById("personal-phone").value);
+  const tarjeta = document.getElementById("personal-cliente");
+  const msg = document.getElementById("personal-mensaje");
+  msg.hidden = true;
+  if(p.length < 9) return;
+  const c = await getClient(p);
+  clienteActivo = c;
+  if(!c){ tarjeta.hidden = true; msg.textContent = "No hi ha cap client amb aquest mòbil encara."; msg.hidden = false; return; }
+  tarjeta.hidden = false;
+  document.getElementById("personal-cliente-nombre").textContent = `${c.nombre || "Sense nom"} · ${c.phone}`;
+  document.getElementById("personal-cliente-meta").textContent = `${c.sellos}/${SELLOS_OBJETIVO} segells · ${c.totalVisits||0} visites totals · ${c.recompensas||0} premis`;
+});
+
+document.getElementById("personal-sello").addEventListener("click", async ()=>{
+  if(!clienteActivo) return;
+  let sellos = (clienteActivo.sellos||0)+1, recompensas = clienteActivo.recompensas||0;
+  if(sellos >= SELLOS_OBJETIVO){ sellos = 0; recompensas += 1; }
+  clienteActivo = { ...clienteActivo, sellos, recompensas, lastVisitDate: todayStr(), totalVisits:(clienteActivo.totalVisits||0)+1 };
+  await saveClient(clienteActivo.phone, clienteActivo);
+  await addParticipation(monthStr(), clienteActivo.phone, clienteActivo.nombre);
+  document.getElementById("personal-cliente-meta").textContent = `${clienteActivo.sellos}/${SELLOS_OBJETIVO} segells · ${clienteActivo.totalVisits||0} visites totals · ${clienteActivo.recompensas||0} premis`;
+  const msg = document.getElementById("personal-mensaje");
+  msg.textContent = "Segell manual afegit."; msg.hidden = false;
+});
+
+document.getElementById("personal-ig").addEventListener("click", async ()=>{
+  if(!clienteActivo) return;
+  await addParticipation(monthStr(), clienteActivo.phone, clienteActivo.nombre);
+  const msg = document.getElementById("personal-mensaje");
+  msg.textContent = "Participació extra d'Instagram afegida pel sorteig d'aquest mes."; msg.hidden = false;
+});
+
+document.getElementById("personal-cargar").addEventListener("click", async ()=>{
+  const cont = document.getElementById("personal-lista");
+  cont.innerHTML = `<p class="muted center">Carregant…</p>`;
+  const clientes = await listAllClients();
+  cont.innerHTML = "";
+  if(clientes.length === 0){ cont.innerHTML = `<p class="muted">Encara no hi ha cap client registrat.</p>`; return; }
+  clientes.forEach(c=>{
+    const row = document.createElement("div");
+    row.className = "list-row";
+    row.innerHTML = `<span class="n">${c.nombre || c.phone}</span><span class="m">${c.sellos}/${SELLOS_OBJETIVO} · ${c.totalVisits||0} visites</span>`;
+    cont.appendChild(row);
+  });
+});
+
+/* -------- sorteig -------- */
+const sorteoMes = document.getElementById("sorteo-mes");
+sorteoMes.value = monthStr();
+let participantesActuales = [];
+
+async function cargarSorteo(){
+  document.getElementById("sorteo-nombre").textContent = "Carregant…";
+  document.getElementById("sorteo-phone").textContent = "";
+  const p = await listParticipations(sorteoMes.value);
+  participantesActuales = p;
+  const total = p.reduce((s,x)=>s+x.count,0);
+  document.getElementById("sorteo-resumen").textContent = `${monthLabel(sorteoMes.value)} · ${p.length} participants · ${total} participacions totals`;
+  document.getElementById("sorteo-nombre").textContent = "Encara no s'ha fet el sorteig d'aquest mes.";
+}
+sorteoMes.addEventListener("change", cargarSorteo);
+document.getElementById("sorteo-refrescar").addEventListener("click", cargarSorteo);
+cargarSorteo();
+
+document.getElementById("sorteo-fer").addEventListener("click", ()=>{
+  const bolsa = [];
+  participantesActuales.forEach(p=>{ for(let i=0;i<p.count;i++) bolsa.push(p); });
+  if(bolsa.length === 0) return;
+  const nombreEl = document.getElementById("sorteo-nombre");
+  const phoneEl = document.getElementById("sorteo-phone");
+  let vueltas = 0;
+  const maxVueltas = 18;
+  const intervalo = setInterval(()=>{
+    const azar = bolsa[Math.floor(Math.random()*bolsa.length)];
+    nombreEl.textContent = azar.nombre || azar.phone;
+    phoneEl.textContent = "";
+    vueltas++;
+    if(vueltas >= maxVueltas){
+      clearInterval(intervalo);
+      const final = bolsa[Math.floor(Math.random()*bolsa.length)];
+      nombreEl.textContent = final.nombre || final.phone;
+      phoneEl.textContent = final.phone;
+    }
+  }, 90);
+});
+
+document.getElementById("sorteo-csv").addEventListener("click", ()=>{
+  const filas = [["mobil","nom","participacions"]];
+  participantesActuales.forEach(p=>filas.push([p.phone, p.nombre||"", p.count]));
+  const csv = filas.map(f=>f.join(",")).join("\n");
+  const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = `sorteig-club-ancora-${sorteoMes.value}.csv`; a.click();
+  URL.revokeObjectURL(url);
+});
+</script>
+
+</body>
+</html>
