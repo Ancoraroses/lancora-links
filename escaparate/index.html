@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'Àncora — Escaparate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1c3454; --navy-ink:#16283f; --gold:#c8963e; --gold-soft:#e0bd7c;
+    --cream:#f5f0e6; --linen:#efe7d6;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{ width:100%; height:100%; overflow:hidden; background:var(--navy); }
+  body{ font-family:'Jost', -apple-system, sans-serif; }
+
+  #stage-iframe{ position:fixed; inset:0; width:100%; height:100%; border:none; display:none; }
+
+  #stage-reserva{
+    position:fixed; inset:0; display:none; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; color:var(--cream);
+    background: radial-gradient(circle at 50% 20%, rgba(200,150,62,0.14), transparent 55%), linear-gradient(180deg, var(--navy) 0%, var(--navy-ink) 100%);
+  }
+  #stage-reserva::before{
+    content:''; position:absolute; inset:22px; border:1px solid rgba(200,150,62,0.35); border-radius:2px; pointer-events:none;
+  }
+  .emblem{ width:min(9vw,90px); height:min(9vw,90px); margin:0 auto 18px; position:relative; }
+  .emblem svg.rope{ position:absolute; inset:0; width:100%; height:100%; color:var(--gold); }
+  .emblem svg.anchor-icon{ position:absolute; inset:0; margin:auto; width:42%; height:42%; color:var(--cream); }
+  .eyebrow{ font-size:clamp(12px,1.3vw,16px); letter-spacing:4px; text-transform:uppercase; color:var(--gold-soft); font-weight:600; margin-bottom:8px; }
+  h1{ font-family:'Playfair Display', Georgia, serif; font-weight:700; font-size:clamp(30px,5vw,56px); }
+  .sub{ margin-top:10px; font-size:clamp(14px,1.6vw,20px); color:rgba(245,240,230,0.8); }
+  .qr-frame{
+    margin:32px auto 0; width:min(30vw,260px); height:min(30vw,260px); background:#fff; border-radius:16px;
+    padding:14px; border:1px solid rgba(200,150,62,0.4);
+  }
+  .qr-frame img{ width:100%; height:100%; display:block; }
+</style>
+</head>
+<body>
+
+<iframe id="stage-iframe" title="Contingut de L'Àncora"></iframe>
+
+<div id="stage-reserva">
+  <div class="emblem">
+    <svg class="rope" viewBox="0 0 100 100"><use href="#ic-rope"/></svg>
+    <svg class="anchor-icon" viewBox="0 0 100 100"><use href="#ic-anchor"/></svg>
+  </div>
+  <div class="eyebrow">Bar · Restaurant · Roses</div>
+  <h1>Reserva la teva taula</h1>
+  <div class="sub">Book your table · Escanea per reservar</div>
+  <div class="qr-frame"><img id="reserva-qr" alt="QR per reservar taula"></div>
+</div>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="ic-anchor" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+      <circle cx="50" cy="16" r="8"/><line x1="50" y1="24" x2="50" y2="85"/>
+      <line x1="30" y1="34" x2="70" y2="34"/>
+      <path d="M20 55 C20 78, 38 90, 50 90 C62 90, 80 78, 80 55"/>
+      <line x1="20" y1="46" x2="20" y2="64"/><line x1="80" y1="46" x2="80" y2="64"/>
+    </symbol>
+    <symbol id="ic-rope" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.2">
+      <circle cx="50" cy="50" r="46" stroke-dasharray="4 3"/>
+      <circle cx="50" cy="50" r="40"/>
+    </symbol>
+  </defs>
+</svg>
+
+<script>
+/* ============================================================
+   ✏️  EDITA AQUÍ LES DIAPOSITIVES DE L'ESCAPARATE
+   - "iframe": obre una pàgina web sencera (ha de permetre incrustar-se;
+     ancoraroses.github.io ho permet, però webs externes poden bloquejar-ho).
+   - "reserva": diapositiva fixa amb QR (no depèn de cap web externa).
+   - duration és en mil·lisegons.
+   ============================================================ */
+const RESERVA_URL = "https://cloudclient28.hiopos.com/booking/#/details";
+
+const SLIDES = [
+  { type: "iframe", url: "https://ancoraroses.github.io/lancora-links/club-ancora/?view=pantalla", duration: 15000 },
+  { type: "iframe", url: "https://ancoraroses.github.io/lancora-carta-comida/lancora-carta-comida.html", duration: 25000 },
+  { type: "reserva", duration: 15000 }
+];
+
+document.getElementById("reserva-qr").src =
+  `https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${encodeURIComponent(RESERVA_URL)}`;
+
+let idx = 0;
+const iframeEl = document.getElementById("stage-iframe");
+const reservaEl = document.getElementById("stage-reserva");
+
+function showSlide(){
+  const s = SLIDES[idx];
+  if(s.type === "iframe"){
+    reservaEl.style.display = "none";
+    iframeEl.style.display = "block";
+    iframeEl.src = s.url;
+  } else {
+    iframeEl.style.display = "none";
+    iframeEl.src = "about:blank";
+    reservaEl.style.display = "flex";
+  }
+  setTimeout(next, s.duration);
+}
+function next(){ idx = (idx + 1) % SLIDES.length; showSlide(); }
+showSlide();
+</script>
+
+</body>
+</html>
