@@ -207,6 +207,19 @@
   }
   .history-item .h-date{font-weight:700;margin-bottom:6px;}
   .history-item .h-detail{font-size:0.82rem;color:#5a5348;line-height:1.6;}
+  .history-item .h-names{margin-top:8px;font-size:0.78rem;color:#7a7268;line-height:1.5;}
+  .dancer-pay-btn{
+    display:block;
+    margin:8px 0 0;
+    background:none;
+    border:1px solid var(--gold);
+    color:var(--gold);
+    border-radius:8px;
+    padding:6px 12px;
+    font-size:0.76rem;
+    font-weight:600;
+  }
+  .dancer-pay-btn.paid{background:var(--ok);border-color:var(--ok);color:white;}
 
   .qr-btn{
     flex-shrink:0;
@@ -470,7 +483,11 @@ function renderHistory(){
     container.innerHTML = '<p style="color:#a89a80;font-size:0.85rem;">Todavía no hay eventos cerrados.</p>';
     return;
   }
-  container.innerHTML = pastEvents.map(ev => `
+  container.innerHTML = pastEvents.map(ev => {
+    const names = (ev.servedNames || []).map(p =>
+      p.name + (p.noticket ? ' <span style="color:#a89a80;">(puerta)</span>' : '')
+    ).join(', ');
+    return `
     <div class="history-item">
       <div class="h-date">${ev.closedAtLabel || ''}</div>
       <div class="h-detail">
@@ -478,9 +495,24 @@ function renderHistory(){
         Ingresos estimados: <strong>${ev.revenue}€</strong><br>
         Chupitos gratis dados: ${ev.freeShotsGiven}<br>
         A pagar a bailarines: <strong>${ev.dancerPayment}€</strong>
+        <button class="dancer-pay-btn${ev.dancerPaid ? ' paid' : ''}" data-event-id="${ev.id}">
+          ${ev.dancerPaid ? '✓ Bailarines pagados' : 'Marcar bailarines pagados'}
+        </button>
+        ${names ? `<div class="h-names"><strong>Asistentes:</strong> ${names}</div>` : ''}
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
+
+  container.querySelectorAll('.dancer-pay-btn').forEach(btn => {
+    btn.onclick = () => {
+      const eventId = btn.getAttribute('data-event-id');
+      const ev = pastEvents.find(e => e.id === eventId);
+      if(!ev) return;
+      update(ref(db), { ['events/' + eventId + '/dancerPaid']: !ev.dancerPaid })
+        .catch(e => console.error('No se pudo actualizar el pago a bailarines', e));
+    };
+  });
 }
 
 // Convierte una lista de filas (cada fila es un array de celdas: la
@@ -771,6 +803,14 @@ document.getElementById('show-reset-link').onclick = () => {
     const stats = computeEventStats(people);
     const now = new Date();
     const eventId = 'evt-' + now.getTime();
+    // Guardamos también los nombres de quienes vinieron (ordenados por
+    // llegada) y de quienes estaban en lista pero no se presentaron,
+    // para poder consultarlos más adelante aunque se vacíe la lista activa.
+    const servedNames = people.filter(p => p.served)
+      .slice()
+      .sort((a, b) => (a.servedAt || 0) - (b.servedAt || 0))
+      .map(p => ({ name: p.name, noticket: !!p.noticket }));
+    const noShowNames = people.filter(p => !p.served).map(p => p.name);
     update(ref(db), {
       ['events/' + eventId]: {
         closedAt: now.getTime(),
@@ -781,7 +821,10 @@ document.getElementById('show-reset-link').onclick = () => {
         revenue: stats.revenue,
         freeShotsGiven: stats.freeShotsGiven,
         dancerPayment: stats.dancerPayment,
-        totalInList: people.length
+        dancerPaid: false,
+        totalInList: people.length,
+        servedNames: servedNames,
+        noShowNames: noShowNames
       },
       guests: null
     }).catch(e => console.error('No se pudo cerrar el evento', e));
