@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>L'Àncora · Celebraciones y grupos en Roses</title>
+<meta name="description" content="Menús para grupos, cenas de empresa, cumpleaños y celebraciones en L'Àncora, Roses (Costa Brava). Paellas, marisco fresco y brindis de bienvenida.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="L'Àncora · Celebraciones y grupos en Roses">
+<meta property="og:description" content="Menús para grupos, cenas de empresa y celebraciones junto al mar en Roses. Pide nuestro dosier y brindamos por la casa.">
+<meta property="og:image" content="https://ancoraroses.github.io/lancora-links/grupos/logo-40-aniversario.png">
+<link rel="icon" type="image/svg+xml" href="logo-40-aniversario.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: sticky header with the 40th-anniversary seal, sunset-sea hero, three occasion cards, full-bleed navy lead band, benefits grid, closing CTA. Boldness lives in the hero script headline; the rest stays quiet. */
+:root{
+  --bg:#fbf9f4; --surface:#ffffff; --tint:#f2ece0; --fg:#1c3454; --muted:#51607a; --line:#e4ddcc;
+  --band:#1c3454; --band-fg:#f4f8fc; --band-muted:#bccadf;
+  --sky:#d3e6f3; --sky-strong:#2f7fb0; --gold:#c8963e;
+  --cta:#b5562d; --cta-hover:#9a4622; --cta-fg:#ffffff; --wa:#168a48; --wa-fg:#ffffff;
+  --field-bg:#ffffff; --field-fg:#1c3454; --field-line:#c9d3e3;
+  --font-body:"Montserrat","Helvetica Neue",Arial,sans-serif;
+  --font-script:"Allura","Snell Roundhand","Brush Script MT",cursive;
+  --shadow:0 10px 30px rgba(28,52,84,.10);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0e1830; --surface:#16223f; --tint:#121d38; --fg:#eef3fa; --muted:#a9b6cc; --line:#27355a;
+    --band:#0b1429; --sky:#1c3354; --sky-strong:#7cc0ea; --shadow:0 10px 30px rgba(0,0,0,.35);
+    --cta:#c8693f; --cta-hover:#d9794d; --wa:#1faa59; color-scheme:dark;
+  }
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3{line-height:1.15;margin:0;text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--sky-strong);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.script{font-family:var(--font-script);font-weight:400;letter-spacing:0}
+.eyebrow{font-size:.78rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
+
+/* header */
+.site-header{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--line)}
+.site-header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:68px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
+.brand img{width:46px;height:46px;flex:none}
+.brand span{font-family:var(--font-script);font-size:2.2rem;line-height:1}
+.langs{display:flex;gap:4px}
+.langs button{font:600 .78rem var(--font-body);letter-spacing:.06em;color:var(--fg);background:transparent;border:1.5px solid transparent;border-radius:999px;padding:7px 11px;cursor:pointer}
+.langs button:hover{border-color:var(--line)}
+.langs button[aria-pressed="true"]{border-color:var(--fg);background:var(--fg);color:var(--bg)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 1rem/1.2 var(--font-body);border:0;border-radius:999px;padding:16px 28px;cursor:pointer;text-decoration:none;text-align:center;transition:background .2s,transform .2s}
+.btn-primary{background:var(--cta);color:var(--cta-fg)}
+.btn-primary:hover{background:var(--cta-hover);transform:translateY(-1px)}
+.btn-wa{background:var(--wa);color:var(--wa-fg)}
+.btn-wa:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--band-fg);border:1.5px solid rgba(255,255,255,.6)}
+.btn-ghost:hover{background:rgba(255,255,255,.12)}
+
+/* hero */
+.hero{position:relative;overflow:hidden;color:#fff;isolation:isolate;
+  background:
+    radial-gradient(circle at 76% 64%, #ffd9a0 0 5.5%, rgba(255,190,120,.55) 9%, transparent 24%),
+    linear-gradient(180deg,#14284f 0%,#2c3f72 34%,#b86a6a 62%,#e9a46c 70%,#274e7a 70.2%,#1b3a63 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(8,16,36,.55),rgba(8,16,36,.25) 45%,rgba(8,16,36,.6))}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:30%;z-index:-1;opacity:.35;background:repeating-linear-gradient(180deg,rgba(255,255,255,0) 0 14px,rgba(255,255,255,.18) 14px 16px)}
+.hero .wrap{padding-top:64px;padding-bottom:72px}
+.hero-inner{max-width:760px;display:flex;flex-direction:column;gap:22px;align-items:flex-start}
+.hero .seal{width:104px;height:104px;filter:drop-shadow(0 6px 16px rgba(0,0,0,.35))}
+.hero .eyebrow{color:#ffe1b8}
+.hero h1{font-size:clamp(2rem,6vw,3.5rem);font-weight:700;letter-spacing:-.01em}
+.hero h1 .script{display:block;font-size:1.45em;line-height:1.05;color:#ffe9c9;margin-top:.1em}
+.hero .sub{font-size:clamp(1rem,2.2vw,1.2rem);max-width:60ch;color:#eef3fa}
+.proof{font-size:.92rem;color:#eef3fa;max-width:52ch}
+.proof .stars{display:block;font-size:1.05rem;letter-spacing:.12em;color:#ffd27a;margin-bottom:2px}
+
+/* sections */
+.section{padding-block:76px}
+.section-head{max-width:640px;display:flex;flex-direction:column;gap:10px;margin-bottom:40px}
+.section-head .eyebrow{color:var(--sky-strong)}
+.section-head h2{font-size:clamp(1.7rem,4vw,2.5rem);font-weight:700}
+.section-head h2 .script{font-size:1.35em;line-height:1}
+.alt{background:var(--tint)}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:24px}
+.card{background:var(--surface);border-radius:22px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;min-width:0}
+.card-img{aspect-ratio:16/10;max-width:100%}
+.img-company{background:linear-gradient(160deg,#d3e6f3,#7fb2d6 60%,#2f5f94)}
+.img-birthday{background:linear-gradient(160deg,#f4e3c4,#e8b98a 55%,#c98a58)}
+.img-friends{background:linear-gradient(160deg,#e9dcc3,#9fc4de 55%,#3d6ea3)}
+.card-body{padding:24px;display:flex;flex-direction:column;gap:10px}
+.card h3{font-size:1.25rem;font-weight:700}
+.card p{color:var(--muted)}
+
+/* lead band */
+.lead{background:var(--band);color:var(--band-fg);padding-block:84px;scroll-margin-top:68px}
+.lead-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:48px;align-items:start}
+.lead h2{font-size:clamp(1.8rem,4.2vw,2.7rem);font-weight:700}
+.lead h2 .script{font-size:1.3em;color:#d3e6f3}
+.lead .copy{display:flex;flex-direction:column;gap:18px}
+.lead .copy p{color:var(--band-muted);max-width:48ch}
+.gift{display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,.08);border-radius:16px;padding:14px 16px;font-size:.95rem}
+.form{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);border-radius:24px;padding:28px;display:grid;gap:16px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label{font-size:.82rem;font-weight:600;letter-spacing:.02em}
+.field label small{font-weight:400;color:var(--band-muted)}
+.row2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:16px}
+input,select{width:100%;font:500 1rem var(--font-body);color:var(--field-fg);background:var(--field-bg);border:1.5px solid var(--field-line);border-radius:12px;padding:13px 14px;min-width:0}
+input::placeholder{color:#6d7b94}
+input:focus-visible,select:focus-visible{outline:3px solid #8ec9ee;outline-offset:2px}
+.consent{display:flex;gap:12px;align-items:flex-start;font-size:.85rem;color:var(--band-muted);line-height:1.5}
+.consent input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--cta)}
+.form .btn{width:100%}
+.btn[disabled]{opacity:.65;cursor:progress}
+.err{color:#ffc9b3;font-size:.85rem;min-height:1.2em}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.legal{font-size:.75rem;color:var(--band-muted);line-height:1.5}
+.done{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);border-radius:24px;padding:32px;display:flex;flex-direction:column;gap:16px}
+.done h3{font-size:1.5rem}
+.done p{color:var(--band-muted)}
+.done .actions{display:flex;flex-wrap:wrap;gap:12px}
+
+/* benefits */
+.benefits{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:28px 40px;list-style:none;margin:0;padding:0}
+.benefit{display:flex;gap:16px;align-items:flex-start;min-width:0}
+.benefit .ico{flex:none;width:52px;height:52px;border-radius:16px;background:var(--sky);display:grid;place-items:center;font-size:1.5rem}
+.benefit .ico img{width:34px;height:34px}
+.benefit h3{font-size:1.05rem;font-weight:700;margin-bottom:2px}
+.benefit p{color:var(--muted);font-size:.96rem}
+
+/* closing + footer */
+.closing .wrap{display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center}
+.closing h2{font-size:clamp(1.7rem,4vw,2.5rem);max-width:20ch}
+.closing h2 .script{font-size:1.3em}
+.closing p{color:var(--muted);max-width:52ch}
+footer{border-top:1px solid var(--line);padding-block:32px;font-size:.9rem;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px 32px;justify-content:space-between;align-items:center}
+footer .brand img{width:56px;height:56px}
+footer address{font-style:normal}
+footer .legal{color:var(--muted);flex-basis:100%}
+
+/* floating whatsapp */
+.wa-float{position:fixed;z-index:70;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px;text-decoration:none}
+.wa-tip{background:var(--surface);color:var(--fg);font-size:.85rem;font-weight:600;padding:9px 14px;border-radius:999px;box-shadow:var(--shadow);border:1px solid var(--line)}
+.wa-btn{width:60px;height:60px;border-radius:50%;background:var(--wa);color:var(--wa-fg);display:grid;place-items:center;box-shadow:0 8px 22px rgba(0,0,0,.28);animation:bob 2.6s ease-in-out infinite}
+.wa-btn svg{width:30px;height:30px}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@media (max-width:420px){.wa-tip{display:none}.brand span{font-size:1.9rem}.langs button{padding:7px 8px}}
+@media (max-width:860px){.lead-grid{grid-template-columns:minmax(0,1fr);gap:32px}.section{padding-block:56px}.lead{padding-block:56px}.hero .wrap{padding-top:40px;padding-bottom:60px}}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}.wa-btn{animation:none}.btn{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="L'Àncora"><img src="logo-40-aniversario.svg" alt="L'Àncora 1986-2026"><span>L'Àncora</span></a>
+    <div class="langs" role="group" aria-label="Idioma / Llengua / Langue / Language">
+      <button type="button" data-lang="ca" aria-pressed="false">CA</button>
+      <button type="button" data-lang="es" aria-pressed="true">ES</button>
+      <button type="button" data-lang="fr" aria-pressed="false">FR</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-label="L'Àncora">
+    <div class="wrap">
+      <div class="hero-inner">
+        <img class="seal" src="logo-40-aniversario.svg" alt="">
+        <p class="eyebrow" data-i18n="preh"></p>
+        <h1 data-i18n="h1"></h1>
+        <p class="sub" data-i18n="sub"></p>
+        <div><a class="btn btn-primary" href="#dossier" data-i18n="cta"></a></div>
+        <p class="proof"><span class="stars" aria-hidden="true">★★★★★</span><span data-i18n="proof"></span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="occ-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow" data-i18n="occ_eyebrow"></p>
+        <h2 id="occ-title" data-i18n="occ_title"></h2>
+      </div>
+      <div class="cards">
+        <article class="card"><div class="card-img img-company" aria-hidden="true"></div>
+          <div class="card-body"><h3 data-i18n="c1t"></h3><p data-i18n="c1d"></p></div></article>
+        <article class="card"><div class="card-img img-birthday" aria-hidden="true"></div>
+          <div class="card-body"><h3 data-i18n="c2t"></h3><p data-i18n="c2d"></p></div></article>
+        <article class="card"><div class="card-img img-friends" aria-hidden="true"></div>
+          <div class="card-body"><h3 data-i18n="c3t"></h3><p data-i18n="c3d"></p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="lead" id="dossier" aria-labelledby="lead-title">
+    <div class="wrap">
+      <div class="lead-grid">
+        <div class="copy">
+          <h2 id="lead-title" data-i18n="lead_h2"></h2>
+          <p data-i18n="lead_p"></p>
+          <div class="gift"><span aria-hidden="true">🥂</span><span data-i18n="gift"></span></div>
+        </div>
+
+        <div>
+          <form class="form" id="lead-form" novalidate>
+            <div class="hp" aria-hidden="true"><label for="f-web">Web</label><input id="f-web" name="web" type="text" tabindex="-1" autocomplete="off"></div>
+            <div class="field"><label for="f-name" data-i18n="l_name"></label>
+              <input id="f-name" name="name" type="text" autocomplete="name" maxlength="80"></div>
+            <div class="field"><label for="f-email" data-i18n="l_email"></label>
+              <input id="f-email" name="email" type="email" autocomplete="email" placeholder="tu@email.com" maxlength="120" required></div>
+            <div class="field"><label for="f-phone" data-i18n="l_phone"></label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+34 600 000 000" maxlength="30" required></div>
+            <div class="field"><label for="f-type" data-i18n="l_type"></label>
+              <select id="f-type" name="type">
+                <option value="company" data-i18n="t_company"></option>
+                <option value="birthday" data-i18n="t_birthday"></option>
+                <option value="friends" data-i18n="t_friends"></option>
+                <option value="other" data-i18n="t_other"></option>
+              </select></div>
+            <div class="row2">
+              <div class="field"><label for="f-date" data-i18n="l_date"></label><input id="f-date" name="date" type="date"></div>
+              <div class="field"><label for="f-guests" data-i18n="l_guests"></label><input id="f-guests" name="guests" type="number" min="2" max="300" inputmode="numeric" placeholder="18"></div>
+            </div>
+            <label class="consent" for="f-consent"><input id="f-consent" name="consent" type="checkbox"><span data-i18n="l_consent"></span></label>
+            <p class="err" id="form-err" role="alert"></p>
+            <button class="btn btn-primary" type="submit" id="f-submit" data-i18n="l_submit"></button>
+            <p class="legal" data-i18n="legal"></p>
+          </form>
+
+          <div class="done" id="lead-done" hidden>
+            <h3 id="done-title"></h3>
+            <p id="done-text"></p>
+            <div class="actions">
+              <a class="btn btn-wa" id="done-wa" href="https://wa.me/34972256386" target="_blank" rel="noopener" data-i18n="done_wa"></a>
+              <button class="btn btn-ghost" type="button" id="done-edit" data-i18n="done_edit"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="why-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow" data-i18n="why_eyebrow"></p>
+        <h2 id="why-title" data-i18n="why_title"></h2>
+      </div>
+      <ul class="benefits">
+        <li class="benefit"><span class="ico" aria-hidden="true">🥘</span><div><h3 data-i18n="b1t"></h3><p data-i18n="b1d"></p></div></li>
+        <li class="benefit"><span class="ico" aria-hidden="true"><img src="logo-40-aniversario.svg" alt=""></span><div><h3 data-i18n="b2t"></h3><p data-i18n="b2d"></p></div></li>
+        <li class="benefit"><span class="ico" aria-hidden="true">🌅</span><div><h3 data-i18n="b3t"></h3><p data-i18n="b3d"></p></div></li>
+        <li class="benefit"><span class="ico" aria-hidden="true">🍽️</span><div><h3 data-i18n="b4t"></h3><p data-i18n="b4d"></p></div></li>
+        <li class="benefit"><span class="ico" aria-hidden="true">🏠</span><div><h3 data-i18n="b5t"></h3><p data-i18n="b5d"></p></div></li>
+        <li class="benefit"><span class="ico" aria-hidden="true">🥂</span><div><h3 data-i18n="b6t"></h3><p data-i18n="b6d"></p></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section alt closing" aria-labelledby="close-title">
+    <div class="wrap">
+      <h2 id="close-title" data-i18n="close_h2"></h2>
+      <p data-i18n="close_p"></p>
+      <a class="btn btn-wa" href="https://wa.me/34972256386" target="_blank" rel="noopener" data-i18n="close_btn"></a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="L'Àncora"><img src="logo-40-aniversario.svg" alt="L'Àncora 1986-2026"><span>L'Àncora</span></a>
+    <address>Avinguda de Rhode 62, 17480 Roses (Girona)<br>Tel. <strong>972 25 63 86</strong></address>
+    <p class="legal" data-i18n="legal_footer"></p>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/34972256386" target="_blank" rel="noopener" id="wa-float">
+  <span class="wa-tip" data-i18n="wa_tip"></span>
+  <span class="wa-btn" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.6-5.4A8.4 8.4 0 1 1 21 11.5Z"/><path d="M9 8.8c.3 2.6 2.7 5.2 6 6l1.2-1.3-2-1-.9.7c-.9-.4-1.7-1.2-2.2-2.2l.7-.9-1-2Z" fill="currentColor" stroke="none"/></svg>
+  </span>
+</a>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+/* ============ Traducciones ============ */
+var T = {
+es:{
+ title:"L'Àncora · Celebraciones y grupos en Roses", wa_aria:"Reservar por WhatsApp",
+ preh:"Celebra tus mejores momentos en Roses",
+ h1:'Donde el sabor mediterráneo se une a <span class="script">celebraciones inolvidables.</span>',
+ sub:"Menús exclusivos para grupos, cenas de empresa y eventos privados. Espacios acogedores, marisco fresco de la zona y un ambiente que hará que tu grupo no quiera irse.",
+ cta:"📥 Descargar dosier de menús para grupos",
+ proof:"«El mejor ambiente y las mejores paellas de Roses para celebrar con amigos.»",
+ occ_eyebrow:"Grupos y eventos privados",
+ occ_title:'Diseñamos el escenario perfecto para <span class="script">cada ocasión.</span>',
+ c1t:"Cenas de empresa", c1d:"Desconecta de la oficina junto al mar. Menús todo incluido para que solo te preocupes de disfrutar, hacer equipo y brindar.",
+ c2t:"Cumpleaños y aniversarios", c2d:"Sopla las velas con el sonido del Mediterráneo de fondo. Detalles personalizados y un servicio que te hace sentir como en casa.",
+ c3t:"Amigos y familia", c3d:"Porque no siempre hace falta una excusa para juntarse. Paellas, marisco, tapas y sobremesas que no se acaban.",
+ lead_h2:'Consigue nuestro dosier de grupos 2026/2027 y un <span class="script">brindis de bienvenida gratis.</span>',
+ lead_p:"Déjanos tus datos y te enviaremos nuestros menús especiales para grupos. Además, si reservas tu evento después de pedir el dosier, invitamos a todo tu grupo a la primera ronda de cava o sangría.",
+ gift:"La primera ronda de cava o sangría corre de nuestra cuenta si reservas después de pedir el dosier.",
+ l_name:"Nombre completo", l_email:"Email <small>(obligatorio)</small>", l_phone:"Teléfono / WhatsApp <small>(obligatorio)</small>",
+ l_type:"Tipo de evento", t_company:"Empresa", t_birthday:"Cumpleaños", t_friends:"Amigos", t_other:"Otro",
+ l_date:"Fecha estimada <small>(opcional)</small>", l_guests:"Comensales <small>(opcional)</small>",
+ l_consent:"Acepto recibir ofertas exclusivas y comunicaciones de L'Àncora.",
+ l_submit:"🥂 Quiero los menús y mi regalo",
+ legal:"Usamos tus datos para responder a tu solicitud. Marcar la casilla es opcional y puedes retirarla cuando quieras.",
+ e_email:"Introduce un email válido.", e_phone:"Introduce un teléfono o WhatsApp donde podamos localizarte.",
+ sending:"Enviando…",
+ done_ok_t:"¡Recibido!", done_ok_p:"Hemos recibido tu solicitud. Te enviaremos los menús para grupos por email o WhatsApp muy pronto. Si tienes prisa, escríbenos directamente.",
+ done_ko_t:"No hemos podido enviar tu solicitud", done_ko_p:"Escríbenos por WhatsApp con los datos que has rellenado y te respondemos hoy mismo.",
+ done_wa:"Escribir por WhatsApp", done_edit:"Editar datos",
+ why_eyebrow:"Por qué elegirnos", why_title:'¿Por qué elegir <span class="script">L\'Àncora?</span>',
+ b1t:"Cocina mediterránea auténtica", b1d:"Especialistas en paellas, marisco y pescado fresco del día.",
+ b2t:"40 años en Roses", b2d:"Desde 1986, cuatro décadas de mesas compartidas junto al mar.",
+ b3t:"Terraza con vistas al mar", b3d:"Cena con vistas a la bahía de Roses, donde cada brindis queda mejor.",
+ b4t:"Menús de grupo cerrados con antelación", b4d:"Elige el menú antes del día y llega sin nada que organizar.",
+ b5t:"Sala privada para grupos grandes", b5d:"Espacio en la planta de arriba para celebraciones más numerosas, solo para tu grupo.",
+ b6t:"Brindis de bienvenida por la casa", b6d:"Reserva tras pedir el dosier y la primera ronda de cava o sangría corre de nuestra cuenta.",
+ close_h2:'¿Listo para organizar <span class="script">tu celebración?</span>', close_p:"Dinos la fecha y cuántos sois, y te ayudamos a montar la velada.", close_btn:"Reservar por WhatsApp",
+ legal_footer:"Responsable del tratamiento: Ancora Oci i Hosteleria S.L. Puedes pedir el acceso o la supresión de tus datos escribiéndonos.",
+ wa_tip:"Reservar por WhatsApp",
+ wa_intro:"¡Hola L'Àncora! Me gustaría recibir el dosier de menús para grupos.",
+ wa_name:"Nombre", wa_event:"Evento", wa_date:"Fecha", wa_guests:"Comensales", wa_email:"Email", wa_phone:"Teléfono"
+},
+ca:{
+ title:"L'Àncora · Celebracions i grups a Roses", wa_aria:"Reservar per WhatsApp",
+ preh:"Celebra els teus millors moments a Roses",
+ h1:'On el sabor mediterrani es troba amb <span class="script">celebracions inoblidables.</span>',
+ sub:"Menús exclusius per a grups, sopars d'empresa i esdeveniments privats. Espais acollidors, marisc fresc de la zona i un ambient que farà que el teu grup no vulgui marxar.",
+ cta:"📥 Descarregar el dossier de menús per a grups",
+ proof:"«El millor ambient i les millors paelles de Roses per celebrar amb amics.»",
+ occ_eyebrow:"Grups i esdeveniments privats",
+ occ_title:'Dissenyem l\'escenari perfecte per a <span class="script">cada ocasió.</span>',
+ c1t:"Sopars d'empresa", c1d:"Desconnecta de l'oficina a tocar del mar. Menús tot inclòs perquè només t'hagis de preocupar de gaudir, fer equip i brindar.",
+ c2t:"Aniversaris i celebracions", c2d:"Bufa les espelmes amb el so del Mediterrani de fons. Detalls personalitzats i un servei que et fa sentir com a casa.",
+ c3t:"Amics i família", c3d:"Perquè no sempre cal una excusa per trobar-se. Paelles, marisc, tapes i sobretaules que no s'acaben.",
+ lead_h2:'Aconsegueix el nostre dossier de grups 2026/2027 i un <span class="script">brindis de benvinguda gratis.</span>',
+ lead_p:"Deixa'ns les teves dades i t'enviarem els nostres menús especials per a grups. A més, si reserves el teu esdeveniment després de demanar el dossier, convidem tot el teu grup a la primera ronda de cava o sangria.",
+ gift:"La primera ronda de cava o sangria va a càrrec nostre si reserves després de demanar el dossier.",
+ l_name:"Nom complet", l_email:"Correu electrònic <small>(obligatori)</small>", l_phone:"Telèfon / WhatsApp <small>(obligatori)</small>",
+ l_type:"Tipus d'esdeveniment", t_company:"Empresa", t_birthday:"Aniversari", t_friends:"Amics", t_other:"Un altre",
+ l_date:"Data aproximada <small>(opcional)</small>", l_guests:"Comensals <small>(opcional)</small>",
+ l_consent:"Accepto rebre ofertes exclusives i comunicacions de L'Àncora.",
+ l_submit:"🥂 Vull els menús i el meu regal",
+ legal:"Fem servir les teves dades per respondre la teva sol·licitud. Marcar la casella és opcional i la pots retirar quan vulguis.",
+ e_email:"Introdueix un correu electrònic vàlid.", e_phone:"Introdueix un telèfon o WhatsApp on et puguem localitzar.",
+ sending:"Enviant…",
+ done_ok_t:"Rebut!", done_ok_p:"Hem rebut la teva sol·licitud. T'enviarem els menús per a grups per correu o WhatsApp molt aviat. Si tens pressa, escriu-nos directament.",
+ done_ko_t:"No hem pogut enviar la teva sol·licitud", done_ko_p:"Escriu-nos per WhatsApp amb les dades que has omplert i et responem avui mateix.",
+ done_wa:"Escriure per WhatsApp", done_edit:"Editar dades",
+ why_eyebrow:"Per què triar-nos", why_title:'Per què triar <span class="script">L\'Àncora?</span>',
+ b1t:"Cuina mediterrània autèntica", b1d:"Especialistes en paelles, marisc i peix fresc del dia.",
+ b2t:"40 anys a Roses", b2d:"Des del 1986, quatre dècades de taules compartides vora el mar.",
+ b3t:"Terrassa amb vistes al mar", b3d:"Sopa amb vistes a la badia de Roses, on cada brindis llueix més.",
+ b4t:"Menús de grup tancats amb antelació", b4d:"Tria el menú abans del dia i arriba sense res a organitzar.",
+ b5t:"Sala privada per a grups grans", b5d:"Espai a la planta de dalt per a celebracions més nombroses, només per al teu grup.",
+ b6t:"Brindis de benvinguda de la casa", b6d:"Reserva després de demanar el dossier i la primera ronda de cava o sangria va a càrrec nostre.",
+ close_h2:'A punt per organitzar <span class="script">la teva celebració?</span>', close_p:"Digue'ns la data i quants sou, i t'ajudem a muntar la vetllada.", close_btn:"Reservar per WhatsApp",
+ legal_footer:"Responsable del tractament: Ancora Oci i Hosteleria S.L. Pots demanar l'accés o la supressió de les teves dades escrivint-nos.",
+ wa_tip:"Reservar per WhatsApp",
+ wa_intro:"Hola L'Àncora! M'agradaria rebre el dossier de menús per a grups.",
+ wa_name:"Nom", wa_event:"Esdeveniment", wa_date:"Data", wa_guests:"Comensals", wa_email:"Correu", wa_phone:"Telèfon"
+},
+fr:{
+ title:"L'Àncora · Fêtes et groupes à Roses", wa_aria:"Réserver par WhatsApp",
+ preh:"Fêtez vos plus beaux moments à Roses",
+ h1:'Là où la saveur méditerranéenne rencontre <span class="script">des célébrations inoubliables.</span>',
+ sub:"Menus exclusifs pour groupes, dîners d'entreprise et événements privés. Des espaces chaleureux, des fruits de mer frais de la région et une ambiance qui donnera envie à votre groupe de rester.",
+ cta:"📥 Télécharger le dossier des menus de groupe",
+ proof:"« La meilleure ambiance et les meilleures paellas de Roses pour fêter avec des amis. »",
+ occ_eyebrow:"Groupes et événements privés",
+ occ_title:'Nous créons le cadre parfait pour <span class="script">chaque occasion.</span>',
+ c1t:"Dîners d'entreprise", c1d:"Déconnectez du bureau au bord de la mer. Des menus tout compris pour que vous n'ayez qu'à profiter, souder l'équipe et trinquer.",
+ c2t:"Anniversaires et fêtes", c2d:"Soufflez les bougies au son de la Méditerranée. Des attentions personnalisées et un service qui vous fait vous sentir chez vous.",
+ c3t:"Entre amis et en famille", c3d:"Parce qu'il n'y a pas toujours besoin d'une excuse pour se retrouver. Paellas, fruits de mer, tapas et conversations sans fin.",
+ lead_h2:'Recevez notre dossier groupes 2026/2027 et <span class="script">un toast de bienvenue offert.</span>',
+ lead_p:"Laissez-nous vos coordonnées et nous vous enverrons nos menus spéciaux pour groupes. De plus, si vous réservez votre événement après avoir demandé le dossier, nous offrons à tout votre groupe la première tournée de cava ou de sangria.",
+ gift:"La première tournée de cava ou de sangria est offerte si vous réservez après avoir demandé le dossier.",
+ l_name:"Nom complet", l_email:"E-mail <small>(obligatoire)</small>", l_phone:"Téléphone / WhatsApp <small>(obligatoire)</small>",
+ l_type:"Type d'événement", t_company:"Entreprise", t_birthday:"Anniversaire", t_friends:"Amis", t_other:"Autre",
+ l_date:"Date estimée <small>(facultatif)</small>", l_guests:"Convives <small>(facultatif)</small>",
+ l_consent:"J'accepte de recevoir des offres exclusives et des communications de L'Àncora.",
+ l_submit:"🥂 Je veux les menus et mon cadeau",
+ legal:"Nous utilisons vos données pour répondre à votre demande. Cocher la case est facultatif et vous pouvez la retirer à tout moment.",
+ e_email:"Saisissez une adresse e-mail valide.", e_phone:"Saisissez un téléphone ou un numéro WhatsApp où nous pouvons vous joindre.",
+ sending:"Envoi…",
+ done_ok_t:"Bien reçu !", done_ok_p:"Nous avons reçu votre demande. Nous vous enverrons les menus de groupe par e-mail ou WhatsApp très bientôt. Si vous êtes pressé, écrivez-nous directement.",
+ done_ko_t:"Nous n'avons pas pu envoyer votre demande", done_ko_p:"Écrivez-nous sur WhatsApp avec les informations saisies et nous vous répondrons dans la journée.",
+ done_wa:"Écrire sur WhatsApp", done_edit:"Modifier mes données",
+ why_eyebrow:"Pourquoi nous choisir", why_title:'Pourquoi choisir <span class="script">L\'Àncora ?</span>',
+ b1t:"Cuisine méditerranéenne authentique", b1d:"Spécialistes de la paella, des fruits de mer et du poisson frais du jour.",
+ b2t:"40 ans à Roses", b2d:"Depuis 1986, quatre décennies de tablées partagées au bord de la mer.",
+ b3t:"Terrasse avec vue sur la mer", b3d:"Dînez face à la baie de Roses, où chaque toast prend plus de saveur.",
+ b4t:"Menus de groupe choisis à l'avance", b4d:"Choisissez le menu avant le jour J et arrivez sans rien à organiser.",
+ b5t:"Salle privée pour les grands groupes", b5d:"Un espace à l'étage pour les célébrations plus nombreuses, rien que pour votre groupe.",
+ b6t:"Toast de bienvenue offert", b6d:"Réservez après avoir demandé le dossier et la première tournée de cava ou de sangria est offerte.",
+ close_h2:'Prêt à organiser <span class="script">votre célébration ?</span>', close_p:"Indiquez-nous la date et le nombre de convives, nous vous aidons à composer la soirée.", close_btn:"Réserver par WhatsApp",
+ legal_footer:"Responsable du traitement : Ancora Oci i Hosteleria S.L. Vous pouvez demander l'accès ou la suppression de vos données en nous écrivant.",
+ wa_tip:"Réserver par WhatsApp",
+ wa_intro:"Bonjour L'Àncora ! J'aimerais recevoir le dossier des menus de groupe.",
+ wa_name:"Nom", wa_event:"Événement", wa_date:"Date", wa_guests:"Convives", wa_email:"E-mail", wa_phone:"Téléphone"
+},
+en:{
+ title:"L'Àncora · Group celebrations in Roses", wa_aria:"Book via WhatsApp",
+ preh:"Celebrate your best moments in Roses",
+ h1:'Where Mediterranean Flavor Meets <span class="script">Unforgettable Celebrations.</span>',
+ sub:"Exclusive menus for groups, company dinners, and private events. Cozy spaces, fresh local seafood, and an atmosphere that will make your group want to stay forever.",
+ cta:"📥 Download Group Menus Dossier",
+ proof:"“The best atmosphere and the best paellas in Roses to celebrate with friends.”",
+ occ_eyebrow:"Groups & private events",
+ occ_title:'We design the perfect setting for <span class="script">every occasion.</span>',
+ c1t:"Company Dinners", c1d:"Disconnect from the office by the sea. All-inclusive menus so you only have to worry about enjoying, team building, and toasting.",
+ c2t:"Birthdays & Anniversaries", c2d:"Blow out the candles with the sound of the Mediterranean in the background. Personalized details and service that makes you feel at home.",
+ c3t:"Friends & Family Gatherings", c3d:"Because you don't always need an excuse to get together. Paellas, seafood, tapas, and endless after-dinner conversations.",
+ lead_h2:'Get our 2026/2027 Group Dossier & a <span class="script">Free Welcome Toast!</span>',
+ lead_p:"Leave your details and we will send you our special group menus. Plus, if you book your event after requesting the dossier, we will treat your entire group to the first round of cava or sangria on the house.",
+ gift:"The first round of cava or sangria is on us when you book after requesting the dossier.",
+ l_name:"Full name", l_email:"Email <small>(required)</small>", l_phone:"Phone / WhatsApp <small>(required)</small>",
+ l_type:"Event type", t_company:"Company", t_birthday:"Birthday", t_friends:"Friends", t_other:"Other",
+ l_date:"Estimated date <small>(optional)</small>", l_guests:"Guests <small>(optional)</small>",
+ l_consent:"I agree to receive exclusive offers and communications from L'Àncora.",
+ l_submit:"🥂 Show me the menus & my gift",
+ legal:"We use your details to reply to your request. The checkbox is optional and you can withdraw it at any time.",
+ e_email:"Enter a valid email address.", e_phone:"Enter a phone or WhatsApp number we can reach you on.",
+ sending:"Sending…",
+ done_ok_t:"Received!", done_ok_p:"We have received your request. We will send you the group menus by email or WhatsApp very soon. If you are in a hurry, message us directly.",
+ done_ko_t:"We could not send your request", done_ko_p:"Message us on WhatsApp with the details you filled in and we will reply today.",
+ done_wa:"Message on WhatsApp", done_edit:"Edit details",
+ why_eyebrow:"Why choose us", why_title:'Why choose <span class="script">L\'Àncora?</span>',
+ b1t:"Authentic Mediterranean Cuisine", b1d:"Specialists in paellas, seafood, and fresh daily catches.",
+ b2t:"40 years in Roses", b2d:"Since 1986, four decades of shared tables by the sea.",
+ b3t:"Terrace with sea views", b3d:"Dine overlooking the bay of Roses, where every toast looks better.",
+ b4t:"Group menus agreed in advance", b4d:"Choose the menu before the day and arrive with nothing left to organize.",
+ b5t:"Private room for larger groups", b5d:"Space upstairs for bigger celebrations, just for your group.",
+ b6t:"Welcome toast on the house", b6d:"Book after requesting the dossier and the first round of cava or sangria is on us.",
+ close_h2:'Ready to plan <span class="script">your celebration?</span>', close_p:"Tell us the date and how many you are, and we will help you build the evening.", close_btn:"Book via WhatsApp",
+ legal_footer:"Data controller: Ancora Oci i Hosteleria S.L. You can ask for access to or deletion of your data by writing to us.",
+ wa_tip:"Book via WhatsApp",
+ wa_intro:"Hello L'Àncora! I would like to receive the group menus dossier.",
+ wa_name:"Name", wa_event:"Event", wa_date:"Date", wa_guests:"Guests", wa_email:"Email", wa_phone:"Phone"
+}};
+
+/* ============ Idioma ============ */
+var LANGS=['ca','es','fr','en'], lang='es';
+function detect(){
+  var q=null; try{q=new URLSearchParams(location.search).get('lang');}catch(e){}
+  if(q && T[q]) return q;
+  try{var s=localStorage.getItem('lancora-grupos-lang'); if(s && T[s]) return s;}catch(e){}
+  var list=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||'es'];
+  for(var i=0;i<list.length;i++){var c=String(list[i]).slice(0,2).toLowerCase(); if(T[c]) return c;}
+  return 'es';
+}
+function apply(l){
+  lang=l; var t=T[l];
+  document.documentElement.lang=l; document.title=t.title;
+  document.querySelectorAll('[data-i18n]').forEach(function(el){var k=el.getAttribute('data-i18n'); if(t[k]!==undefined) el.innerHTML=t[k];});
+  document.querySelectorAll('[data-lang]').forEach(function(b){b.setAttribute('aria-pressed', b.getAttribute('data-lang')===l?'true':'false');});
+  document.getElementById('wa-float').setAttribute('aria-label', t.wa_aria);
+  document.getElementById('f-email').placeholder = l==='fr'?'vous@email.com':(l==='en'?'you@email.com':'tu@email.com');
+  if(!done.hidden && lastState) showDone(lastState);
+}
+
+/* ============ Firebase (proyecto compartido lancora-social, base Firestore) ============ */
+var firebaseConfig = {
+  apiKey: "AIzaSyBwfoTj5OONhFtdyvl4STHvkB2nOLO2hWk",
+  authDomain: "lancora-social.firebaseapp.com",
+  databaseURL: "https://lancora-social-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "lancora-social",
+  storageBucket: "lancora-social.firebasestorage.app",
+  messagingSenderId: "453756091430",
+  appId: "1:453756091430:web:f5b236a7c17eb5ddfd3ae7"
+};
+var LEADS_COLLECTION = "leads";   // colección compartida por todos los proyectos; el campo "source" dice de dónde viene
+var fdb=null;
+try{ if(window.firebase){ if(!firebase.apps.length) firebase.initializeApp(firebaseConfig); fdb=firebase.firestore(); } }catch(e){ fdb=null; }
+
+/* ============ Formulario ============ */
+var form=document.getElementById('lead-form'), done=document.getElementById('lead-done'), err=document.getElementById('form-err'),
+    submit=document.getElementById('f-submit'), waBtn=document.getElementById('done-wa'), lastState=null, lastLines=[];
+function v(id){return document.getElementById(id).value.trim();}
+try{var n=new Date(); document.getElementById('f-date').min=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');}catch(e){}
+
+function showDone(ok){
+  var t=T[lang]; lastState=ok;
+  document.getElementById('done-title').textContent = ok? t.done_ok_t : t.done_ko_t;
+  document.getElementById('done-text').textContent  = ok? t.done_ok_p : t.done_ko_p;
+  var lines=[t.wa_intro];
+  var typeLabel=document.querySelector('#f-type option[value="'+v('f-type')+'"]');
+  if(v('f-name')) lines.push(t.wa_name+': '+v('f-name'));
+  lines.push(t.wa_event+': '+(typeLabel?typeLabel.textContent:v('f-type')));
+  if(v('f-date')) lines.push(t.wa_date+': '+v('f-date'));
+  if(v('f-guests')) lines.push(t.wa_guests+': '+v('f-guests'));
+  lines.push(t.wa_email+': '+v('f-email')); lines.push(t.wa_phone+': '+v('f-phone'));
+  waBtn.href='https://wa.me/34972256386?text='+encodeURIComponent(lines.join('\n'));
+  form.hidden=true; done.hidden=false;
+}
+function withTimeout(p,ms){return Promise.race([p,new Promise(function(_,rej){setTimeout(function(){rej(new Error('timeout'));},ms);})]);}
+
+form.addEventListener('submit',function(ev){
+  ev.preventDefault(); err.textContent='';
+  var t=T[lang], email=v('f-email'), phone=v('f-phone');
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.textContent=t.e_email; document.getElementById('f-email').focus(); return;}
+  if(phone.replace(/[^0-9]/g,'').length<7){err.textContent=t.e_phone; document.getElementById('f-phone').focus(); return;}
+  if(v('f-web')){ showDone(true); return; }              // trampa anti-bots: no se guarda nada
+  submit.disabled=true; var label=submit.textContent; submit.textContent=t.sending;
+  var lead={
+    name:v('f-name').slice(0,80), email:email.slice(0,120), phone:phone.slice(0,30),
+    type:v('f-type'), date:v('f-date'), guests:v('f-guests')?parseInt(v('f-guests'),10):null,
+    consent:document.getElementById('f-consent').checked, lang:lang, source:'grupos',
+    ts:firebase.firestore.FieldValue.serverTimestamp()
+  };
+  if(lead.guests===null) delete lead.guests;
+  var job = fdb ? withTimeout(fdb.collection(LEADS_COLLECTION).add(lead),9000) : Promise.reject(new Error('no-db'));
+  job.then(function(){ showDone(true); })
+     .catch(function(){ showDone(false); })
+     .then(function(){ submit.disabled=false; submit.textContent=T[lang].l_submit; });
+});
+document.getElementById('done-edit').addEventListener('click',function(){done.hidden=true; form.hidden=false; lastState=null; document.getElementById('f-name').focus();});
+
+document.querySelectorAll('[data-lang]').forEach(function(b){
+  b.addEventListener('click',function(){var l=b.getAttribute('data-lang'); try{localStorage.setItem('lancora-grupos-lang',l);}catch(e){} apply(l);});
+});
+apply(detect());
+</script>
+</body>
+</html>

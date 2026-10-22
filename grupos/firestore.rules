@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Contactos (leads) de todas las webs de L'Àncora.
+    // Cualquiera puede ENVIAR uno con esta forma exacta; nadie puede leerlo, editarlo ni borrarlo desde la web.
+    // Carlos los lee desde la consola de Firebase (Firestore Database > Datos).
+    match /leads/{leadId} {
+      allow create: if request.resource.data.keys().hasOnly(
+                         ['name','email','phone','type','date','guests','consent','lang','source','ts'])
+                    && request.resource.data.keys().hasAll(['email','phone','source','ts'])
+                    && request.resource.data.email is string && request.resource.data.email.size() <= 120
+                    && request.resource.data.phone is string && request.resource.data.phone.size() <= 30
+                    && request.resource.data.source is string && request.resource.data.source.size() <= 30
+                    && (!('name' in request.resource.data) || (request.resource.data.name is string && request.resource.data.name.size() <= 80))
+                    && (!('guests' in request.resource.data) || (request.resource.data.guests is int && request.resource.data.guests < 1000))
+                    && request.resource.data.ts == request.time;
+      allow read, update, delete: if false;
+    }
+  }
+}
