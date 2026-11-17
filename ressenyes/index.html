@@ -153,35 +153,11 @@ input.cf-input:focus{border-color:var(--navy);background:var(--white);}
 
   <img class="logo" src="https://lh3.googleusercontent.com/d/1Sn6cRZPGXz9UCWmdOR2Ea6JmohuCCZUl" alt="L'Ancora">
 
-  <!-- Badge individual -->
-  <div id="wBadge" style="display:none">
-    <div class="waiter-badge">
-      <div class="waiter-avatar" id="wInitial">J</div>
-      <div>
-        <div class="badge-label" id="wLabel">Has sido atendido/a por</div>
-        <div class="badge-name" id="wName">Josselin</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Selector genèric -->
-  <div id="wSelector" class="waiter-selector">
-    <div class="sel-label" id="selLabel">¿Quién te ha atendido?</div>
-    <div class="waiter-grid">
-      <div class="w-chip" onclick="pickWaiter('Sandra',this)">Sandra</div>
-      <div class="w-chip" onclick="pickWaiter('Josselin',this)">Josselin</div>
-      <div class="w-chip" onclick="pickWaiter('Alberto',this)">Alberto</div>
-      <div class="w-chip" onclick="pickWaiter('Anas',this)">Anas</div>
-      <div class="w-chip" onclick="pickWaiter('Abdellah',this)">Abdellah</div>
-      <div class="w-chip full" id="noChip" onclick="pickWaiter('Desconegut',this)">No lo recuerdo</div>
-    </div>
-  </div>
 
   <!-- Stars screen -->
   <div id="starsScreen">
     <h1 id="hTitle">¿Cómo ha sido tu experiencia?</h1>
     <p class="subtitle" id="hSub">Tu opinión nos ayuda a mejorar cada día en L'Ancora.</p>
-    <p class="warn" id="wWarn" style="display:none">⚠️ Selecciona primero quién te ha atendido</p>
     <div class="stars" id="stars">
       <svg data-v="1" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
       <svg data-v="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
@@ -191,6 +167,14 @@ input.cf-input:focus{border-color:var(--navy);background:var(--white);}
     </div>
     <div class="redirect-msg" id="rMsg" style="display:none">Gracias, redirigiendo…</div>
   </div>
+  <!-- Elección: Google o privado (para TODAS las valoraciones) -->
+  <div id="choiceScreen" style="display:none">
+    <h1 id="chTitle">Gracias</h1>
+    <p class="subtitle" id="chSub">¿Dónde prefieres dejar tu opinión?</p>
+    <button class="cf-send" id="chGoogle" onclick="goGoogle()">Opinar en Google</button>
+    <button class="cf-send" id="chPrivate" onclick="goPrivate()" style="margin-top:10px">Escribir al restaurante en privado</button>
+  </div>
+
 
   <!-- Complaint form (1-3 stars) -->
   <div class="complaint-form" id="cfForm">
@@ -203,6 +187,8 @@ input.cf-input:focus{border-color:var(--navy);background:var(--white);}
     <label class="cf-label" id="cfLabelEmail">Email (opcional, para responderte)</label>
     <input class="cf-input" type="email" id="cfEmail" placeholder="tu@email.com">
     <button class="cf-send" id="cfSendBtn" onclick="sendComplaint()" id="cfLabelSend">Enviar mensaje</button>
+    <p style="font-size:11px;opacity:.7;margin:8px 0 0">Usaremos tu mensaje solo para atenderte. Más información en nuestra <a href="https://www.ancoraroses.com/privacitat/" style="color:inherit">política de privacidad</a>.</p>
+
   </div>
 
   <!-- Success messages -->
@@ -271,6 +257,18 @@ var T = {
   }
 };
 
+var CH = {
+  es:{t:"Gracias",s:"¿Dónde prefieres dejar tu opinión?",g:"Opinar en Google",p:"Escribir al restaurante en privado"},
+  fr:{t:"Merci",s:"Où préférez-vous laisser votre avis ?",g:"Donner mon avis sur Google",p:"Écrire au restaurant en privé"},
+  en:{t:"Thank you",s:"Where would you like to leave your feedback?",g:"Review on Google",p:"Write to the restaurant privately"},
+  nl:{t:"Bedankt",s:"Waar wilt u uw mening achterlaten?",g:"Beoordeling op Google",p:"Privé schrijven naar het restaurant"}
+};
+var GOOGLE_REVIEW_URL = "https://g.page/r/CbUHHhOQWx2cEBE/review";
+function goGoogle(){ window.location.href = GOOGLE_REVIEW_URL; }
+function goPrivate(){
+  document.getElementById("choiceScreen").style.display="none";
+  document.getElementById("cfForm").className="complaint-form show";
+}
 var lang = "es", waiter = "", generic = true, waiterChosen = false, locked = false, starVal = 0;
 
 function getParam(name){
@@ -278,19 +276,7 @@ function getParam(name){
   return m ? decodeURIComponent(m[1].replace(/\+/g," ")) : "";
 }
 
-var NAMES = {sandra:"Sandra",josselin:"Josselin",alberto:"Alberto",anas:"Anas",abdellah:"Abdellah"};
-var cParam = getParam("c").toLowerCase().trim();
-if(cParam && NAMES[cParam]){
-  generic=false; waiter=NAMES[cParam]; waiterChosen=true;
-  document.getElementById("wBadge").style.display="block";
-  document.getElementById("wInitial").textContent=NAMES[cParam].charAt(0);
-  document.getElementById("wName").textContent=NAMES[cParam];
-  document.getElementById("wSelector").style.display="none";
-} else {
-  generic=true;
-  document.getElementById("wBadge").style.display="none";
-  document.getElementById("wSelector").style.display="block";
-}
+var waiterChosen = true;
 
 function detectLang(){
   var n=(navigator.language||navigator.userLanguage||"es").toLowerCase();
@@ -301,13 +287,14 @@ function detectLang(){
 }
 function setLang(l){
   lang=l; var t=T[l];
+  var c=CH[l];
+  document.getElementById("chTitle").textContent=c.t;
+  document.getElementById("chSub").textContent=c.s;
+  document.getElementById("chGoogle").textContent=c.g;
+  document.getElementById("chPrivate").textContent=c.p;
   document.getElementById("hTitle").textContent=t.title;
   document.getElementById("hSub").textContent=t.sub;
   document.getElementById("fNote").textContent=t.foot;
-  document.getElementById("selLabel").textContent=t.sel;
-  document.getElementById("noChip").textContent=t.no;
-  document.getElementById("wWarn").textContent=t.warn;
-  document.getElementById("wLabel").textContent=t.by;
   document.getElementById("cfTitle").textContent=t.cfTitle;
   document.getElementById("cfSub").textContent=t.cfSub;
   document.getElementById("cfSendBtn").textContent=t.cfSend;
@@ -320,13 +307,6 @@ function setLang(l){
 }
 setLang(detectLang());
 
-function pickWaiter(name,btn){
-  waiter=name; waiterChosen=true;
-  var chips=document.querySelectorAll(".w-chip");
-  for(var i=0;i<chips.length;i++) chips[i].className=chips[i].className.replace(" sel","");
-  btn.className+=" sel";
-  document.getElementById("wWarn").style.display="none";
-}
 
 var sc=document.getElementById("stars");
 var svgs=sc.querySelectorAll("svg");
@@ -341,11 +321,6 @@ for(var i=0;i<svgs.length;i++){
     sv.onmouseover=function(){ if(!locked) paint(Number(sv.getAttribute("data-v"))); };
     sv.onmouseout=function(){  if(!locked) paint(starVal); };
     sv.onclick=function(){
-      if(generic && !waiterChosen){
-        document.getElementById("wWarn").style.display="block";
-        document.getElementById("wSelector").scrollIntoView({behavior:"smooth",block:"center"});
-        return;
-      }
       if(locked) return;
       locked=true;
       starVal=Number(sv.getAttribute("data-v"));
@@ -353,26 +328,11 @@ for(var i=0;i<svgs.length;i++){
 
       // Log click to sheet
       try{
-        new Image().src=LOG_URL+"?action=log&waiter="+encodeURIComponent(waiter||"Desconegut")+"&stars="+starVal+"&lang="+lang+"&_="+Date.now();
+        new Image().src=LOG_URL+"?action=log&waiter="+encodeURIComponent("")+"&stars="+starVal+"&lang="+lang+"&_="+Date.now();
       }catch(ex){}
-
-      if(starVal>=4){
-        // Positive: show success then redirect to Google
-        document.getElementById("starsScreen").style.display="none";
-        document.getElementById("wSelector").style.display="none";
-        document.getElementById("wBadge").style.display="none";
-        document.getElementById("successPos").className="success-msg show";
-        document.getElementById("rMsg").style.display="block";
-        setTimeout(function(){
-          window.location.href="https://g.page/r/CbUHHhOQWx2cEBE/review";
-        },1400);
-      } else {
-        // Negative: show inline complaint form
-        document.getElementById("starsScreen").style.display="none";
-        document.getElementById("wSelector").style.display="none";
-        document.getElementById("wBadge").style.display="none";
-        document.getElementById("cfForm").className="complaint-form show";
-      }
+      // Todas las valoraciones ven las mismas dos opciones
+      document.getElementById("starsScreen").style.display="none";
+      document.getElementById("choiceScreen").style.display="block";
     };
   })(svgs[i]);
 }
@@ -395,7 +355,7 @@ function sendComplaint(){
 
   var url = LOG_URL
     +"?action=mail"
-    +"&waiter="+encodeURIComponent(waiter||"Desconegut")
+    +"&waiter="+encodeURIComponent("")
     +"&stars="+starVal
     +"&lang="+lang
     +"&message="+encodeURIComponent(msg||"(sense comentari)")
@@ -417,5 +377,11 @@ function sendComplaint(){
   }, 4000);
 }
 </script>
+
+<div style="text-align:center;font-size:11px;line-height:1.6;opacity:.75;padding:16px 10px 22px;font-family:system-ui,sans-serif">
+  <a href="https://www.ancoraroses.com/avis-legal/" style="color:inherit">Avís legal</a> ·
+  <a href="https://www.ancoraroses.com/privacitat/" style="color:inherit">Privacitat</a> ·
+  <a href="https://www.ancoraroses.com/cookies/" style="color:inherit">Cookies</a>
+</div>
 </body>
 </html>
