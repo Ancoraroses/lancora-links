@@ -6,7 +6,7 @@
 <title>Club Àncora — L'Àncora</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --navy:#1c3454;
@@ -27,7 +27,7 @@
     font-family:'Jost', -apple-system, sans-serif;
     font-size:16px; line-height:1.5;
   }
-  h1,h2,h3{ font-family:'Playfair Display', Georgia, serif; font-weight:700; }
+  h1,h2,h3{ font-family:'Cormorant Garamond', Georgia, serif; font-weight:700; }
   .wrap{ max-width:440px; margin:0 auto; }
 
   /* -------- header -------- */
@@ -109,7 +109,7 @@
   .card{
     background:#fff; border:1px solid var(--hair); border-radius:14px; padding:14px 16px; margin-top:14px;
   }
-  .card .name{ font-family:'Playfair Display',serif; font-weight:700; font-size:16px; color:var(--navy); }
+  .card .name{ font-family:'Cormorant Garamond',serif; font-weight:700; font-size:16px; color:var(--navy); }
 
   .stamps{ display:flex; gap:8px; justify-content:center; margin:18px 0; }
   .stamp{
@@ -132,7 +132,7 @@
     border:1px solid var(--hair); border-radius:14px; background:#fff; padding:34px 16px; margin-top:16px;
     text-align:center; min-height:90px; display:flex; flex-direction:column; justify-content:center; gap:4px;
   }
-  .draw-name{ font-family:'Playfair Display',serif; font-size:19px; color:var(--navy); }
+  .draw-name{ font-family:'Cormorant Garamond',serif; font-size:19px; color:var(--navy); }
 
   .divider{ height:1px; background:var(--hair); margin:20px 0 14px; }
 
@@ -154,6 +154,42 @@
   }
   .side-widget .lang-btn:hover{ opacity:1; }
   .side-widget .lang-btn.active{ opacity:1; background:var(--gold); color:var(--navy-ink); }
+</style>
+<style id="tema-ancora-2026">
+/* Tema L'Àncora 2026: arena, azul marino y dorado; Cormorant Garamond + Jost */
+:root{--navy:#1A2B45;--navy-ink:#121F33;--gold:#C5A059;--gold-soft:#DDBF85;--cream:#F4EDE1;--linen:#EDE3D2;--slate:#5B6577;--hair:rgba(26,43,69,.16)}
+body{background-image:none!important;background-color:var(--cream)!important}
+h1,h2,h3{font-weight:600!important}
+.hero{min-height:auto!important;padding:44px 20px 34px!important;background:var(--cream)!important;border-bottom:1px solid var(--hair)}
+.hero::before,.hero::after,.hero .grid-texture,.hero .stars,.hero .bg-anchor-big,.hero .horizon,.hero .scroll-cue{display:none!important}
+.hero .illus{opacity:.28!important}
+.hero .emblem svg.rope{display:none!important}
+.hero .emblem{width:64px!important;height:64px!important;border-radius:50%;background:var(--navy)}
+.hero .emblem svg.anchor-icon{color:var(--gold)!important;width:30px!important;height:30px!important}
+.hero .eyebrow{letter-spacing:.02em!important;text-transform:none!important;font-size:15px!important;font-weight:500!important}
+.hero .tagline{letter-spacing:.01em!important;text-transform:none!important;font-size:16px!important;color:var(--slate)!important;opacity:1!important}
+.hero h1{letter-spacing:0!important}
+nav.catnav{background:rgba(244,237,225,.96)!important}
+.chip{background:#FFFDF8}
+.chip.active{background:var(--navy)!important;color:var(--cream)!important;border-color:var(--navy)!important}
+.cat-head .icon-wrap{background:var(--navy)!important;border-color:var(--navy)!important}
+.cat-head .icon-wrap svg{color:var(--gold)!important}
+.cat-note{letter-spacing:.02em!important;text-transform:none!important;font-size:14px!important}
+.cat-head + .cat-note{background:rgba(197,160,89,.16)!important;font-size:26px!important}
+.item .tag{color:#1A2B45!important}
+.link-card{background:#FFFDF8!important}
+.link-card .icon-wrap{background:var(--navy)!important}
+.link-card .desc{font-style:normal!important}
+footer{background:var(--navy)!important}
+footer p{letter-spacing:.01em!important;text-transform:none!important}
+
+header::before{display:none!important}
+header .eyebrow{letter-spacing:.02em!important;text-transform:none!important;font-size:14px!important;font-weight:500!important;color:var(--gold)!important}
+header h1{font-size:34px!important}
+header .emblem svg.rope{display:none!important}
+header .emblem{width:52px!important;height:52px!important}
+header .emblem svg.anchor-icon{color:var(--gold)!important;width:30px!important;height:30px!important}
+nav.tabs{background:#FFFDF8!important}
 </style>
 </head>
 <body>
