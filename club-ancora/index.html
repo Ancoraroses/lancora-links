@@ -155,6 +155,13 @@
   .side-widget .lang-btn:hover{ opacity:1; }
   .side-widget .lang-btn.active{ opacity:1; background:var(--gold); color:var(--navy-ink); }
 </style>
+<style>
+.info-card{background:#FFFDF8;border:1px solid var(--hair);border-radius:16px;padding:20px}
+.info-card h2{font-size:28px;line-height:1.1;margin-bottom:6px}
+.info-steps{margin:16px 0 14px 18px;display:grid;gap:10px}
+.info-steps li{padding-left:4px}
+.info-bases{display:inline-block;padding:10px 0;color:var(--navy);text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:4px}
+</style>
 <style id="tema-ancora-2026">
 /* Tema L'Àncora 2026: arena, azul marino y dorado; Cormorant Garamond + Jost */
 :root{--navy:#1A2B45;--navy-ink:#121F33;--gold:#C5A059;--gold-soft:#DDBF85;--cream:#F4EDE1;--linen:#EDE3D2;--slate:#5B6577;--hair:rgba(26,43,69,.16)}
@@ -214,7 +221,15 @@ nav.tabs{background:#FFFDF8!important}
 <main class="wrap">
 
   <section id="view-cliente" class="view">
-    <div id="cliente-blocked" class="notice" hidden>Aquest enllaç ja no és vàlid. Escaneja el QR de la pantalla del restaurant per registrar la teva visita d'avui.</div>
+    <div id="cliente-blocked" hidden>
+      <div class="info-card">
+        <h2 id="info-t"></h2>
+        <p class="muted" id="info-lead"></p>
+        <ol class="info-steps"><li id="info-1"></li><li id="info-2"></li><li id="info-3"></li></ol>
+        <p class="lead" id="info-foot"></p>
+        <a class="info-bases" id="info-bases" href="bases/"></a>
+      </div>
+    </div>
 
     <div id="cliente-form">
       <p class="lead" id="cliente-lead">Introdueix el teu mòbil per registrar la teva visita d'avui.</p>
@@ -245,11 +260,10 @@ nav.tabs{background:#FFFDF8!important}
 
   <section id="view-personal" class="view" hidden>
     <div id="personal-gate">
-      <p class="muted center" style="margin-bottom:14px;">Zona restringida al personal.</p>
-      <input id="personal-pin" type="password" inputmode="numeric" placeholder="PIN" style="text-align:center; max-width:140px; margin:0 auto; display:block;">
-      <p id="personal-pin-error" class="error center" hidden style="max-width:260px; margin-inline:auto;"></p>
-      <button id="personal-entrar" class="btn-primary" style="max-width:200px; margin:14px auto 0; display:block;">Entrar</button>
-    </div>
+        <p class="muted center" style="margin-bottom:14px;">Zona restringida al personal. Entra amb el compte de Google del restaurant.</p>
+        <button id="personal-entrar" class="btn-primary" style="max-width:240px; margin:0 auto; display:block;">Entrar amb Google</button>
+        <p id="personal-pin-error" class="error center" hidden style="max-width:280px; margin-inline:auto;"></p>
+      </div>
 
     <div id="personal-panel" hidden>
       <div class="row">
@@ -279,6 +293,7 @@ nav.tabs{background:#FFFDF8!important}
       <div class="divider"></div>
       <button id="personal-cargar" class="btn-secondary">Carregar llistat de clients</button>
       <div id="personal-lista"></div>
+        <button id="personal-sortir" class="btn-secondary" style="margin-top:14px">Tancar sessió</button>
     </div>
   </section>
 
@@ -317,6 +332,7 @@ nav.tabs{background:#FFFDF8!important}
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 
 <script>
 /* ============================================================
@@ -339,9 +355,11 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 const ROOT = "club-ancora";
+const urlParams = new URLSearchParams(window.location.search);
 
 const SELLOS_OBJETIVO = 5;
-const PIN_DEMO = "0000";
+const STAFF_EMAILS = ["ancoraroses@gmail.com"]; // comptes de Google amb accés al panell (han de coincidir amb les regles de Firebase)
+function esStaff(u){ return !!u && u.emailVerified !== false && STAFF_EMAILS.includes((u.email||"").toLowerCase()); }
 
 function todayStr(){ return new Date().toISOString().slice(0,10); }
 function monthStr(d = new Date()){ return d.toISOString().slice(0,7); }
@@ -415,7 +433,7 @@ const UI = {
   cliente_btn_registrar: { ca:"Registrar la meva visita", es:"Registrar mi visita", en:"Log my visit", fr:"Enregistrer ma visite", de:"Meinen Besuch registrieren", nl:"Mijn bezoek registreren" },
   cliente_btn_confirmar: { ca:"Confirmar i registrar visita", es:"Confirmar y registrar visita", en:"Confirm and log visit", fr:"Confirmer et enregistrer la visite", de:"Bestätigen und registrieren", nl:"Bevestigen en registreren" },
   cliente_msg_ya: { ca:"Avui ja tens el segell registrat. Fins la propera!", es:"Hoy ya tienes el sello registrado. ¡Hasta la próxima!", en:"You've already logged today's stamp. See you next time!", fr:"Vous avez déjà enregistré le tampon d'aujourd'hui. À bientôt !", de:"Du hast deinen heutigen Stempel schon erhalten. Bis zum nächsten Mal!", nl:"Je hebt vandaag al een stempel geregistreerd. Tot de volgende keer!" },
-  cliente_msg_premio: { ca:"Segell registrat i premi desbloquejat! Ensenya la pantalla al personal.", es:"¡Sello registrado y premio desbloqueado! Enseña la pantalla al personal.", en:"Stamp logged and reward unlocked! Show this screen to staff.", fr:"Tampon enregistré et récompense débloquée ! Montrez cet écran au personnel.", de:"Stempel registriert und Prämie freigeschaltet! Zeig diesen Bildschirm dem Personal.", nl:"Stempel geregistreerd en beloning ontgrendeld! Laat dit scherm aan het personeel zien." },
+  cliente_msg_premio: { ca:"Segell registrat i premi desbloquejat: una copa de vi o vermut. Ensenya aquesta pantalla al personal.", es:"¡Sello registrado y premio desbloqueado: una copa de vino o vermut! Enseña esta pantalla al personal.", en:"Stamp logged and reward unlocked: a glass of wine or vermouth! Show this screen to staff.", fr:"Tampon enregistré et récompense débloquée : un verre de vin ou de vermouth ! Montrez cet écran au personnel.", de:"Stempel registriert und Prämie freigeschaltet: ein Glas Wein oder Wermut! Zeigen Sie diesen Bildschirm dem Personal.", nl:"Stempel geregistreerd en beloning vrijgespeeld: een glas wijn of vermout! Laat dit scherm aan het personeel zien." },
   cliente_msg_ok: { ca:"Segell registrat. Cada 30€ del teu tiquet et donen una participació pel sorteig — demana-ho al personal en pagar.", es:"Sello registrado. Cada 30€ de tu tique te dan una participación para el sorteo — pídelo al personal al pagar.", en:"Stamp logged. Every €30 on your bill earns a raffle entry — ask staff when you pay.", fr:"Tampon enregistré. Chaque tranche de 30€ sur votre addition donne une participation au tirage — demandez-le au personnel en payant.", de:"Stempel registriert. Pro 30€ auf deiner Rechnung bekommst du eine Verlosungsteilnahme — frag das Personal beim Bezahlen.", nl:"Stempel geregistreerd. Elke €30 op je rekening levert een deelname aan de trekking op — vraag ernaar bij het personeel bij het afrekenen." },
   cliente_sub: {
     ca:(n,tt,r)=>`${n} de ${tt} segells · ${r} premis aconseguits`,
@@ -426,6 +444,14 @@ const UI = {
     nl:(n,tt,r)=>`${n} van ${tt} stempels · ${r} beloningen behaald`
   },
   cliente_btn_fet: { ca:"Fet", es:"Hecho", en:"Done", fr:"Terminé", de:"Fertig", nl:"Klaar" },
+  info_t: { ca:"Club Àncora: el teu dinar entre setmana té premi", es:"Club Àncora: tu comida entre semana tiene premio", en:"Club Àncora: your weekday lunch gets rewarded", fr:"Club Àncora : votre déjeuner en semaine est récompensé", de:"Club Àncora: Ihr Mittagessen unter der Woche wird belohnt", nl:"Club Àncora: uw lunch door de week wordt beloond" },
+  info_lead: { ca:"Per als clients que venen a dinar de dilluns a divendres.", es:"Para los clientes que vienen a comer de lunes a viernes.", en:"For guests who come for lunch Monday to Friday.", fr:"Pour les clients qui viennent déjeuner du lundi au vendredi.", de:"Für Gäste, die von Montag bis Freitag zum Mittagessen kommen.", nl:"Voor gasten die van maandag tot vrijdag komen lunchen." },
+  info_1: { ca:"Cada dinar de dilluns a divendres suma un segell: escaneja el QR de la barra i posa el teu mòbil.", es:"Cada comida de lunes a viernes suma un sello: escanea el QR de la barra y pon tu móvil.", en:"Every weekday lunch earns a stamp: scan the QR at the bar and enter your mobile.", fr:"Chaque déjeuner du lundi au vendredi vous donne un tampon : scannez le QR au bar et indiquez votre mobile.", de:"Jedes Mittagessen von Montag bis Freitag bringt einen Stempel: QR-Code an der Bar scannen und Handynummer eingeben.", nl:"Elke lunch van maandag tot vrijdag levert een stempel op: scan de QR-code aan de bar en vul uw mobiele nummer in." },
+  info_2: { ca:"Amb 5 segells et convidem a una copa de vi o vermut.", es:"Con 5 sellos te invitamos a una copa de vino o vermut.", en:"With 5 stamps, we treat you to a glass of wine or vermouth.", fr:"Avec 5 tampons, nous vous offrons un verre de vin ou de vermouth.", de:"Mit 5 Stempeln laden wir Sie zu einem Glas Wein oder Wermut ein.", nl:"Met 5 stempels trakteren we u op een glas wijn of vermout." },
+  info_3: { ca:"Cada 30 € del teu compte et dona una participació al sorteig mensual d'un sopar per a dos.", es:"Cada 30 € de tu cuenta te da una participación en el sorteo mensual de una cena para dos.", en:"Every €30 on your bill gives you an entry in the monthly draw for dinner for two.", fr:"Chaque tranche de 30 € sur votre addition vous donne une participation au tirage mensuel d'un dîner pour deux.", de:"Je 30 € auf Ihrer Rechnung erhalten Sie ein Los für die monatliche Verlosung eines Abendessens für zwei.", nl:"Elke € 30 op uw rekening geeft u een lot voor de maandelijkse trekking van een diner voor twee." },
+  info_foot: { ca:"Escaneja el QR de la barra al teu proper dinar per començar.", es:"Escanea el QR de la barra en tu próxima comida para empezar.", en:"Scan the QR at the bar on your next lunch to start.", fr:"Scannez le QR au bar lors de votre prochain déjeuner pour commencer.", de:"Scannen Sie beim nächsten Mittagessen den QR-Code an der Bar.", nl:"Scan bij uw volgende lunch de QR-code aan de bar om te beginnen." },
+  info_bases: { ca:"Bases del sorteig", es:"Bases del sorteo", en:"Draw rules", fr:"Règlement du tirage", de:"Teilnahmebedingungen", nl:"Spelregels" },
+  cliente_msg_fuera: { ca:"El Club suma segells als dinars de dilluns a divendres (de 12 a 17 h). T'esperem al migdia!", es:"El Club suma sellos en las comidas de lunes a viernes (de 12 a 17 h). ¡Te esperamos a mediodía!", en:"The Club adds stamps for lunches Monday to Friday (12:00–17:00). See you at lunchtime!", fr:"Le Club ajoute des tampons aux déjeuners du lundi au vendredi (12 h – 17 h). À bientôt à midi !", de:"Der Club vergibt Stempel für Mittagessen von Montag bis Freitag (12–17 Uhr). Bis bald zum Mittagessen!", nl:"De Club geeft stempels voor lunches van maandag tot vrijdag (12–17 uur). Tot ziens bij de lunch!" },
   cliente_blocked: { ca:"Aquest enllaç ja no és vàlid. Escaneja el QR de la pantalla del restaurant per registrar la teva visita d'avui.", es:"Este enlace ya no es válido. Escanea el QR de la pantalla del restaurante para registrar tu visita de hoy.", en:"This link is no longer valid. Scan the QR shown on screen at the restaurant to log today's visit.", fr:"Ce lien n'est plus valide. Scannez le QR affiché au restaurant pour enregistrer votre visite du jour.", de:"Dieser Link ist nicht mehr gültig. Scanne den im Restaurant angezeigten QR-Code, um deinen heutigen Besuch zu registrieren.", nl:"Deze link is niet meer geldig. Scan de QR-code op het scherm in het restaurant om je bezoek van vandaag te registreren." }
 };
 
@@ -449,7 +475,7 @@ function applyLang(){
   document.getElementById("cliente-nombre").placeholder = t(UI.cliente_placeholder_nombre);
   document.getElementById("cliente-consent-label").textContent = t(UI.cliente_consent);
   document.getElementById("cliente-submit").textContent = necesitaAlta ? t(UI.cliente_btn_confirmar) : t(UI.cliente_btn_registrar);
-  document.getElementById("cliente-blocked").textContent = t(UI.cliente_blocked);
+  ["info_t","info_lead","info_1","info_2","info_3","info_foot","info_bases"].forEach(k=>{ document.getElementById(k.replace("_","-")).textContent = t(UI[k]); });
   document.getElementById("cliente-reset").textContent = t(UI.cliente_btn_fet);
   buildSideWidget();
 }
@@ -487,7 +513,7 @@ const clienteBlocked = document.getElementById("cliente-blocked");
 let necesitaAlta = false;
 
 const STAFF_KEY = "tripulacio26";
-const urlParams = new URLSearchParams(window.location.search);
+// urlParams se declara al principio del script (antes se usaba antes de declararse y el script se paraba)
 const isStaff = urlParams.get("staff") === STAFF_KEY;
 
 if(!isStaff){
@@ -516,6 +542,11 @@ function pintarSegells(container, sellos){
 async function registrarVisita(cliente, nombreNuevo){
   const p = cleanPhone(clientePhone.value);
   const hoy = todayStr();
+  const ahora = new Date(), dia = ahora.getDay(), hora = ahora.getHours() + ahora.getMinutes()/60;
+  if(dia === 0 || dia === 6 || hora < 12 || hora >= 17){
+    mostrarDone(cliente, t(UI.cliente_msg_fuera));
+    return;
+  }
   if(cliente.lastVisitDate === hoy){
     mostrarDone(cliente, t(UI.cliente_msg_ya));
     return;
@@ -580,11 +611,23 @@ const personalGate = document.getElementById("personal-gate");
 const personalPanel = document.getElementById("personal-panel");
 let clienteActivo = null;
 
-document.getElementById("personal-entrar").addEventListener("click", ()=>{
-  const pin = document.getElementById("personal-pin").value;
-  const err = document.getElementById("personal-pin-error");
-  if(pin === PIN_DEMO){ personalGate.hidden = true; personalPanel.hidden = false; }
-  else{ err.textContent = "PIN incorrecte. (Demo: 0000 — canvia'l per un de real abans de fer-ho servir a producció.)"; err.hidden = false; }
+const auth = firebase.auth();
+document.getElementById("personal-sortir").addEventListener("click", ()=> auth.signOut());
+const gateErr = document.getElementById("personal-pin-error");
+auth.onAuthStateChanged(u => {
+  const ok = esStaff(u);
+  personalGate.hidden = ok; personalPanel.hidden = !ok;
+  if(u && !ok){ gateErr.textContent = "Aquest compte (" + (u.email||"") + ") no té accés. Entra amb el compte del restaurant."; gateErr.hidden = false; auth.signOut(); }
+});
+document.getElementById("personal-entrar").addEventListener("click", async ()=>{
+  gateErr.hidden = true;
+  const prov = new firebase.auth.GoogleAuthProvider();
+  prov.setCustomParameters({ prompt: "select_account" });
+  try{ await auth.signInWithPopup(prov); }
+  catch(e){
+    if(e && (e.code === "auth/popup-blocked" || e.code === "auth/operation-not-supported-in-environment")){ auth.signInWithRedirect(prov); }
+    else if(!(e && e.code === "auth/popup-closed-by-user")){ gateErr.textContent = "No s'ha pogut entrar (" + (e && e.code || e) + ")."; gateErr.hidden = false; }
+  }
 });
 
 document.getElementById("personal-buscar").addEventListener("click", async ()=>{
@@ -704,6 +747,7 @@ sorteoMes.value = monthStr();
 let participantesActuales = [];
 
 async function cargarSorteo(){
+  if(!esStaff(firebase.auth().currentUser)){ document.getElementById("sorteo-nombre").textContent = "Entra primer a la pestanya Personal amb el compte del restaurant."; document.getElementById("sorteo-resumen").textContent = ""; return; }
   document.getElementById("sorteo-nombre").textContent = "Carregant…";
   document.getElementById("sorteo-phone").textContent = "";
   const p = await listParticipations(sorteoMes.value);
