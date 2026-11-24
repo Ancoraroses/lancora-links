@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gracias · L'Àncora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* VOICE: cálido, sereno, discreto — una nota de agradecimiento, no un formulario
+   IDEA: la tarjeta que acompaña la cuenta en un restaurante de toda la vida
+   PICTURE: un vale-regalo azul marino con borde dorado troquelado y el código grande
+   COLOUR and TYPE: arena de fondo, azul marino #1A2B45 dominante, dorado #C5A059 de acento; Cormorant + Jost
+   LAYOUT: una columna estrecha, como una carta; nada compite con el vale */
+:root{color-scheme:light dark;
+--bg:light-dark(#F4EDE1,#0E1724);--ink:light-dark(#1A2B45,#EDE5D6);--soft:light-dark(#5B6577,#A9B1BF);
+--navy:#1A2B45;--gold:#C5A059;--card:light-dark(#FFFDF8,#162236);--line:light-dark(#E3D8C4,#2A3850);--olive:#6E7A4B}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Jost,system-ui,sans-serif;overflow-x:clip}
+.wrap{max-width:460px;margin:0 auto;padding:28px 22px 40px}
+h1,h2,.serif{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:600;letter-spacing:.02em}
+.brand svg{width:26px;height:26px;color:var(--gold)}
+.lang{display:flex;gap:2px}
+.lang button{font:inherit;font-size:13px;background:none;border:0;color:var(--soft);padding:10px 7px;min-height:44px;cursor:pointer;border-radius:8px}
+.lang button[aria-pressed=true]{color:var(--ink);text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:5px}
+.lang button:focus-visible,.btn:focus-visible,.rate button:focus-visible,a:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+h1{font-size:clamp(34px,9vw,44px);line-height:1.05;margin:34px 0 10px;text-wrap:balance}
+.lead{color:var(--soft);margin:0 0 28px}
+.ticket{position:relative;background:var(--navy);color:#F4EDE1;border-radius:18px;padding:26px 24px 22px;box-shadow:0 18px 40px -22px rgba(26,43,69,.7);overflow:hidden}
+.ticket::before{content:"";position:absolute;inset:8px;border:1px solid rgba(197,160,89,.55);border-radius:12px;pointer-events:none}
+.ticket .notch{position:absolute;top:50%;width:22px;height:22px;border-radius:50%;background:var(--bg);transform:translateY(-50%)}
+.ticket .l{left:-11px}.ticket .r{right:-11px}
+.ticket .waves{position:absolute;right:-10px;bottom:-6px;width:170px;opacity:.16;color:var(--gold)}
+.kick{font-size:14px;color:var(--gold);margin:0}
+.off{font-family:"Cormorant Garamond",serif;font-size:46px;line-height:1;margin:8px 0 16px}
+.code{display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px dashed rgba(197,160,89,.6);padding-top:16px}
+.code b{font:500 26px/1 Jost,sans-serif;letter-spacing:.14em;color:#F6E7C6;white-space:nowrap}
+.btn{font:inherit;font-size:15px;border-radius:999px;min-height:44px;padding:10px 18px;cursor:pointer;border:1px solid var(--gold);background:transparent;color:inherit;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn.solid{background:var(--gold);color:#1A2B45;border-color:var(--gold);font-weight:500}
+.ticket .btn{color:#F4EDE1;padding:8px 14px;font-size:14px}
+.cond{font-size:13px;color:var(--soft);margin:14px 2px 0}
+.book{margin-top:16px;width:100%}
+hr{border:0;border-top:1px solid var(--line);margin:36px 0 30px}
+h2{font-size:30px;line-height:1.1;margin:0 0 6px}
+.hint{color:var(--soft);font-size:15px;margin:0 0 18px}
+.rate{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.rate button{font:inherit;font-size:14px;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:14px 6px 12px;min-height:88px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;transition:border-color .2s,transform .2s}
+.rate button svg{width:28px;height:28px;color:var(--gold)}
+.rate button[aria-pressed=true]{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset}
+.panel{margin-top:20px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;animation:rise .35s ease}
+.panel p{margin:0 0 14px}
+.panel .btn{width:100%}
+.alt{display:block;text-align:center;margin-top:12px;color:var(--soft);font-size:14px;background:none;border:0;font-family:inherit;cursor:pointer;min-height:44px;width:100%;text-decoration:underline;text-underline-offset:4px}
+textarea{width:100%;font:16px/1.5 Jost,sans-serif;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;min-height:110px;resize:vertical;margin-bottom:12px}
+.ok{color:var(--olive);font-weight:500}
+footer{margin-top:44px;text-align:center;font-size:13px;color:var(--soft)}
+footer .serif{font-size:17px;color:var(--ink)}
+footer button{font:inherit;font-size:13px;background:none;border:0;color:var(--soft);text-decoration:underline;cursor:pointer;min-height:44px}
+.demo{font-size:12px;opacity:.7;margin-top:6px}
+[hidden]{display:none!important}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.panel{animation:none}.rate button{transition:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="anchor" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="16" cy="5.5" r="2.6"/><path d="M16 8.2V28M10 12.5h12M5 19c0 5 5 9 11 9s11-4 11-9M5 19l-2 2.5M5 19l2.6 1.4M27 19l2 2.5M27 19l-2.6 1.4"/></g></symbol>
+  <symbol id="wave" viewBox="0 0 40 20"><path d="M2 12c4-6 8-6 12 0s8 6 12 0 8-6 12 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+</svg>
+<div class="wrap">
+  <header>
+    <div class="brand"><svg><use href="#anchor"/></svg>L'Àncora</div>
+    <nav class="lang" aria-label="Idioma">
+      <button data-l="es">ES</button><button data-l="ca">CA</button><button data-l="fr">FR</button><button data-l="en">EN</button>
+    </nav>
+  </header>
+
+  <h1 id="hi"></h1>
+  <p class="lead" data-t="sub"></p>
+
+  <section class="ticket" aria-labelledby="kick">
+    <span class="notch l"></span><span class="notch r"></span>
+    <svg class="waves" viewBox="0 0 170 60" aria-hidden="true"><use href="#wave" x="0" y="0" width="80" height="40"/><use href="#wave" x="60" y="14" width="80" height="40"/><use href="#wave" x="20" y="28" width="80" height="40"/><use href="#wave" x="95" y="34" width="80" height="40"/></svg>
+    <p class="kick" id="kick" data-t="gift"></p>
+    <div class="off" data-t="off"></div>
+    <div class="code">
+      <b id="code">ANC-7K3P</b>
+      <button class="btn" id="copy" type="button" data-t="copy"></button>
+    </div>
+  </section>
+  <p class="cond" data-t="cond"></p>
+  <a class="btn solid book" href="https://cloudclient28.hiopos.com/booking/#/details" target="_blank" rel="noopener" data-t="book"></a>
+
+  <hr>
+
+  <h2 data-t="q"></h2>
+  <p class="hint" data-t="qs"></p>
+  <div class="rate" role="group" aria-labelledby="q">
+    <button type="button" data-r="1"><svg viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="16" cy="16" r="13"/><path d="M11 21.5c3-2 7-2 10 0"/><circle cx="11.5" cy="13" r=".9" fill="currentColor"/><circle cx="20.5" cy="13" r=".9" fill="currentColor"/></g></svg><span data-t="r1"></span></button>
+    <button type="button" data-r="2"><svg viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="16" cy="16" r="13"/><path d="M11 20h10"/><circle cx="11.5" cy="13" r=".9" fill="currentColor"/><circle cx="20.5" cy="13" r=".9" fill="currentColor"/></g></svg><span data-t="r2"></span></button>
+    <button type="button" data-r="3"><svg viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="16" cy="16" r="13"/><path d="M10.5 18.5c3 3.5 8 3.5 11 0"/><circle cx="11.5" cy="13" r=".9" fill="currentColor"/><circle cx="20.5" cy="13" r=".9" fill="currentColor"/></g></svg><span data-t="r3"></span></button>
+  </div>
+
+  <div class="panel" id="pGood" hidden>
+    <p data-t="t3"></p>
+    <a class="btn solid" id="g1" data-t="google"></a>
+    <button class="alt" type="button" id="showPriv" data-t="priv"></button>
+  </div>
+  <div class="panel" id="pPriv" hidden>
+    <p id="privMsg"></p>
+    <form id="form">
+      <label for="msg" class="hint" data-t="ph" style="display:block;margin-bottom:6px"></label>
+      <textarea id="msg"></textarea>
+      <button class="btn solid" type="submit" data-t="send"></button>
+    </form>
+    <p class="ok" id="sent" hidden data-t="sent"></p>
+    <a class="alt" id="g2" data-t="google2"></a>
+  </div>
+
+  <footer>
+    <div class="serif" data-t="foot"></div>
+    <div>Avinguda de Rhode 62 · 17480 Roses</div>
+    <button type="button" id="out" data-t="out"></button>
+    <div class="demo">Vista previa · nombre y código de ejemplo</div>
+  </footer>
+</div>
+<script>
+{
+const T={
+es:{hi:"Gracias por venir, {n}",sub:"Ha sido un placer tenerte en nuestra mesa frente al mar.",gift:"Un detalle para tu próxima visita",off:"5 % de descuento",copy:"Copiar",copied:"Copiado",cond:"De lunes a viernes, del 21 de diciembre de 2026 al 31 de mayo de 2027 (cerramos del 10 de enero al 10 de marzo). Código personal, de un solo uso y no acumulable.",book:"Reservar mesa",q:"¿Cómo fue tu visita?",qs:"Solo si te apetece. Con un toque basta.",r1:"Mejorable",r2:"Bien",r3:"Excelente",t3:"¡Qué alegría! Si quieres contarlo, una reseña en Google nos ayuda muchísimo.",t2:"Gracias. ¿Qué habría hecho falta para que fuera excelente?",t1:"Sentimos que no fuera como esperabas. Cuéntanoslo: lo lee el equipo directamente.",tp:"Cuéntanos lo que quieras: lo lee el equipo directamente.",google:"Escribir una reseña en Google",google2:"También puedes dejar una reseña en Google",priv:"¿Prefieres contárnoslo en privado?",ph:"Tu mensaje",send:"Enviar al equipo",sent:"Te abrimos WhatsApp con tu mensaje: solo tienes que enviarlo. Gracias por ayudarnos a mejorar.",foot:"Desde 1986, frente al mar",out:"No quiero recibir más mensajes",outd:"Te abrimos WhatsApp: envía «BAJA» y no recibirás más mensajes.",hiS:"Gracias por visitarnos este año, {n}",stop:"BAJA"},
+ca:{hi:"Gràcies per venir, {n}",sub:"Ha estat un plaer tenir-te a la nostra taula davant del mar.",gift:"Un detall per a la propera visita",off:"5 % de descompte",copy:"Copiar",copied:"Copiat",cond:"De dilluns a divendres, del 21 de desembre de 2026 al 31 de maig de 2027 (tanquem del 10 de gener al 10 de març). Codi personal, d'un sol ús i no acumulable.",book:"Reservar taula",q:"Com va anar la visita?",qs:"Només si et ve de gust. N'hi ha prou amb un toc.",r1:"Millorable",r2:"Bé",r3:"Excel·lent",t3:"Quina alegria! Si ho vols explicar, una ressenya a Google ens ajuda moltíssim.",t2:"Gràcies. Què hauria calgut perquè fos excel·lent?",t1:"Sentim que no fos com esperaves. Explica-ho: ho llegeix l'equip directament.",tp:"Explica'ns el que vulguis: ho llegeix l'equip directament.",google:"Escriure una ressenya a Google",google2:"També pots deixar una ressenya a Google",priv:"Prefereixes explicar-nos-ho en privat?",ph:"El teu missatge",send:"Enviar a l'equip",sent:"T'obrim WhatsApp amb el teu missatge: només cal enviar-lo. Gràcies per ajudar-nos a millorar.",foot:"Des de 1986, davant del mar",out:"No vull rebre més missatges",outd:"T'obrim WhatsApp: envia «BAIXA» i no rebràs més missatges.",hiS:"Gràcies per visitar-nos aquest any, {n}",stop:"BAIXA"},
+fr:{hi:"Merci de votre visite, {n}",sub:"Ce fut un plaisir de vous recevoir à notre table face à la mer.",gift:"Une attention pour votre prochaine visite",off:"5 % de remise",copy:"Copier",copied:"Copié",cond:"Du lundi au vendredi, du 21 décembre 2026 au 31 mai 2027 (fermé du 10 janvier au 10 mars). Code personnel, à usage unique, non cumulable.",book:"Réserver une table",q:"Comment s'est passée votre visite ?",qs:"Seulement si vous en avez envie. Un geste suffit.",r1:"À améliorer",r2:"Bien",r3:"Excellente",t3:"Quel plaisir ! Si vous le souhaitez, un avis sur Google nous aide énormément.",t2:"Merci. Qu'est-ce qui l'aurait rendue excellente ?",t1:"Nous sommes désolés qu'elle n'ait pas été à la hauteur. Dites-le-nous : l'équipe le lit directement.",tp:"Écrivez-nous ce que vous voulez : l'équipe le lit directement.",google:"Laisser un avis sur Google",google2:"Vous pouvez aussi laisser un avis sur Google",priv:"Vous préférez nous écrire en privé ?",ph:"Votre message",send:"Envoyer à l'équipe",sent:"Nous ouvrons WhatsApp avec votre message : il suffit de l'envoyer. Merci de nous aider à progresser.",foot:"Depuis 1986, face à la mer",out:"Je ne souhaite plus recevoir de messages",outd:"Nous ouvrons WhatsApp : envoyez « STOP » et vous ne recevrez plus de messages.",hiS:"Merci pour votre visite cette année, {n}",stop:"STOP"},
+en:{hi:"Thank you for coming, {n}",sub:"It was a pleasure having you at our table by the sea.",gift:"A little something for your next visit",off:"5% off",copy:"Copy",copied:"Copied",cond:"Monday to Friday, 21 December 2026 to 31 May 2027 (closed 10 January to 10 March). Personal code, single use, not combinable with other offers.",book:"Book a table",q:"How was your visit?",qs:"Only if you feel like it. One tap is enough.",r1:"Could be better",r2:"Good",r3:"Excellent",t3:"Wonderful! If you'd like to share it, a Google review helps us enormously.",t2:"Thank you. What would have made it excellent?",t1:"We're sorry it wasn't what you hoped for. Tell us — the team reads it directly.",tp:"Tell us anything — the team reads it directly.",google:"Write a Google review",google2:"You can also leave a Google review",priv:"Prefer to tell us privately?",ph:"Your message",send:"Send to the team",sent:"We're opening WhatsApp with your message: just tap send. Thank you for helping us improve.",foot:"Since 1986, by the sea",out:"Stop receiving messages",outd:"We're opening WhatsApp: send STOP and you won't get any more messages.",hiS:"Thanks for visiting us this year, {n}",stop:"STOP"}};
+const P=new URLSearchParams(location.search);
+const DEMO=!P.get("c");
+const NAME=(P.get("n")||(DEMO?"Marta":"")).slice(0,40);
+const CODE=(P.get("c")||"ANC-7K3P").toUpperCase().replace(/[^A-Z0-9-]/g,"").slice(0,12);
+const SEASON=P.get("t")==="s";
+const GURL="https://search.google.com/local/writereview?placeid=ChIJSbdRqrNmuhIRtQceE5BbHZw";
+const WA="34972256386";
+const $=id=>document.getElementById(id);
+let L=["es","ca","fr","en"].includes(P.get("l"))?P.get("l"):"es",rating=0;
+$("code").textContent=CODE;
+if(!DEMO)document.querySelector(".demo").hidden=true;
+function openWa(text){const a=document.createElement("a");a.href="https://wa.me/"+WA+"?text="+encodeURIComponent(text);a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove()}
+for(const a of [$("g1"),$("g2")]){a.href=GURL}
+function render(){
+  const t=T[L];document.documentElement.lang=L;
+  const h=SEASON?t.hiS:t.hi;
+  $("hi").textContent=NAME?h.replace("{n}",NAME):h.replace(/,? \{n\}/,"");
+  document.querySelectorAll("[data-t]").forEach(e=>{e.textContent=t[e.dataset.t]});
+  document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===L));
+  if(rating)show(rating,false);
+}
+function show(r,scroll){
+  rating=r;const t=T[L];
+  document.querySelectorAll(".rate button").forEach(b=>b.setAttribute("aria-pressed",+b.dataset.r===r));
+  $("pGood").hidden=r!==3;
+  const priv=r<3||!$("pPriv").hidden&&r===3&&$("pPriv").dataset.open==="1";
+  $("pPriv").hidden=!priv;
+  $("privMsg").textContent=r===1?t.t1:r===2?t.t2:t.tp;
+  $("g2").hidden=r===3;
+  if(scroll)($("pGood").hidden?$("pPriv"):$("pGood")).scrollIntoView({behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth",block:"nearest"});
+}
+document.querySelectorAll(".lang button").forEach(b=>b.addEventListener("click",()=>{L=b.dataset.l;render()}));
+document.querySelectorAll(".rate button").forEach(b=>b.addEventListener("click",()=>{$("pPriv").dataset.open="0";show(+b.dataset.r,true)}));
+$("showPriv").addEventListener("click",()=>{$("pPriv").dataset.open="1";$("pPriv").hidden=false;$("privMsg").textContent=T[L].tp;$("pPriv").scrollIntoView({block:"nearest"})});
+$("form").addEventListener("submit",e=>{e.preventDefault();const m=$("msg").value.trim();openWa("["+CODE+"] "+(NAME?NAME+": ":"")+(m||T[L]["r"+(rating||2)]));$("form").hidden=true;$("sent").hidden=false});
+$("copy").addEventListener("click",async()=>{try{await navigator.clipboard.writeText($("code").textContent)}catch(e){}$("copy").textContent=T[L].copied;setTimeout(()=>{$("copy").textContent=T[L].copy},1800)});
+$("out").addEventListener("click",()=>{openWa(T[L].stop+" ["+CODE+"]");$("out").textContent=T[L].outd;$("out").disabled=true});
+render();
+}
+</script>
+</body>
+</html>
