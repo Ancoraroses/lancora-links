@@ -64,6 +64,8 @@ input[type=text],input[type=tel],input[type=email],input[type=date],input[type=n
 .li .r{color:var(--soft);text-align:right;white-space:nowrap}
 .li button{font-size:13px;background:none;border:1px solid var(--err);color:var(--err);border-radius:999px;padding:4px 10px;cursor:pointer;margin-left:8px}
 .li.void{opacity:.45;text-decoration:line-through}
+.li-btn{width:100%;background:none;border:0;border-bottom:1px solid var(--line);text-align:left;cursor:pointer;min-height:44px;align-items:center}
+.li-btn:hover{background:#fff}
 .facts{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;font-size:14px;margin:10px 0}
 .facts dt{color:var(--soft)}.facts dd{margin:0}
 .draw{border:1px solid var(--line);border-radius:14px;background:#fff;padding:30px 16px;margin-top:14px;text-align:center;min-height:100px}
@@ -230,6 +232,7 @@ footer a{display:inline-block;padding:8px 4px}
           <button class="btn small" id="s-list">Ver listado</button>
           <button class="btn small" id="s-csv">Descargar CSV</button>
         </div>
+        <input id="s-filter" type="text" placeholder="Filtrar por nombre, apellido o móvil" style="margin-top:10px" hidden>
         <div class="list" id="s-clients"></div>
       </div>
       <button class="btn" id="s-logout">Cerrar sesión</button>
@@ -630,7 +633,18 @@ async function cargarSocios(){
 $("s-list").addEventListener("click", async () => {
   const box = $("s-clients"); box.innerHTML = `<p class="muted">Cargando…</p>`;
   await cargarSocios();
-  box.innerHTML = socios.length ? `<p class="muted">${socios.length} socios</p>` + socios.map(x => `<div class="li"><span>${esc(x.nombre || x.phone)} ${esc(x.apellidos || "")}</span><span class="r">${x.sellos || 0}/${SELLOS} · ${x.totalVisits || 0} visitas</span></div>`).join("") : `<p class="muted">Todavía no hay socios.</p>`;
+  $("s-filter").hidden = false;
+  box.innerHTML = socios.length ? `<p class="muted">${socios.length} socios</p>` + socios.map(x => `<button type="button" class="li li-btn" data-p="${esc(x.phone)}"><span>${esc(x.nombre || x.phone)} ${esc(x.apellidos || "")}</span><span class="r">${x.sellos || 0}/${SELLOS} · ${x.totalVisits || 0} visitas ›</span></button>`).join("") : `<p class="muted">Todavía no hay socios.</p>`;
+  box.querySelectorAll("button[data-p]").forEach(btn => btn.addEventListener("click", async () => {
+    $("s-msg").hidden = true;
+    await pintarFicha(btn.dataset.p);
+    $("s-phone").value = ""; 
+    $("s-client").closest(".card").scrollIntoView({ behavior: "smooth", block: "start" });
+  }));
+});
+$("s-filter").addEventListener("input", () => {
+  const q = $("s-filter").value.trim().toLowerCase();
+  $("s-clients").querySelectorAll("button[data-p]").forEach(b => { b.hidden = q && !b.textContent.toLowerCase().includes(q) && !b.dataset.p.includes(q.replace(/\D/g, "") || "~"); });
 });
 function descargarCSV(nombre, filas){
   const csv = "﻿" + filas.map(f => f.map(v => `"${String(v ?? "").replace(/"/g, '""')}"`).join(";")).join("\n");
