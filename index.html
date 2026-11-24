@@ -28,7 +28,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
 h1{font-size:clamp(34px,9vw,44px);line-height:1.05;margin:30px 0 8px;text-wrap:balance}
 .lead{color:var(--soft);margin:0 0 24px}
 
-/* Tarjeta destacada: reservar */
+/* Tarjeta destacada: Club Àncora */
 .ticket{position:relative;display:block;text-decoration:none;background:var(--navy);color:#F4EDE1;border-radius:18px;padding:24px 24px 22px;box-shadow:0 18px 40px -22px rgba(26,43,69,.7);overflow:hidden}
 .ticket::before{content:"";position:absolute;inset:8px;border:1px solid rgba(197,160,89,.55);border-radius:12px;pointer-events:none}
 .ticket .notch{position:absolute;top:50%;width:22px;height:22px;border-radius:50%;background:var(--bg);transform:translateY(-50%)}
@@ -90,6 +90,7 @@ footer .legal a{display:inline-block;padding:10px 4px}
   <symbol id="ic-whatsapp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12a8.5 8.5 0 10-3.7 7L21 20l-1.1-3.7c.4-.7.6-1.5.6-2.3z"/></symbol>
   <symbol id="ic-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></symbol>
   <symbol id="ic-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/><path d="M2.5 12.5h19"/></symbol>
+  <symbol id="ic-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></symbol>
   <symbol id="ic-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8.5c5.5-5.3 14.5-5.3 20 0"/><path d="M5.5 12.3c3.7-3.5 9.3-3.5 13 0"/><path d="M9 16c1.7-1.6 4.3-1.6 6 0"/><circle cx="12" cy="19.3" r="1.1" fill="currentColor" stroke="none"/></symbol>
 </svg>
 
@@ -102,7 +103,7 @@ footer .legal a{display:inline-block;padding:10px 4px}
   <h1 id="tagline">Tot el que t'oferim</h1>
   <p class="lead" id="lead">Bar · Restaurant · Roses, des de 1986</p>
 
-  <a class="ticket" id="book" href="https://cloudclient28.hiopos.com/booking/#/details" target="_blank" rel="noopener">
+  <a class="ticket" id="book" href="https://ancoraroses.github.io/lancora-links/club-ancora/">
     <span class="notch l"></span><span class="notch r"></span>
     <svg class="waves" viewBox="0 0 170 60" aria-hidden="true"><use href="#ic-wave" x="0" y="0" width="80" height="40"/><use href="#ic-wave" x="60" y="14" width="80" height="40"/><use href="#ic-wave" x="20" y="28" width="80" height="40"/><use href="#ic-wave" x="95" y="34" width="80" height="40"/></svg>
     <p class="kick" id="bookKick"></p>
@@ -155,15 +156,12 @@ const LINKS = [
   { icon:"wine", url:"https://ancoraroses.github.io/lancora-carta-bebidas/lancora-carta-vins.html",
     title:{ca:"Carta de vins",es:"Carta de vinos",en:"Wine list",fr:"Carte des vins",de:"Weinkarte",nl:"Wijnkaart"},
     desc:{ca:"Selecció del sommelier, amb maridatges",es:"Selección del sumiller, con maridajes",en:"Sommelier's selection, with pairings",fr:"Sélection du sommelier, avec accords",de:"Auswahl des Sommeliers, mit Speiseempfehlungen",nl:"Selectie van de sommelier, met spijssuggesties"} },
-  { icon:"club", url:"https://ancoraroses.github.io/lancora-links/club-ancora/",
-    title:{ca:"Club Àncora",es:"Club Àncora",en:"Club Àncora",fr:"Club Àncora",de:"Club Àncora",nl:"Club Àncora"},
-    desc:{ca:"Dinars entre setmana amb premi",es:"Comidas entre semana con premio",en:"Weekday lunches with rewards",fr:"Déjeuners en semaine récompensés",de:"Mittagessen unter der Woche mit Prämie",nl:"Lunches door de week met beloning"} },
+  { icon:"calendar", url:"https://cloudclient28.hiopos.com/booking/#/details",
+    title:{ca:"Reserva la teva taula",es:"Reserva tu mesa",en:"Book your table",fr:"Réservez votre table",de:"Reserviere deinen Tisch",nl:"Reserveer je tafel"},
+    desc:{ca:"Per a la propera visita",es:"Para tu próxima visita",en:"For your next visit",fr:"Pour votre prochaine visite",de:"Für deinen nächsten Besuch",nl:"Voor je volgende bezoek"} },
   { icon:"review", url:"https://ancoraroses.github.io/lancora-links/ressenyes/",
     title:{ca:"Deixa'ns una ressenya",es:"Déjanos una reseña",en:"Leave us a review",fr:"Laissez-nous un avis",de:"Bewerte uns",nl:"Laat een recensie achter"},
-    desc:{ca:"La teva opinió ens importa",es:"Tu opinión nos importa",en:"Your opinion matters",fr:"Votre avis compte",de:"Deine Meinung zählt",nl:"Jouw mening telt"} },
-  { icon:"briefcase", url:"https://forms.gle/XEzEUssF4msNQAii6",
-    title:{ca:"Treballa amb nosaltres",es:"Trabaja con nosotros",en:"Work with us",fr:"Travaillez avec nous",de:"Arbeite mit uns",nl:"Werk bij ons"},
-    desc:{ca:"Envia'ns la teva candidatura",es:"Envíanos tu candidatura",en:"Send us your application",fr:"Envoyez votre candidature",de:"Sende uns deine Bewerbung",nl:"Stuur ons je sollicitatie"} }
+    desc:{ca:"La teva opinió ens importa",es:"Tu opinión nos importa",en:"Your opinion matters",fr:"Votre avis compte",de:"Deine Meinung zählt",nl:"Jouw mening telt"} }
 ];
 
 /* ✏️  DATOS DEL WIFI */
@@ -172,9 +170,9 @@ const WIFI = { ssid:"LAncora_WiFi", password:"AncoraRoses2026" };
 const UI = {
   tagline:{ca:"Tot el que t'oferim",es:"Todo lo que te ofrecemos",en:"Everything we offer",fr:"Tout ce que nous offrons",de:"Alles, was wir bieten",nl:"Alles wat wij bieden"},
   lead:{ca:"Bar · Restaurant · Roses, des de 1986",es:"Bar · Restaurante · Roses, desde 1986",en:"Bar · Restaurant · Roses, since 1986",fr:"Bar · Restaurant · Roses, depuis 1986",de:"Bar · Restaurant · Roses, seit 1986",nl:"Bar · Restaurant · Roses, sinds 1986"},
-  bookKick:{ca:"40 anys vora el mar",es:"40 años junto al mar",en:"40 years by the sea",fr:"40 ans au bord de la mer",de:"40 Jahre am Meer",nl:"40 jaar aan zee"},
-  bookBig:{ca:"Reserva la teva taula",es:"Reserva tu mesa",en:"Book your table",fr:"Réservez votre table",de:"Reserviere deinen Tisch",nl:"Reserveer je tafel"},
-  bookGo:{ca:"Reservar",es:"Reservar",en:"Book now",fr:"Réserver",de:"Reservieren",nl:"Reserveren"},
+  bookKick:{ca:"Club Àncora · 5 segells, una copa de regal",es:"Club Àncora · 5 sellos, una copa de regalo",en:"Club Àncora · 5 stamps, a free glass",fr:"Club Àncora · 5 tampons, un verre offert",de:"Club Àncora · 5 Stempel, ein Glas gratis",nl:"Club Àncora · 5 stempels, een gratis glas"},
+  bookBig:{ca:"Fes-te soci del Club",es:"Hazte socio del Club",en:"Join the Club",fr:"Rejoignez le Club",de:"Werde Clubmitglied",nl:"Word lid van de Club"},
+  bookGo:{ca:"Entrar al Club",es:"Entrar al Club",en:"Enter the Club",fr:"Entrer au Club",de:"Zum Club",nl:"Naar de Club"},
   foot:{ca:"Des de 1986, vora el mar",es:"Desde 1986, frente al mar",en:"Since 1986, by the sea",fr:"Depuis 1986, face à la mer",de:"Seit 1986, am Meer",nl:"Sinds 1986, aan zee"},
   wifiT:{ca:"WiFi per a clients",es:"WiFi para clientes",en:"Guest WiFi",fr:"WiFi pour les clients",de:"Gäste-WLAN",nl:"WiFi voor gasten"},
   wifiD:{ca:"Connecta't gratis al local",es:"Conéctate gratis en el local",en:"Free connection in-house",fr:"Connexion gratuite sur place",de:"Kostenlos vor Ort verbinden",nl:"Gratis verbinding ter plaatse"},
