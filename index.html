@@ -50,7 +50,11 @@ h1{font-size:clamp(34px,9vw,44px);line-height:1.05;margin:30px 0 8px;text-wrap:b
 .row .desc{font-size:13.5px;color:var(--soft)}
 .row .arr{margin-left:auto;flex:none;width:16px;height:16px;color:var(--gold)}
 
-footer{margin-top:40px;text-align:center;font-size:13px;color:var(--soft);padding-bottom:8px}
+.social{display:flex;justify-content:center;gap:28px;margin-top:26px}
+.round{display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;font-size:13px;color:var(--soft)}
+.round svg{width:56px;height:56px;padding:15px;border-radius:50%;background:var(--navy);color:var(--gold);transition:transform .2s}
+.round:hover svg{transform:translateY(-2px)}
+footer{margin-top:34px;text-align:center;font-size:13px;color:var(--soft);padding-bottom:8px}
 footer .serif{font-size:18px;color:var(--ink)}
 footer .legal{margin-top:12px}
 footer .legal a{display:inline-block;padding:10px 4px}
@@ -107,6 +111,11 @@ footer .legal a{display:inline-block;padding:10px 4px}
 
   <div class="links" id="links"></div>
 
+  <div class="social">
+    <a class="round" href="https://wa.me/34972256386" target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#ic-whatsapp"/></svg><span>WhatsApp</span></a>
+    <a class="round" href="https://instagram.com/ancoraroses" target="_blank" rel="noopener" aria-label="Instagram @ancoraroses"><svg><use href="#ic-instagram"/></svg><span>Instagram</span></a>
+  </div>
+
   <footer>
     <div class="serif" id="foot"></div>
     <div>Avinguda de Rhode 62 · 17480 Roses</div>
@@ -148,12 +157,6 @@ const LINKS = [
   { icon:"review", url:"https://ancoraroses.github.io/lancora-links/ressenyes/",
     title:{ca:"Deixa'ns una ressenya",es:"Déjanos una reseña",en:"Leave us a review",fr:"Laissez-nous un avis",de:"Bewerte uns",nl:"Laat een recensie achter"},
     desc:{ca:"La teva opinió ens importa",es:"Tu opinión nos importa",en:"Your opinion matters",fr:"Votre avis compte",de:"Deine Meinung zählt",nl:"Jouw mening telt"} },
-  { icon:"whatsapp", url:"https://wa.me/34972256386",
-    title:{ca:"Escriu-nos per WhatsApp",es:"Escríbenos por WhatsApp",en:"Message us on WhatsApp",fr:"Écrivez-nous sur WhatsApp",de:"Schreib uns auf WhatsApp",nl:"Stuur ons een WhatsApp"},
-    desc:{ca:"Resposta ràpida",es:"Respuesta rápida",en:"Quick reply",fr:"Réponse rapide",de:"Schnelle Antwort",nl:"Snel antwoord"} },
-  { icon:"instagram", url:"https://instagram.com/ancoraroses",
-    title:{ca:"Instagram",es:"Instagram",en:"Instagram",fr:"Instagram",de:"Instagram",nl:"Instagram"},
-    desc:{ca:"@ancoraroses · el dia a dia",es:"@ancoraroses · el día a día",en:"@ancoraroses · day to day",fr:"@ancoraroses · au quotidien",de:"@ancoraroses · unser Alltag",nl:"@ancoraroses · dag tot dag"} },
   { icon:"briefcase", url:"https://forms.gle/XEzEUssF4msNQAii6",
     title:{ca:"Treballa amb nosaltres",es:"Trabaja con nosotros",en:"Work with us",fr:"Travaillez avec nous",de:"Arbeite mit uns",nl:"Werk bij ons"},
     desc:{ca:"Envia'ns la teva candidatura",es:"Envíanos tu candidatura",en:"Send us your application",fr:"Envoyez votre candidature",de:"Sende uns deine Bewerbung",nl:"Stuur ons je sollicitatie"} }
