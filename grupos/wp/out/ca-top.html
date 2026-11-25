@@ -1,0 +1,110 @@
+<div class="ag" lang="ca">
+<style>
+/* L'Àncora · Grups i celebracions. Tipografia Poppins (la del web). Paleta de marca: blau marí #1A2B45, daurat #C5A059, sorra #F4EDE1. */
+.ag{--navy:#1A2B45;--gold:#C5A059;--gold-d:#8A6A2A;--sand:#F4EDE1;--paper:#FFFDF8;--ink:#1A2B45;--soft:#4D586B;--line:#E3D8C4;--wa:#146F3A;font-family:Poppins,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);line-height:1.65;font-size:16px;text-align:left}
+.ag *,.ag *::before,.ag *::after{box-sizing:border-box}
+.ag a{color:inherit}
+.ag .ag-in{max-width:1120px;margin:0 auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+.ag .ag-eyebrow{margin:0 0 10px!important;font-size:12.5px!important;font-weight:600!important;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-d)!important}
+.ag h1.ag-h1,.ag h2.ag-h2,.ag h3.ag-h3{font-family:inherit!important;color:var(--ink)!important;margin:0!important;line-height:1.14!important;text-transform:none!important;letter-spacing:-.01em;text-wrap:balance}
+.ag h2.ag-h2{font-size:clamp(26px,4.2vw,40px)!important;font-weight:600!important}
+.ag h3.ag-h3{font-size:19px!important;font-weight:600!important;line-height:1.3!important}
+.ag p{font-size:16px;line-height:1.65;margin:0}
+.ag .ag-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:13px 26px;border-radius:999px;font:600 15.5px/1.2 Poppins,system-ui,sans-serif;text-decoration:none!important;cursor:pointer;border:1.5px solid var(--gold);transition:background .2s,transform .2s,color .2s}
+.ag .ag-btn:focus-visible{outline:3px solid #fff;outline-offset:3px;box-shadow:0 0 0 6px var(--navy)}
+.ag .ag-btn.gold{background:var(--gold);color:var(--navy)!important}
+.ag .ag-btn.gold:hover{background:#D4B06C;transform:translateY(-1px)}
+.ag .ag-btn.wa{background:var(--wa);border-color:var(--wa);color:#fff!important}
+.ag .ag-btn.wa:hover{background:#0F5C2E;transform:translateY(-1px)}
+.ag .ag-btn.line{background:transparent;color:#fff!important;border-color:rgba(255,255,255,.7)}
+.ag .ag-btn.line:hover{background:rgba(255,255,255,.12)}
+.ag .ag-btn.dark{background:transparent;color:var(--navy)!important;border-color:var(--navy)}
+.ag .ag-btn.dark:hover{background:var(--navy);color:#fff!important}
+/* portada */
+.ag-hero{position:relative;color:#fff;background:linear-gradient(180deg,rgba(26,43,69,.80),rgba(26,43,69,.68) 55%,rgba(26,43,69,.90)),url(https://ancoraroses.com/wp-content/uploads/2024/06/roses_beach_edit-v2.jpg) center/cover no-repeat,var(--navy);overflow:hidden}
+.ag-hero .ag-in{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:40px;align-items:center;padding-top:72px;padding-bottom:72px}
+.ag-hero .ag-eyebrow{color:#E9D3A3!important}
+.ag-hero h1.ag-h1{color:#fff!important;font-size:clamp(32px,5.6vw,58px)!important;font-weight:600!important}
+.ag-hero h1.ag-h1 span{display:block;color:var(--gold)!important}
+.ag-hero .ag-sub{margin-top:18px;max-width:58ch;font-size:clamp(16px,2vw,19px);color:#F1EADB}
+.ag-hero .ag-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.ag-hero .ag-trust{display:flex;flex-wrap:wrap;gap:8px 26px;margin:28px 0 0;padding:0;list-style:none;font-size:14px;color:#E9E0CE}
+.ag-hero .ag-trust li{display:flex;align-items:center;gap:8px}
+.ag-hero .ag-trust li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.ag-hero .ag-seal{width:190px;height:190px;filter:drop-shadow(0 10px 24px rgba(0,0,0,.4))}
+.ag-wave{display:block;width:100%;height:auto;color:var(--gold);opacity:.55}
+/* ocasiones */
+.ag-sec{padding:76px 0}
+.ag-sec.sand{background:var(--sand)}
+.ag-head{max-width:680px;margin-bottom:38px}
+.ag-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:22px}
+.ag-card{position:relative;background:var(--navy);color:#F4EDE1;border-radius:18px;padding:30px 28px 28px;box-shadow:0 18px 40px -24px rgba(26,43,69,.75);overflow:hidden;min-width:0}
+.ag-card::before{content:"";position:absolute;inset:8px;border:1px solid rgba(197,160,89,.55);border-radius:12px;pointer-events:none}
+.ag-card .ic{width:48px;height:48px;border-radius:50%;background:rgba(197,160,89,.16);color:var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.ag-card h3.ag-h3{color:#fff!important;margin-bottom:10px!important}
+.ag-card p{color:#E7DFCD;font-size:15.5px}
+/* pasos */
+.ag-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:22px;list-style:none;margin:0;padding:0}
+.ag-step{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:26px 24px;min-width:0}
+.ag-step b{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--navy);color:var(--gold);font-size:15px;font-weight:600;margin-bottom:14px}
+.ag-step h3.ag-h3{margin-bottom:8px!important}
+.ag-step p{color:var(--soft);font-size:15px}
+.ag-note{margin-top:22px!important;font-size:14.5px!important}
+.ag-note a{font-weight:600;color:var(--navy);text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--gold)}
+/* banda de formulario */
+.ag-lead-copy{color:#F4EDE1}
+.ag-lead-copy h2.ag-h2{color:#fff!important}
+.ag-lead-copy h2.ag-h2 span{display:block;color:var(--gold)!important}
+.ag-lead-copy .ag-eyebrow{color:#E9D3A3!important}
+.ag-lead-copy p{color:#E7DFCD;margin-top:18px;max-width:50ch}
+.ag-lead-copy .ag-gift{margin-top:20px;display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,.08);border:1px solid rgba(197,160,89,.45);border-radius:14px;padding:14px 16px;font-size:14.5px;color:#F4EDE1}
+.ag-lead-copy .ag-gift svg{flex:none;color:var(--gold);margin-top:2px}
+.ag-lead .wpcf7,.ag-lead .wpcf7 *{box-sizing:border-box}
+.ag-lead .wpcf7-form{background:#FFFDF8;color:var(--navy);border-radius:20px;padding:30px 28px;font-family:Poppins,system-ui,sans-serif}
+.ag-lead .wpcf7-form p{margin:0 0 16px!important;font-size:14.5px!important;line-height:1.5}
+.ag-lead .wpcf7-form label{display:block;font-size:13.5px;font-weight:600;color:var(--navy)}
+.ag-lead .wpcf7-form input[type=text],.ag-lead .wpcf7-form input[type=email],.ag-lead .wpcf7-form input[type=tel],.ag-lead .wpcf7-form input[type=date],.ag-lead .wpcf7-form input[type=number],.ag-lead .wpcf7-form select,.ag-lead .wpcf7-form textarea{width:100%!important;margin-top:6px;padding:12px 14px!important;font:400 16px/1.4 Poppins,system-ui,sans-serif!important;color:var(--navy)!important;background:#fff!important;border:1.5px solid #C9BFA9!important;border-radius:12px!important;box-shadow:none!important;height:auto}
+.ag-lead .wpcf7-form textarea{min-height:92px}
+.ag-lead .wpcf7-form input:focus-visible,.ag-lead .wpcf7-form select:focus-visible,.ag-lead .wpcf7-form textarea:focus-visible{outline:3px solid var(--gold);outline-offset:1px;border-color:var(--navy)!important}
+.ag-lead .ag-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:0 16px}
+.ag-lead .wpcf7-acceptance .wpcf7-list-item{margin:0}
+.ag-lead .wpcf7-acceptance label{display:flex;gap:12px;align-items:flex-start;font-weight:400;font-size:14px;line-height:1.5}
+.ag-lead .wpcf7-acceptance input{flex:none;width:20px!important;height:20px;margin:2px 0 0!important;accent-color:var(--navy)}
+.ag-lead .wpcf7-acceptance a{font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.ag-lead .ag-info{font-size:12.5px!important;line-height:1.55!important;color:#4D586B;background:var(--sand);border-radius:12px;padding:12px 14px}
+.ag-lead .ag-info a{text-decoration:underline;text-underline-offset:2px;font-weight:600}
+.ag-lead .wpcf7-submit{display:block;width:100%;min-height:50px;border:0!important;border-radius:999px!important;background:var(--gold)!important;color:var(--navy)!important;font:600 16px/1.2 Poppins,system-ui,sans-serif!important;padding:14px 24px!important;cursor:pointer;transition:background .2s}
+.ag-lead .wpcf7-submit:hover{background:#D4B06C!important}
+.ag-lead .wpcf7-not-valid-tip{font-size:13px;color:#A32A1E;margin-top:4px}
+.ag-lead .wpcf7-response-output{margin:16px 0 0!important;padding:12px 14px!important;border-radius:12px;font-size:14.5px;color:var(--navy)}
+.ag-lead .wpcf7 form.sent .wpcf7-response-output{border:2px solid #3F7A3A!important;background:#EAF4E6}
+.ag-lead .wpcf7 form.invalid .wpcf7-response-output,.ag-lead .wpcf7 form.failed .wpcf7-response-output,.ag-lead .wpcf7 form.unaccepted .wpcf7-response-output{border:2px solid #A32A1E!important;background:#FBEAE7}
+/* ventajas */
+.ag-ben{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:26px 40px;list-style:none;margin:0;padding:0}
+.ag-ben li{display:flex;gap:16px;align-items:flex-start;min-width:0}
+.ag-ben .ic{flex:none;width:50px;height:50px;border-radius:50%;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center}
+.ag-ben h3.ag-h3{margin-bottom:4px!important;font-size:17px!important}
+.ag-ben p{color:var(--soft);font-size:15px}
+/* cierre */
+.ag-close{background:var(--sand);text-align:center}
+.ag-close .ag-in{display:flex;flex-direction:column;align-items:center;gap:16px}
+.ag-close p{max-width:52ch;color:var(--soft)}
+.ag-close .ag-cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px}
+.ag-close .ag-tel{font-size:15px;color:var(--navy)}
+.ag-close .ag-tel a{font-weight:600;text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--gold)}
+/* whatsapp flotante */
+.ag-wa{position:fixed;z-index:9990;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px;text-decoration:none!important}
+.ag-wa .tip{background:#fff;color:var(--navy);font:600 13.5px/1.2 Poppins,system-ui,sans-serif;padding:9px 14px;border-radius:999px;box-shadow:0 6px 18px rgba(0,0,0,.18);border:1px solid var(--line)}
+.ag-wa .dot{width:60px;height:60px;border-radius:50%;background:var(--wa);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 22px rgba(0,0,0,.3);animation:agbob 2.6s ease-in-out infinite}
+.ag-wa .dot svg{width:30px;height:30px}
+.ag-wa:focus-visible .dot{outline:3px solid var(--gold);outline-offset:3px}
+@keyframes agbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@media (max-width:820px){
+ .ag-hero .ag-in{grid-template-columns:minmax(0,1fr);gap:24px;padding-top:44px;padding-bottom:52px}
+ .ag-hero .ag-seal{width:112px;height:112px;order:-1}
+ .ag-sec{padding:54px 0}
+}
+@media (max-width:440px){.ag-wa .tip{display:none}.ag-lead .wpcf7-form{padding:24px 18px}}
+@media (prefers-reduced-motion:reduce){.ag-wa .dot{animation:none}.ag .ag-btn{transition:none}}
+</style>
+<section class="ag-hero" aria-labelledby="ag-h1"><div class="ag-in"><div><p class="ag-eyebrow">Celebracions i grups a Roses</p><h1 class="ag-h1" id="ag-h1">On el sabor mediterrani es troba amb <span>celebracions inoblidables.</span></h1><p class="ag-sub">Menús per a grups, sopars d'empresa i esdeveniments privats. Arrossos, peix i tapes a peu de platja, amb un equip que cuida cada detall.</p><div class="ag-cta"><a class="ag-btn gold" href="#dossier">Demana el dossier per a grups</a><a class="ag-btn line" href="https://wa.me/34972256386?text=Hola%20L%27%C3%80ncora%21%20M%27agradaria%20informaci%C3%B3%20sobre%20men%C3%BAs%20per%20a%20grups." target="_blank" rel="noopener">Escriu-nos per WhatsApp</a></div><ul class="ag-trust"><li>Des del 1986</li><li>A peu de platja</li><li>+1.000 opinions a Google</li></ul></div><img class="ag-seal" src="https://ancoraroses.com/wp-content/uploads/2026/11/logo-40-aniversario-360.png" width="190" height="190" alt="L'Àncora 1986 – 2026" decoding="async"></div><svg class="ag-wave" viewBox="0 0 1200 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 22c50-18 100-18 150 0s100 18 150 0 100-18 150 0 100 18 150 0 100-18 150 0 100 18 150 0 100-18 150 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></section><section class="ag-sec" aria-labelledby="ag-occ"><div class="ag-in"><div class="ag-head"><p class="ag-eyebrow">Per a cada ocasió</p><h2 class="ag-h2" id="ag-occ">Preparem l'escenari perfecte per a cada ocasió.</h2></div><div class="ag-cards"><article class="ag-card"><div class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M3 13h18"/></svg></div><h3 class="ag-h3">Sopars d'empresa</h3><p>Desconnecteu de l'oficina a tocar del mar. Menús tancats perquè només us hàgiu de preocupar de gaudir, fer equip i brindar.</p></article><article class="ag-card"><div class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16M5 20v-6h14v6M5 14c2 0 2-2 3.5-2s2 2 3.5 2 2-2 3.500-2 1.500 2 3.500 2M12 12V9M12 6.500c.8-.9.8-1.700 0-2.700-.8 1-.8 1.800 0 2.700z"/></svg></div><h3 class="ag-h3">Aniversaris i celebracions</h3><p>Bufeu les espelmes amb el mar de fons. Detalls personalitzats i un tracte que us fa sentir com a casa.</p></article><article class="ag-card"><div class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.300 2.700-6 6-6s6 2.700 6 6"/><circle cx="17" cy="9" r="2.500"/><path d="M16 14.200c2.900.3 5 2.600 5 5.800"/></svg></div><h3 class="ag-h3">Amics i família</h3><p>Perquè no sempre cal una excusa per trobar-se. Arrossos, peix, tapes i sobretaules que s'allarguen.</p></article></div></div></section><section class="ag-sec sand" aria-labelledby="ag-how"><div class="ag-in"><div class="ag-head"><p class="ag-eyebrow">Com funciona</p><h2 class="ag-h2" id="ag-how">De la primera consulta a la reserva.</h2></div><ol class="ag-steps"><li class="ag-step"><b>1</b><h3 class="ag-h3">Explica'ns la data i quants sou</h3><p>Omple el formulari o escriu-nos per WhatsApp. Si ho saps, indica el tipus d'esdeveniment i les restriccions alimentàries.</p></li><li class="ag-step"><b>2</b><h3 class="ag-h3">T'enviem menús i un pressupost a mida</h3><p>El nostre equip revisa la teva sol·licitud i et respon amb les propostes de menú i un pressupost segons el grup.</p></li><li class="ag-step"><b>3</b><h3 class="ag-h3">Confirmem la reserva</h3><p>Per a grups de més de 8 persones podem demanar confirmació addicional, prepagament parcial o elecció de menú tancat. Un menú tancat s'ha de confirmar almenys 24 hores abans.</p></li></ol><p class="ag-note"><a href="https://ancoraroses.com/condiciones-de-reserva/" target="_blank" rel="noopener">Consulta les condicions generals de reserva</a></p></div></section></div>

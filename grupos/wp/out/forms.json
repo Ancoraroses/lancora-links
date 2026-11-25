@@ -1,0 +1,227 @@
+{
+ "ca": {
+  "title": "Grups i celebracions - Sol·licitud (CA)",
+  "locale": "ca",
+  "properties": {
+   "form": "<p><label>Nom i cognoms*<br>[text* your-name autocomplete:name maxlength:80]</label></p>\n<p><label>Correu electrònic*<br>[email* your-email autocomplete:email maxlength:120]</label></p>\n<p><label>Telèfon / WhatsApp*<br>[tel* your-phone autocomplete:tel maxlength:30]</label></p>\n<p><label>Tipus d'esdeveniment<br>[select event-type \"Empresa\" \"Aniversari\" \"Amics\" \"Altres\"]</label></p>\n<div class=\"ag-row\"><p><label>Data aproximada (opcional)<br>[date event-date]</label></p><p><label>Comensals (opcional)<br>[number guests min:2 max:300]</label></p></div>\n<p><label>Comentaris o al·lèrgies (opcional)<br>[textarea your-message x4 maxlength:600]</label></p>\n<p>[acceptance consent-privacy]He llegit i accepto la <a href=\"https://ancoraroses.com/privacitat/\" target=\"_blank\" rel=\"noopener\">política de privacitat</a>.[/acceptance]</p>\n<p>[acceptance consent-marketing optional]Vull rebre ofertes i novetats de L'Àncora per correu electrònic o WhatsApp. Puc retirar el consentiment quan vulgui.[/acceptance]</p>\n<p class=\"ag-info\"><strong>Informació bàsica de protecció de dades.</strong> <b>Responsable:</b> Ancora Oci i Hosteleria, S.L. (NIF B55162051). <b>Finalitat:</b> atendre la teva sol·licitud d'informació i pressupost per a grups i, si ho marques, enviar-te ofertes. <b>Legitimació:</b> la teva sol·licitud i el teu consentiment. <b>Destinataris:</b> no cedim dades; el nostre proveïdor d'allotjament web i de correu actua com a encarregat del tractament. <b>Conservació:</b> el temps necessari per gestionar la sol·licitud i, si escau, la reserva; les ofertes, fins que retiris el consentiment. <b>Drets:</b> accés, rectificació, supressió, oposició, limitació i portabilitat a info@ancoraroses.com; i reclamació davant l'<a href=\"https://www.aepd.es/\" target=\"_blank\" rel=\"noopener\">AEPD</a>. Més informació a la <a href=\"https://ancoraroses.com/privacitat/\" target=\"_blank\" rel=\"noopener\">política de privacitat</a>.</p>\n[submit \"Demanar dossier i pressupost\"]",
+   "mail": {
+    "active": true,
+    "subject": "[Grups CA] [your-name] · [event-type] · [guests] p.",
+    "sender": "L'Àncora Web <wordpress@ancoraroses.com>",
+    "recipient": "info@ancoraroses.com",
+    "body": "Nova sol·licitud de dossier de grups (web, idioma: CA)\n\nNom: [your-name]\nCorreu: [your-email]\nTelèfon: [your-phone]\nEsdeveniment: [event-type]\nData: [event-date]\nComensals: [guests]\nComentaris: [your-message]\n\nConsentiment privacitat: [consent-privacy]\nOfertes (consentiment de màrqueting): [consent-marketing]\n(1 = sí / buit = no)\n\nPàgina: [_url]\nEnviat: [_date] [_time]\n",
+    "additional_headers": "Reply-To: [your-email]",
+    "attachments": "",
+    "use_html": false,
+    "exclude_blank": true
+   },
+   "mail_2": {
+    "active": true,
+    "subject": "Hem rebut la teva sol·licitud · L'Àncora",
+    "sender": "L'Àncora <wordpress@ancoraroses.com>",
+    "recipient": "[your-email]",
+    "body": "Hola [your-name],\n\nGràcies pel teu interès a celebrar amb nosaltres. Hem rebut la teva sol·licitud de menús per a grups.\nEl nostre equip la revisarà i et respondrà amb les propostes de menú i un pressupost a mida.\n\nSi ho prefereixes, també ens pots escriure per WhatsApp al 972 25 63 86.\n\nL'equip de L'Àncora\nAvinguda de Rhode 62 · 17480 Roses\n\n--\nResponsable del tractament: Ancora Oci i Hosteleria, S.L. Pots exercir els teus drets escrivint a info@ancoraroses.com. Més informació: https://ancoraroses.com/privacitat/",
+    "additional_headers": "Reply-To: info@ancoraroses.com",
+    "attachments": "",
+    "use_html": false,
+    "exclude_blank": true
+   },
+   "messages": {
+    "mail_sent_ok": "Gràcies! Hem rebut la teva sol·licitud. Et respondrem amb els menús i un pressupost a mida.",
+    "mail_sent_ng": "No s'ha pogut enviar la sol·licitud. Torna-ho a provar o escriu-nos per WhatsApp al 972 25 63 86.",
+    "validation_error": "Hi ha camps per revisar. Comprova'ls i torna-ho a provar.",
+    "spam": "No s'ha pogut enviar la sol·licitud. Torna-ho a provar o escriu-nos per WhatsApp al 972 25 63 86.",
+    "accept_terms": "Cal acceptar la política de privacitat per poder enviar la sol·licitud.",
+    "invalid_required": "Aquest camp és obligatori.",
+    "invalid_too_long": "Hi ha camps per revisar. Comprova'ls i torna-ho a provar.",
+    "invalid_too_short": "Hi ha camps per revisar. Comprova'ls i torna-ho a provar.",
+    "invalid_email": "Introdueix una adreça de correu vàlida.",
+    "invalid_tel": "Introdueix un telèfon vàlid.",
+    "invalid_number": "Hi ha camps per revisar. Comprova'ls i torna-ho a provar.",
+    "invalid_date": "Hi ha camps per revisar. Comprova'ls i torna-ho a provar.",
+    "upload_failed": "No s'ha pogut enviar la sol·licitud. Torna-ho a provar o escriu-nos per WhatsApp al 972 25 63 86."
+   },
+   "additional_settings": ""
+  }
+ },
+ "es": {
+  "title": "Grups i celebracions - Sol·licitud (ES)",
+  "locale": "es_ES",
+  "properties": {
+   "form": "<p><label>Nombre y apellidos*<br>[text* your-name autocomplete:name maxlength:80]</label></p>\n<p><label>Correo electrónico*<br>[email* your-email autocomplete:email maxlength:120]</label></p>\n<p><label>Teléfono / WhatsApp*<br>[tel* your-phone autocomplete:tel maxlength:30]</label></p>\n<p><label>Tipo de evento<br>[select event-type \"Empresa\" \"Cumpleaños\" \"Amigos\" \"Otro\"]</label></p>\n<div class=\"ag-row\"><p><label>Fecha aproximada (opcional)<br>[date event-date]</label></p><p><label>Comensales (opcional)<br>[number guests min:2 max:300]</label></p></div>\n<p><label>Comentarios o alergias (opcional)<br>[textarea your-message x4 maxlength:600]</label></p>\n<p>[acceptance consent-privacy]He leído y acepto la <a href=\"https://ancoraroses.com/privacitat/\" target=\"_blank\" rel=\"noopener\">política de privacidad</a> (disponible en catalán).[/acceptance]</p>\n<p>[acceptance consent-marketing optional]Quiero recibir ofertas y novedades de L'Àncora por correo electrónico o WhatsApp. Puedo retirar el consentimiento cuando quiera.[/acceptance]</p>\n<p class=\"ag-info\"><strong>Información básica de protección de datos.</strong> <b>Responsable:</b> Ancora Oci i Hosteleria, S.L. (NIF B55162051). <b>Finalidad:</b> atender tu solicitud de información y presupuesto para grupos y, si lo marcas, enviarte ofertas. <b>Legitimación:</b> tu solicitud y tu consentimiento. <b>Destinatarios:</b> no cedemos datos; nuestro proveedor de alojamiento web y de correo actúa como encargado del tratamiento. <b>Conservación:</b> el tiempo necesario para gestionar la solicitud y, en su caso, la reserva; las ofertas, hasta que retires el consentimiento. <b>Derechos:</b> acceso, rectificación, supresión, oposición, limitación y portabilidad en info@ancoraroses.com; y reclamación ante la <a href=\"https://www.aepd.es/\" target=\"_blank\" rel=\"noopener\">AEPD</a>. Más información en la <a href=\"https://ancoraroses.com/privacitat/\" target=\"_blank\" rel=\"noopener\">política de privacidad</a>.</p>\n[submit \"Pedir dosier y presupuesto\"]",
+   "mail": {
+    "active": true,
+    "subject": "[Grupos ES] [your-name] · [event-type] · [guests] p.",
+    "sender": "L'Àncora Web <wordpress@ancoraroses.com>",
+    "recipient": "info@ancoraroses.com",
+    "body": "Nueva solicitud de dosier de grupos (web, idioma: ES)\n\nNombre: [your-name]\nCorreo: [your-email]\nTeléfono: [your-phone]\nEvento: [event-type]\nFecha: [event-date]\nComensales: [guests]\nComentarios: [your-message]\n\nConsentimiento privacidad: [consent-privacy]\nOfertas (consentimiento de marketing): [consent-marketing]\n(1 = sí / buit = no)\n\nPágina: [_url]\nEnviado: [_date] [_time]\n",
+    "additional_headers": "Reply-To: [your-email]",
+    "attachments": "",
+    "use_html": false,
+    "exclude_blank": true
+   },
+   "mail_2": {
+    "active": true,
+    "subject": "Hemos recibido tu solicitud · L'Àncora",
+    "sender": "L'Àncora <wordpress@ancoraroses.com>",
+    "recipient": "[your-email]",
+    "body": "Hola [your-name],\n\nGracias por tu interés en celebrar con nosotros. Hemos recibido tu solicitud de menús para grupos.\nNuestro equipo la revisará y te responderá con las propuestas de menú y un presupuesto a medida.\n\nSi lo prefieres, también puedes escribirnos por WhatsApp al 972 25 63 86.\n\nEl equipo de L'Àncora\nAvinguda de Rhode 62 · 17480 Roses\n\n--\nResponsable del tratamiento: Ancora Oci i Hosteleria, S.L. Puedes ejercer tus derechos escribiendo a info@ancoraroses.com. Más información: https://ancoraroses.com/privacitat/",
+    "additional_headers": "Reply-To: info@ancoraroses.com",
+    "attachments": "",
+    "use_html": false,
+    "exclude_blank": true
+   },
+   "messages": {
+    "mail_sent_ok": "¡Gracias! Hemos recibido tu solicitud. Te responderemos con los menús y un presupuesto a medida.",
+    "mail_sent_ng": "No se ha podido enviar la solicitud. Vuelve a intentarlo o escríbenos por WhatsApp al 972 25 63 86.",
+    "validation_error": "Hay campos por revisar. Compruébalos y vuelve a intentarlo.",
+    "spam": "No se ha podido enviar la solicitud. Vuelve a intentarlo o escríbenos por WhatsApp al 972 25 63 86.",
+    "accept_terms": "Debes aceptar la política de privacidad para enviar la solicitud.",
+    "invalid_required": "Este campo es obligatorio.",
+    "invalid_too_long": "Hay campos por revisar. Compruébalos y vuelve a intentarlo.",
+    "invalid_too_short": "Hay campos por revisar. Compruébalos y vuelve a intentarlo.",
+    "invalid_email": "Introduce una dirección de correo válida.",
+    "invalid_tel": "Introduce un teléfono válido.",
+    "invalid_number": "Hay campos por revisar. Compruébalos y vuelve a intentarlo.",
+    "invalid_date": "Hay campos por revisar. Compruébalos y vuelve a intentarlo.",
+    "upload_failed": "No se ha podido enviar la solicitud. Vuelve a intentarlo o escríbenos por WhatsApp al 972 25 63 86."
+   },
+   "additional_settings": ""
+  }
+ },
+ "fr": {
+  "title": "Grups i celebracions - Sol·licitud (FR)",
+  "locale": "fr_FR",
+  "properties": {
+   "form": "<p><label>Nom et prénom*<br>[text* your-name autocomplete:name maxlength:80]</label></p>\n<p><label>E-mail*<br>[email* your-email autocomplete:email maxlength:120]</label></p>\n<p><label>Téléphone / WhatsApp*<br>[tel* your-phone autocomplete:tel maxlength:30]</label></p>\n<p><label>Type d'événement<br>[select event-type \"Entreprise\" \"Anniversaire\" \"Amis\" \"Autre\"]</label></p>\n<div class=\"ag-row\"><p><label>Date approximative (facultatif)<br>[date event-date]</label></p><p><label>Convives (facultatif)<br>[number guests min:2 max:300]</label></p></div>\n<p><label>Commentaires ou allergies (facultatif)<br>[textarea your-message x4 maxlength:600]</label></p>\n<p>[acceptance consent-privacy]J'ai lu et j'accepte la <a href=\"https://ancoraroses.com/privacitat/\" target=\"_blank\" rel=\"noopener\">politique de confidentialité</a> (disponible en catalan).[/acceptance]</p>\n<p>[acceptance consent-marketing optional]Je souhaite recevoir les offres et nouveautés de L'Àncora par e-mail ou WhatsApp. Je peux retirer mon consentement à tout moment.[/acceptance]</p>\n<p class=\"ag-info\"><strong>Informations de base sur la protection des données.</strong> <b>Responsable :</b> Ancora Oci i Hosteleria, S.L. (NIF B55162051). <b>Finalité :</b> traiter votre demande d'informations et de devis pour groupes et, si vous cochez la case, vous envoyer des offres. <b>Base juridique :</b> votre demande et votre consentement. <b>Destinataires :</b> aucune cession de données ; notre hébergeur web et notre prestataire de messagerie agissent comme sous-traitants. <b>Conservation :</b> le temps nécessaire pour traiter la demande et, le cas échéant, la réservation ; pour les offres, jusqu'au retrait de votre consentement. <b>Droits :</b> accès, rectification, effacement, opposition, limitation et portabilité à info@ancoraroses.com ; réclamation auprès de l'<a href=\"https://www.aepd.es/\" target=\"_blank\" rel=\"noopener\">AEPD</a>. Plus d'informations dans la <a href=\"https://ancoraroses.com/privacitat/\" target=\"_blank\" rel=\"noopener\">politique de confidentialité</a>.</p>\n[submit \"Demander le dossier et un devis\"]",
+   "mail": {
+    "active": true,
+    "subject": "[Groupes FR] [your-name] · [event-type] · [guests] p.",
+    "sender": "L'Àncora Web <wordpress@ancoraroses.com>",
+    "recipient": "info@ancoraroses.com",
+    "body": "Nouvelle demande de dossier groupes (web, langue : FR)\n\nNom: [your-name]\nE-mail: [your-email]\nTéléphone: [your-phone]\nÉvénement: [event-type]\nDate: [event-date]\nConvives: [guests]\nCommentaires: [your-message]\n\nConsentement confidentialité: [consent-privacy]\nOffres (consentement marketing): [consent-marketing]\n(1 = sí / buit = no)\n\nPage: [_url]\nEnvoyé: [_date] [_time]\n",
+    "additional_headers": "Reply-To: [your-email]",
+    "attachments": "",
+    "use_html": false,
+    "exclude_blank": true
+   },
+   "mail_2": {
+    "active": true,
+    "subject": "Nous avons bien reçu votre demande · L'Àncora",
+    "sender": "L'Àncora <wordpress@ancoraroses.com>",
+    "recipient": "[your-email]",
+    "body": "Bonjour [your-name],\n\nMerci de votre intérêt pour fêter votre événement chez nous. Nous avons bien reçu votre demande de menus de groupe.\nNotre équipe l'étudiera et vous répondra avec des propositions de menus et un devis sur mesure.\n\nSi vous préférez, vous pouvez aussi nous écrire sur WhatsApp au 972 25 63 86.\n\nL'équipe de L'Àncora\nAvinguda de Rhode 62 · 17480 Roses\n\n--\nResponsable du traitement : Ancora Oci i Hosteleria, S.L. Vous pouvez exercer vos droits en écrivant à info@ancoraroses.com. Plus d'informations : https://ancoraroses.com/privacitat/",
+    "additional_headers": "Reply-To: info@ancoraroses.com",
+    "attachments": "",
+    "use_html": false,
+    "exclude_blank": true
+   },
+   "messages": {
+    "mail_sent_ok": "Merci ! Nous avons bien reçu votre demande. Nous vous répondrons avec les menus et un devis sur mesure.",
+    "mail_sent_ng": "La demande n'a pas pu être envoyée. Réessayez ou écrivez-nous sur WhatsApp au 972 25 63 86.",
+    "validation_error": "Certains champs sont à vérifier. Contrôlez-les et réessayez.",
+    "spam": "La demande n'a pas pu être envoyée. Réessayez ou écrivez-nous sur WhatsApp au 972 25 63 86.",
+    "accept_terms": "Vous devez accepter la politique de confidentialité pour envoyer la demande.",
+    "invalid_required": "Ce champ est obligatoire.",
+    "invalid_too_long": "Certains champs sont à vérifier. Contrôlez-les et réessayez.",
+    "invalid_too_short": "Certains champs sont à vérifier. Contrôlez-les et réessayez.",
+    "invalid_email": "Saisissez une adresse e-mail valide.",
+    "invalid_tel": "Saisissez un numéro de téléphone valide.",
+    "invalid_number": "Certains champs sont à vérifier. Contrôlez-les et réessayez.",
+    "invalid_date": "Certains champs sont à vérifier. Contrôlez-les et réessayez.",
+    "upload_failed": "La demande n'a pas pu être envoyée. Réessayez ou écrivez-nous sur WhatsApp au 972 25 63 86."
+   },
+   "additional_settings": ""
+  }
+ },
+ "en": {
+  "title": "Grups i celebracions - Sol·licitud (EN)",
+  "locale": "en_US",
+  "properties": {
+   "form": "<p><label>Full name*<br>[text* your-name autocomplete:name maxlength:80]</label></p>\n<p><label>Email*<br>[email* your-email autocomplete:email maxlength:120]</label></p>\n<p><label>Phone / WhatsApp*<br>[tel* your-phone autocomplete:tel maxlength:30]</label></p>\n<p><label>Event type<br>[select event-type \"Company\" \"Birthday\" \"Friends\" \"Other\"]</label></p>\n<div class=\"ag-row\"><p><label>Approximate date (optional)<br>[date event-date]</label></p><p><label>Guests (optional)<br>[number guests min:2 max:300]</label></p></div>\n<p><label>Comments or allergies (optional)<br>[textarea your-message x4 maxlength:600]</label></p>\n<p>[acceptance consent-privacy]I have read and accept the <a href=\"https://ancoraroses.com/privacitat/\" target=\"_blank\" rel=\"noopener\">privacy policy</a> (available in Catalan).[/acceptance]</p>\n<p>[acceptance consent-marketing optional]I would like to receive offers and news from L'Àncora by email or WhatsApp. I can withdraw my consent at any time.[/acceptance]</p>\n<p class=\"ag-info\"><strong>Basic data protection information.</strong> <b>Controller:</b> Ancora Oci i Hosteleria, S.L. (NIF B55162051). <b>Purpose:</b> to handle your request for information and a group quote and, if you tick the box, to send you offers. <b>Legal basis:</b> your request and your consent. <b>Recipients:</b> we do not share your data; our web hosting and email providers act as processors. <b>Retention:</b> as long as needed to handle the request and, if applicable, the booking; for offers, until you withdraw your consent. <b>Rights:</b> access, rectification, erasure, objection, restriction and portability at info@ancoraroses.com; you may also complain to the <a href=\"https://www.aepd.es/\" target=\"_blank\" rel=\"noopener\">Spanish data protection authority (AEPD)</a>. More information in the <a href=\"https://ancoraroses.com/privacitat/\" target=\"_blank\" rel=\"noopener\">privacy policy</a>.</p>\n[submit \"Request dossier and quote\"]",
+   "mail": {
+    "active": true,
+    "subject": "[Groups EN] [your-name] · [event-type] · [guests] p.",
+    "sender": "L'Àncora Web <wordpress@ancoraroses.com>",
+    "recipient": "info@ancoraroses.com",
+    "body": "New group dossier request (web, language: EN)\n\nName: [your-name]\nEmail: [your-email]\nPhone: [your-phone]\nEvent: [event-type]\nDate: [event-date]\nGuests: [guests]\nComments: [your-message]\n\nPrivacy consent: [consent-privacy]\nOffers (marketing consent): [consent-marketing]\n(1 = sí / buit = no)\n\nPage: [_url]\nSent: [_date] [_time]\n",
+    "additional_headers": "Reply-To: [your-email]",
+    "attachments": "",
+    "use_html": false,
+    "exclude_blank": true
+   },
+   "mail_2": {
+    "active": true,
+    "subject": "We have received your request · L'Àncora",
+    "sender": "L'Àncora <wordpress@ancoraroses.com>",
+    "recipient": "[your-email]",
+    "body": "Hello [your-name],\n\nThank you for your interest in celebrating with us. We have received your request for group menus.\nOur team will review it and reply with menu proposals and a tailored quote.\n\nIf you prefer, you can also message us on WhatsApp at 972 25 63 86.\n\nThe L'Àncora team\nAvinguda de Rhode 62 · 17480 Roses\n\n--\nData controller: Ancora Oci i Hosteleria, S.L. You can exercise your rights by writing to info@ancoraroses.com. More information: https://ancoraroses.com/privacitat/",
+    "additional_headers": "Reply-To: info@ancoraroses.com",
+    "attachments": "",
+    "use_html": false,
+    "exclude_blank": true
+   },
+   "messages": {
+    "mail_sent_ok": "Thank you! We have received your request. We will reply with the menus and a tailored quote.",
+    "mail_sent_ng": "Your request could not be sent. Please try again or message us on WhatsApp at 972 25 63 86.",
+    "validation_error": "Some fields need checking. Please review them and try again.",
+    "spam": "Your request could not be sent. Please try again or message us on WhatsApp at 972 25 63 86.",
+    "accept_terms": "You must accept the privacy policy to send the request.",
+    "invalid_required": "This field is required.",
+    "invalid_too_long": "Some fields need checking. Please review them and try again.",
+    "invalid_too_short": "Some fields need checking. Please review them and try again.",
+    "invalid_email": "Enter a valid email address.",
+    "invalid_tel": "Enter a valid phone number.",
+    "invalid_number": "Some fields need checking. Please review them and try again.",
+    "invalid_date": "Some fields need checking. Please review them and try again.",
+    "upload_failed": "Your request could not be sent. Please try again or message us on WhatsApp at 972 25 63 86."
+   },
+   "additional_settings": ""
+  }
+ },
+ "de": {
+  "title": "Grups i celebracions - Sol·licitud (DE)",
+  "locale": "de_DE",
+  "properties": {
+   "form": "<p><label>Vor- und Nachname*<br>[text* your-name autocomplete:name maxlength:80]</label></p>\n<p><label>E-Mail*<br>[email* your-email autocomplete:email maxlength:120]</label></p>\n<p><label>Telefon / WhatsApp*<br>[tel* your-phone autocomplete:tel maxlength:30]</label></p>\n<p><label>Art der Veranstaltung<br>[select event-type \"Firma\" \"Geburtstag\" \"Freunde\" \"Sonstiges\"]</label></p>\n<div class=\"ag-row\"><p><label>Ungefähres Datum (optional)<br>[date event-date]</label></p><p><label>Personen (optional)<br>[number guests min:2 max:300]</label></p></div>\n<p><label>Anmerkungen oder Allergien (optional)<br>[textarea your-message x4 maxlength:600]</label></p>\n<p>[acceptance consent-privacy]Ich habe die <a href=\"https://ancoraroses.com/privacitat/\" target=\"_blank\" rel=\"noopener\">Datenschutzerklärung</a> gelesen und akzeptiere sie (auf Katalanisch verfügbar).[/acceptance]</p>\n<p>[acceptance consent-marketing optional]Ich möchte Angebote und Neuigkeiten von L'Àncora per E-Mail oder WhatsApp erhalten. Ich kann meine Einwilligung jederzeit widerrufen.[/acceptance]</p>\n<p class=\"ag-info\"><strong>Grundlegende Informationen zum Datenschutz.</strong> <b>Verantwortlicher:</b> Ancora Oci i Hosteleria, S.L. (NIF B55162051). <b>Zweck:</b> Bearbeitung Ihrer Anfrage nach Informationen und einem Gruppenangebot und, wenn Sie das Kästchen ankreuzen, Zusendung von Angeboten. <b>Rechtsgrundlage:</b> Ihre Anfrage und Ihre Einwilligung. <b>Empfänger:</b> Wir geben keine Daten weiter; unser Webhosting- und E-Mail-Anbieter handelt als Auftragsverarbeiter. <b>Speicherdauer:</b> so lange, wie für die Bearbeitung der Anfrage und gegebenenfalls der Reservierung nötig; bei Angeboten bis zum Widerruf Ihrer Einwilligung. <b>Rechte:</b> Auskunft, Berichtigung, Löschung, Widerspruch, Einschränkung und Übertragbarkeit unter info@ancoraroses.com; Beschwerde bei der spanischen Datenschutzbehörde (<a href=\"https://www.aepd.es/\" target=\"_blank\" rel=\"noopener\">AEPD</a>). Weitere Informationen in der <a href=\"https://ancoraroses.com/privacitat/\" target=\"_blank\" rel=\"noopener\">Datenschutzerklärung</a>.</p>\n[submit \"Dossier und Angebot anfordern\"]",
+   "mail": {
+    "active": true,
+    "subject": "[Gruppen DE] [your-name] · [event-type] · [guests] P.",
+    "sender": "L'Àncora Web <wordpress@ancoraroses.com>",
+    "recipient": "info@ancoraroses.com",
+    "body": "Neue Anfrage für das Gruppendossier (Web, Sprache: DE)\n\nName: [your-name]\nE-Mail: [your-email]\nTelefon: [your-phone]\nVeranstaltung: [event-type]\nDatum: [event-date]\nPersonen: [guests]\nAnmerkungen: [your-message]\n\nDatenschutz-Einwilligung: [consent-privacy]\nAngebote (Marketing-Einwilligung): [consent-marketing]\n(1 = sí / buit = no)\n\nSeite: [_url]\nGesendet: [_date] [_time]\n",
+    "additional_headers": "Reply-To: [your-email]",
+    "attachments": "",
+    "use_html": false,
+    "exclude_blank": true
+   },
+   "mail_2": {
+    "active": true,
+    "subject": "Wir haben Ihre Anfrage erhalten · L'Àncora",
+    "sender": "L'Àncora <wordpress@ancoraroses.com>",
+    "recipient": "[your-email]",
+    "body": "Hallo [your-name],\n\nvielen Dank für Ihr Interesse, bei uns zu feiern. Wir haben Ihre Anfrage für Gruppenmenüs erhalten.\nUnser Team prüft sie und antwortet mit Menüvorschlägen und einem individuellen Angebot.\n\nWenn Sie möchten, können Sie uns auch per WhatsApp unter 972 25 63 86 schreiben.\n\nDas Team von L'Àncora\nAvinguda de Rhode 62 · 17480 Roses\n\n--\nVerantwortlicher: Ancora Oci i Hosteleria, S.L. Ihre Rechte können Sie per E-Mail an info@ancoraroses.com ausüben. Weitere Informationen: https://ancoraroses.com/privacitat/",
+    "additional_headers": "Reply-To: info@ancoraroses.com",
+    "attachments": "",
+    "use_html": false,
+    "exclude_blank": true
+   },
+   "messages": {
+    "mail_sent_ok": "Vielen Dank! Wir haben Ihre Anfrage erhalten. Wir antworten mit den Menüs und einem individuellen Angebot.",
+    "mail_sent_ng": "Die Anfrage konnte nicht gesendet werden. Versuchen Sie es erneut oder schreiben Sie uns per WhatsApp an 972 25 63 86.",
+    "validation_error": "Einige Felder müssen überprüft werden. Bitte prüfen Sie diese und versuchen Sie es erneut.",
+    "spam": "Die Anfrage konnte nicht gesendet werden. Versuchen Sie es erneut oder schreiben Sie uns per WhatsApp an 972 25 63 86.",
+    "accept_terms": "Sie müssen die Datenschutzerklärung akzeptieren, um die Anfrage zu senden.",
+    "invalid_required": "Dieses Feld ist erforderlich.",
+    "invalid_too_long": "Einige Felder müssen überprüft werden. Bitte prüfen Sie diese und versuchen Sie es erneut.",
+    "invalid_too_short": "Einige Felder müssen überprüft werden. Bitte prüfen Sie diese und versuchen Sie es erneut.",
+    "invalid_email": "Geben Sie eine gültige E-Mail-Adresse ein.",
+    "invalid_tel": "Geben Sie eine gültige Telefonnummer ein.",
+    "invalid_number": "Einige Felder müssen überprüft werden. Bitte prüfen Sie diese und versuchen Sie es erneut.",
+    "invalid_date": "Einige Felder müssen überprüft werden. Bitte prüfen Sie diese und versuchen Sie es erneut.",
+    "upload_failed": "Die Anfrage konnte nicht gesendet werden. Versuchen Sie es erneut oder schreiben Sie uns per WhatsApp an 972 25 63 86."
+   },
+   "additional_settings": ""
+  }
+ }
+}
