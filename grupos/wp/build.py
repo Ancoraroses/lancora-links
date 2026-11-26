@@ -63,11 +63,11 @@ T = {
   f_priv="He llegit i accepto la <a href=\"%s\" target=\"_blank\" rel=\"noopener\">política de privacitat</a>." % PRIVACY,
   f_mkt="Vull rebre ofertes i novetats de L'Àncora per correu electrònic o WhatsApp. Puc retirar el consentiment quan vulgui.",
   f_submit="Demanar dossier i pressupost",
-  info=("<strong>Informació bàsica de protecció de dades.</strong> <b>Responsable:</b> Ancora Oci i Hosteleria, S.L. (NIF B55162051). "
-        "<b>Finalitat:</b> atendre la teva sol·licitud d'informació i pressupost per a grups i, si ho marques, enviar-te ofertes. "
-        "<b>Legitimació:</b> la teva sol·licitud i el teu consentiment. <b>Destinataris:</b> no cedim dades; el nostre proveïdor d'allotjament web i de correu actua com a encarregat del tractament. "
-        "<b>Conservació:</b> el temps necessari per gestionar la sol·licitud i, si escau, la reserva; les ofertes, fins que retiris el consentiment. "
-        "<b>Drets:</b> accés, rectificació, supressió, oposició, limitació i portabilitat a info@ancoraroses.com; i reclamació davant l'<a href=\"%s\" target=\"_blank\" rel=\"noopener\">AEPD</a>. "
+  info=("<strong>Informació bàsica de protecció de dades.</strong><br><b>Responsable:</b> Ancora Oci i Hosteleria, S.L. (NIF B55162051). "
+        "<br><b>Finalitat:</b> atendre la teva sol·licitud d'informació i pressupost per a grups i, si ho marques, enviar-te ofertes. "
+        "<br><b>Legitimació:</b> la teva sol·licitud i el teu consentiment. <b>Destinataris:</b> no cedim dades; el nostre proveïdor d'allotjament web i de correu actua com a encarregat del tractament. "
+        "<br><b>Conservació:</b> el temps necessari per gestionar la sol·licitud i, si escau, la reserva; les ofertes, fins que retiris el consentiment. "
+        "<br><b>Drets:</b> accés, rectificació, supressió, oposició, limitació i portabilitat a info@ancoraroses.com; i reclamació davant l'<a href=\"%s\" target=\"_blank\" rel=\"noopener\">AEPD</a>. "
         "Més informació a la <a href=\"%s\" target=\"_blank\" rel=\"noopener\">política de privacitat</a>.") % (AEPD, PRIVACY),
   m_ok="Gràcies! Hem rebut la teva sol·licitud. Et respondrem amb els menús i un pressupost a mida.",
   m_ng="No s'ha pogut enviar la sol·licitud. Torna-ho a provar o escriu-nos per WhatsApp al %s." % PHONE_TXT,
@@ -120,11 +120,11 @@ T = {
   f_priv="He leído y acepto la <a href=\"%s\" target=\"_blank\" rel=\"noopener\">política de privacidad</a> (disponible en catalán)." % PRIVACY,
   f_mkt="Quiero recibir ofertas y novedades de L'Àncora por correo electrónico o WhatsApp. Puedo retirar el consentimiento cuando quiera.",
   f_submit="Pedir dosier y presupuesto",
-  info=("<strong>Información básica de protección de datos.</strong> <b>Responsable:</b> Ancora Oci i Hosteleria, S.L. (NIF B55162051). "
-        "<b>Finalidad:</b> atender tu solicitud de información y presupuesto para grupos y, si lo marcas, enviarte ofertas. "
-        "<b>Legitimación:</b> tu solicitud y tu consentimiento. <b>Destinatarios:</b> no cedemos datos; nuestro proveedor de alojamiento web y de correo actúa como encargado del tratamiento. "
-        "<b>Conservación:</b> el tiempo necesario para gestionar la solicitud y, en su caso, la reserva; las ofertas, hasta que retires el consentimiento. "
-        "<b>Derechos:</b> acceso, rectificación, supresión, oposición, limitación y portabilidad en info@ancoraroses.com; y reclamación ante la <a href=\"%s\" target=\"_blank\" rel=\"noopener\">AEPD</a>. "
+  info=("<strong>Información básica de protección de datos.</strong><br><b>Responsable:</b> Ancora Oci i Hosteleria, S.L. (NIF B55162051). "
+        "<br><b>Finalidad:</b> atender tu solicitud de información y presupuesto para grupos y, si lo marcas, enviarte ofertas. "
+        "<br><b>Legitimación:</b> tu solicitud y tu consentimiento. <b>Destinatarios:</b> no cedemos datos; nuestro proveedor de alojamiento web y de correo actúa como encargado del tratamiento. "
+        "<br><b>Conservación:</b> el tiempo necesario para gestionar la solicitud y, en su caso, la reserva; las ofertas, hasta que retires el consentimiento. "
+        "<br><b>Derechos:</b> acceso, rectificación, supresión, oposición, limitación y portabilidad en info@ancoraroses.com; y reclamación ante la <a href=\"%s\" target=\"_blank\" rel=\"noopener\">AEPD</a>. "
         "Más información en la <a href=\"%s\" target=\"_blank\" rel=\"noopener\">política de privacidad</a>.") % (AEPD, PRIVACY),
   m_ok="¡Gracias! Hemos recibido tu solicitud. Te responderemos con los menús y un presupuesto a medida.",
   m_ng="No se ha podido enviar la solicitud. Vuelve a intentarlo o escríbenos por WhatsApp al %s." % PHONE_TXT,
@@ -177,11 +177,11 @@ T = {
   f_priv="J'ai lu et j'accepte la <a href=\"%s\" target=\"_blank\" rel=\"noopener\">politique de confidentialité</a> (disponible en catalan)." % PRIVACY,
   f_mkt="Je souhaite recevoir les offres et nouveautés de L'Àncora par e-mail ou WhatsApp. Je peux retirer mon consentement à tout moment.",
   f_submit="Demander le dossier et un devis",
-  info=("<strong>Informations de base sur la protection des données.</strong> <b>Responsable :</b> Ancora Oci i Hosteleria, S.L. (NIF B55162051). "
-        "<b>Finalité :</b> traiter votre demande d'informations et de devis pour groupes et, si vous cochez la case, vous envoyer des offres. "
-        "<b>Base juridique :</b> votre demande et votre consentement. <b>Destinataires :</b> aucune cession de données ; notre hébergeur web et notre prestataire de messagerie agissent comme sous-traitants. "
-        "<b>Conservation :</b> le temps nécessaire pour traiter la demande et, le cas échéant, la réservation ; pour les offres, jusqu'au retrait de votre consentement. "
-        "<b>Droits :</b> accès, rectification, effacement, opposition, limitation et portabilité à info@ancoraroses.com ; réclamation auprès de l'<a href=\"%s\" target=\"_blank\" rel=\"noopener\">AEPD</a>. "
+  info=("<strong>Informations de base sur la protection des données.</strong><br><b>Responsable :</b> Ancora Oci i Hosteleria, S.L. (NIF B55162051). "
+        "<br><b>Finalité :</b> traiter votre demande d'informations et de devis pour groupes et, si vous cochez la case, vous envoyer des offres. "
+        "<br><b>Base juridique :</b> votre demande et votre consentement. <b>Destinataires :</b> aucune cession de données ; notre hébergeur web et notre prestataire de messagerie agissent comme sous-traitants. "
+        "<br><b>Conservation :</b> le temps nécessaire pour traiter la demande et, le cas échéant, la réservation ; pour les offres, jusqu'au retrait de votre consentement. "
+        "<br><b>Droits :</b> accès, rectification, effacement, opposition, limitation et portabilité à info@ancoraroses.com ; réclamation auprès de l'<a href=\"%s\" target=\"_blank\" rel=\"noopener\">AEPD</a>. "
         "Plus d'informations dans la <a href=\"%s\" target=\"_blank\" rel=\"noopener\">politique de confidentialité</a>.") % (AEPD, PRIVACY),
   m_ok="Merci ! Nous avons bien reçu votre demande. Nous vous répondrons avec les menus et un devis sur mesure.",
   m_ng="La demande n'a pas pu être envoyée. Réessayez ou écrivez-nous sur WhatsApp au %s." % PHONE_TXT,
@@ -234,11 +234,11 @@ T = {
   f_priv="I have read and accept the <a href=\"%s\" target=\"_blank\" rel=\"noopener\">privacy policy</a> (available in Catalan)." % PRIVACY,
   f_mkt="I would like to receive offers and news from L'Àncora by email or WhatsApp. I can withdraw my consent at any time.",
   f_submit="Request dossier and quote",
-  info=("<strong>Basic data protection information.</strong> <b>Controller:</b> Ancora Oci i Hosteleria, S.L. (NIF B55162051). "
-        "<b>Purpose:</b> to handle your request for information and a group quote and, if you tick the box, to send you offers. "
-        "<b>Legal basis:</b> your request and your consent. <b>Recipients:</b> we do not share your data; our web hosting and email providers act as processors. "
-        "<b>Retention:</b> as long as needed to handle the request and, if applicable, the booking; for offers, until you withdraw your consent. "
-        "<b>Rights:</b> access, rectification, erasure, objection, restriction and portability at info@ancoraroses.com; you may also complain to the <a href=\"%s\" target=\"_blank\" rel=\"noopener\">Spanish data protection authority (AEPD)</a>. "
+  info=("<strong>Basic data protection information.</strong><br><b>Controller:</b> Ancora Oci i Hosteleria, S.L. (NIF B55162051). "
+        "<br><b>Purpose:</b> to handle your request for information and a group quote and, if you tick the box, to send you offers. "
+        "<br><b>Legal basis:</b> your request and your consent. <b>Recipients:</b> we do not share your data; our web hosting and email providers act as processors. "
+        "<br><b>Retention:</b> as long as needed to handle the request and, if applicable, the booking; for offers, until you withdraw your consent. "
+        "<br><b>Rights:</b> access, rectification, erasure, objection, restriction and portability at info@ancoraroses.com; you may also complain to the <a href=\"%s\" target=\"_blank\" rel=\"noopener\">Spanish data protection authority (AEPD)</a>. "
         "More information in the <a href=\"%s\" target=\"_blank\" rel=\"noopener\">privacy policy</a>.") % (AEPD, PRIVACY),
   m_ok="Thank you! We have received your request. We will reply with the menus and a tailored quote.",
   m_ng="Your request could not be sent. Please try again or message us on WhatsApp at %s." % PHONE_TXT,
@@ -291,11 +291,11 @@ T = {
   f_priv="Ich habe die <a href=\"%s\" target=\"_blank\" rel=\"noopener\">Datenschutzerklärung</a> gelesen und akzeptiere sie (auf Katalanisch verfügbar)." % PRIVACY,
   f_mkt="Ich möchte Angebote und Neuigkeiten von L'Àncora per E-Mail oder WhatsApp erhalten. Ich kann meine Einwilligung jederzeit widerrufen.",
   f_submit="Dossier und Angebot anfordern",
-  info=("<strong>Grundlegende Informationen zum Datenschutz.</strong> <b>Verantwortlicher:</b> Ancora Oci i Hosteleria, S.L. (NIF B55162051). "
-        "<b>Zweck:</b> Bearbeitung Ihrer Anfrage nach Informationen und einem Gruppenangebot und, wenn Sie das Kästchen ankreuzen, Zusendung von Angeboten. "
-        "<b>Rechtsgrundlage:</b> Ihre Anfrage und Ihre Einwilligung. <b>Empfänger:</b> Wir geben keine Daten weiter; unser Webhosting- und E-Mail-Anbieter handelt als Auftragsverarbeiter. "
-        "<b>Speicherdauer:</b> so lange, wie für die Bearbeitung der Anfrage und gegebenenfalls der Reservierung nötig; bei Angeboten bis zum Widerruf Ihrer Einwilligung. "
-        "<b>Rechte:</b> Auskunft, Berichtigung, Löschung, Widerspruch, Einschränkung und Übertragbarkeit unter info@ancoraroses.com; Beschwerde bei der spanischen Datenschutzbehörde (<a href=\"%s\" target=\"_blank\" rel=\"noopener\">AEPD</a>). "
+  info=("<strong>Grundlegende Informationen zum Datenschutz.</strong><br><b>Verantwortlicher:</b> Ancora Oci i Hosteleria, S.L. (NIF B55162051). "
+        "<br><b>Zweck:</b> Bearbeitung Ihrer Anfrage nach Informationen und einem Gruppenangebot und, wenn Sie das Kästchen ankreuzen, Zusendung von Angeboten. "
+        "<br><b>Rechtsgrundlage:</b> Ihre Anfrage und Ihre Einwilligung. <b>Empfänger:</b> Wir geben keine Daten weiter; unser Webhosting- und E-Mail-Anbieter handelt als Auftragsverarbeiter. "
+        "<br><b>Speicherdauer:</b> so lange, wie für die Bearbeitung der Anfrage und gegebenenfalls der Reservierung nötig; bei Angeboten bis zum Widerruf Ihrer Einwilligung. "
+        "<br><b>Rechte:</b> Auskunft, Berichtigung, Löschung, Widerspruch, Einschränkung und Übertragbarkeit unter info@ancoraroses.com; Beschwerde bei der spanischen Datenschutzbehörde (<a href=\"%s\" target=\"_blank\" rel=\"noopener\">AEPD</a>). "
         "Weitere Informationen in der <a href=\"%s\" target=\"_blank\" rel=\"noopener\">Datenschutzerklärung</a>.") % (AEPD, PRIVACY),
   m_ok="Vielen Dank! Wir haben Ihre Anfrage erhalten. Wir antworten mit den Menüs und einem individuellen Angebot.",
   m_ng="Die Anfrage konnte nicht gesendet werden. Versuchen Sie es erneut oder schreiben Sie uns per WhatsApp an %s." % PHONE_TXT,
@@ -401,9 +401,12 @@ STYLE = """
 .ag-lead .wpcf7-form input:focus-visible,.ag-lead .wpcf7-form select:focus-visible,.ag-lead .wpcf7-form textarea:focus-visible{outline:3px solid #7FA3BC;outline-offset:1px;border-color:var(--navy)!important}
 .ag-lead .ag-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:0 16px}
 .ag-lead .wpcf7-acceptance .wpcf7-list-item{margin:0}
+.ag-lead .wpcf7-acceptance,.ag-lead .wpcf7-acceptance *{font-size:14px!important;font-weight:400!important;line-height:1.5!important}
+.ag-lead .wpcf7-acceptance a{font-weight:600!important}
 .ag-lead .wpcf7-acceptance label{display:flex;gap:12px;align-items:flex-start;font-weight:400;font-size:14px;line-height:1.5}
 .ag-lead .wpcf7-acceptance input{flex:none;width:20px!important;height:20px;margin:2px 0 0!important;accent-color:var(--navy)}
 .ag-lead .wpcf7-acceptance a{font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.ag-lead .wpcf7-form .ag-info,.ag-lead .wpcf7-form .ag-info *{font-size:12.5px!important}
 .ag-lead .ag-info{font-size:12.5px!important;line-height:1.55!important;color:#4D586B;background:var(--sand);border-radius:12px;padding:12px 14px}
 .ag-lead .ag-info a{text-decoration:underline;text-underline-offset:2px;font-weight:600}
 .ag-lead .wpcf7-submit{display:block;width:100%;min-height:50px;border:0!important;border-radius:999px!important;background:var(--navy)!important;color:#F4ECE2!important;font:500 16px/1.2 Poppins,system-ui,sans-serif!important;padding:14px 24px!important;cursor:pointer;transition:background .2s}
